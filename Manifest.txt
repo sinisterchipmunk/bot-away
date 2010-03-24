@@ -1,0 +1,14 @@
+History.txt
+Manifest.txt
+PostInstall.txt
+README.rdoc
+Rakefile
+lib/bot-proof-forms.rb
+lib/bot-proof-forms/builder.rb
+script/console
+script/destroy
+script/generate
+spec/bot-proof-forms/builder_spec.rb
+spec/spec_helper.rb
+spec/support/controllers/test_controller.rb
+spec/support/views/test/index.html.erb
