@@ -5,4 +5,3 @@ class TestController < ActionController::Base
     puts url_for(:action => 'hi')
   end
 end
-puts 'loaded'
