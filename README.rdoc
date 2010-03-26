@@ -1,33 +1,67 @@
 = bot-proof-forms
 
-* http://github.com/#{github_username}/#{project_name}
-* http://nedbatchelder.com/text/stopbots.html
+* http://github.com/sinisterchipmunk/bot-proof-forms
 
 == DESCRIPTION:
 
-FIX (describe your package)
+Unobtrusively detects form submissions made by spambots, and silently drops those submissions. The key word here is
+"unobtrusive" -- this is NOT a CAPTCHA. This is transparent, modular implementation of the bot-catching techniques
+discussed by Ned Batchelder at http://nedbatchelder.com/text/stopbots.html
+
+If a submission is detected, the params hash is cleared, so the data can't be used. Since this includes the authenticity
+token, Rails should barf due to an invalid or missing authenticity token. Congrats, spam blocked.
+
+The specifics of the techniques employed for filtering spambots are discussed at the above location; however, here's
+a brief run-down of what's going on:
+
+  * Your code stays the same. After the bot-proof-forms gem has been activated, all Rails-generated forms on your site
+    will automatically be transformed into bot-proof forms.
+  * All of the form elements that you create (for instance, a "comment" model with a "body" field) are turned into
+    dummy elements, or honeypots, and are made invisible to the end user. This is done using div elements and inline CSS
+    stylesheets. In the rare event that a user actually can see the element, it has a label next to it along the lines
+    of "Leave this blank" -- though the exact message is randomized to help prevent detection.
+  * All of the form elements are mirrored by hashes. The hashes are generated using the session's authenticity token,
+    so they can't be predicted.
+  * When data is submitted, bot-proof-forms steps in and 1.) validates that no honeypots have been filled in; and 2)
+    converts the hashed elements back into the field names that you are expecting (replacing the honeypot fields).
+  * If a honeypot has been filled in, or a discrepancy between honeypots and hashes is found (for instance, a hash
+    exists where a corresponding honeypot does not, or vice versa), then the request is considered to be spam, and the
+    entire params hash is cleared. Since this happens at the lowest level, the most likely result is that Rails will
+    complain that the user's authenticity token is invalid. If that does not happen, then your code will be passed an
+    empty params hash, and an error will result. Either way, the spambot has been foiled!
 
 == FEATURES/PROBLEMS:
 
-* FIX (list of features or problems)
-
-== SYNOPSIS:
-
-  FIX (code sample of usage)
+* Wherever protection from forgery is not enabled in your Rails app, the Rails forms will be generated as if this gem
+  did not exist. By default, protection from forgery is enabled for all Rails controllers. For more details on forgery
+  protection, see http://api.rubyonrails.org/classes/ActionController/RequestForgeryProtection/ClassMethods.html
+  
+* This method will be very, very difficult for a spambot to circumvent. However, keep in mind that since the pages have
+  to be machine-readable just to ensure the browser will run properly, and since it also has to follow certain protocols
+  in order to prevent confusing lots of humans (such as hiding the honeypots), it is always theoretically possible for
+  a spambot to get around it. It's just very, very difficult.
 
 == REQUIREMENTS:
 
-* FIX (list of requirements)
+* Rails 2.3.5 or better.
 
 == INSTALL:
 
-* FIX (sudo gem install, anything else)
+* sudo gem install bot-proof-forms
+
+== USAGE:
+
+In your Rails config/environment.rb:
+
+* config.gem 'bot-proof-forms'
+
+That's it.
 
 == LICENSE:
 
 (The MIT License)
 
-Copyright (c) 2010 FIXME full name
+Copyright (c) 2010 Colin MacKenzie IV
 
 Permission is hereby granted, free of charge, to any person obtaining
 a copy of this software and associated documentation files (the

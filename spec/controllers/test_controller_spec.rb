@@ -15,6 +15,8 @@ describe TestController do
 
   before :each do
     @request = ActionController::TestRequest.new
+    # can the authenticity token so that we can predict the generated element names
+    @request.session[:_csrf_token] = 'aVjGViz+pIphXt2pxrWfXgRXShOI0KXOILR23yw0WBo='
     @request.remote_addr = '208.77.188.166' # example.com
     @response = ActionController::TestResponse.new
     @controller = TestController.new
@@ -24,6 +26,29 @@ describe TestController do
     # effectively disables forgery protection.
     TestController.request_forgery_protection_token = nil
   end
+  
+  context "with a model" do
+    context "with forgery protection" do
+      before :each do
+        (class << @controller; self; end).send(:protect_from_forgery)
+        prepare!('model_form')
+      end
+
+      it "should work?" do
+        puts @response.body
+      end
+    end
+
+    context "without forgery protection" do
+      before :each do
+        prepare!('model_form')
+      end
+
+      it "should work?" do
+        puts @response.body
+      end
+    end
+  end
 
   context "with forgery protection" do
     before :each do
@@ -31,26 +56,48 @@ describe TestController do
       prepare!
     end
 
-    it "produces obfuscated form elements" do
-      puts @response.body
-      @response.body.should match(/<\/div><input/)
+    def self.should_obfuscate(type, result = '4644938bcf10443347cf092b6eb11e6b[550d0c771b007a3ba3af86d726bd4058]',
+            message = "produces obfuscated #{type} element", &block)
+      it message do
+        @response.template.send(:fields_for, :post, :url => { :action => 'proc_form' }) do |f|
+          puts(t = yield(f))
+          t.should match(/name="#{Regexp::escape result}"/)
+        end
+      end
+    end
+
+    %w(hidden_field text_field text_area file_field password_field check_box).each do |field|
+      should_obfuscate(field) { |f| f.send(field, :field) }
+    end
+    should_obfuscate(:radio_button) do |f|
+      f.radio_button :field, :value
+    end
+
+    it "links labels to their obfuscated elements" do
+      @response.template.send(:fields_for, :post, :url => { :action => 'proc_form' }) do |f|
+        puts(t = f.label(:field))
+        t.should match(/for=\"4644938bcf10443347cf092b6eb11e6b_550d0c771b007a3ba3af86d726bd4058\"/)
+      end
     end
 
     it "processes valid obfuscated form post" do
       form = { 'authenticity_token' => 'aVjGViz+pIphXt2pxrWfXgRXShOI0KXOILR23yw0WBo=',
                'test' => { 'name' => '' },
-               '3d026031f5be275dd715eaa866014d0b' => { '97e969f7b98e5613dec665117746bba6' => 'colin' }
+               'ccd346990f191d7a89a8fc555acd7cfe' => { '223c595232840668232310c41665996e' => 'colin' }
              }
       post 'proc_form', form
       puts @response.body
-#        <div style='display:none;'>Leave this empty: <input id="test_name" name="test[name]" size="30" type="text" /></div><input id="3d026031f5be275dd715eaa866014d0b_97e969f7b98e5613dec665117746bba6" name="3d026031f5be275dd715eaa866014d0b[97e969f7b98e5613dec665117746bba6]" size="30" type="text" />
-#      </form>
+      @response.template.controller.params.should_not be_empty
     end
 
-    it "processes invalid obfuscated form post" do
-#      <form action="/test/post_to" method="post"><div style="margin:0;padding:0;display:inline"><input name="authenticity_token" type="hidden" value="aVjGViz+pIphXt2pxrWfXgRXShOI0KXOILR23yw0WBo=" /></div>
-#        <div style='display:none;'>Leave this empty: <input id="test_name" name="test[name]" size="30" type="text" /></div><input id="3d026031f5be275dd715eaa866014d0b_97e969f7b98e5613dec665117746bba6" name="3d026031f5be275dd715eaa866014d0b[97e969f7b98e5613dec665117746bba6]" size="30" type="text" />
-#      </form>
+    it "drops invalid obfuscated form post" do
+      form = { 'authenticity_token' => 'aVjGViz+pIphXt2pxrWfXgRXShOI0KXOILR23yw0WBo=',
+               'test' => { 'name' => 'test' },
+               'ccd346990f191d7a89a8fc555acd7cfe' => { '223c595232840668232310c41665996e' => 'test' }
+             }
+      post 'proc_form', form
+      puts @response.body
+      @response.template.controller.params.should be_empty
     end
   end
 
@@ -60,13 +107,15 @@ describe TestController do
     end
 
     it "processes non-obfuscated form post" do
-#      <form action="/test/post_to" method="post">
-#        <input id="test_name" name="test[name]" size="30" type="text" />
-#      </form>
+      form = { 'authenticity_token' => 'aVjGViz+pIphXt2pxrWfXgRXShOI0KXOILR23yw0WBo=',
+               'test' => { 'name' => 'test' }
+             }
+      post 'proc_form', form
+      puts @response.body
+      @response.template.controller.params.should_not be_empty
     end
 
     it "produces non-obfuscated form elements" do
-      #puts @response.body
       @response.body.should_not match(/<\/div><input/)
     end
   end

@@ -1,0 +1,6 @@
+<%form_for @post, :url => url_for('proc_form') do |f|%>
+  <p>
+    <%=f.label :subject%><br/>
+    <%=f.text_field :subject%>
+  </p>
+<%end%>

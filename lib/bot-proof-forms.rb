@@ -1,8 +1,9 @@
 $:.unshift(File.dirname(__FILE__)) unless
   $:.include?(File.dirname(__FILE__)) || $:.include?(File.expand_path(File.dirname(__FILE__)))
 
-require 'bot-proof-forms/action_view/helpers/instance_tag'
-require 'bot-proof-forms/action_view/helpers/form_helper'
+require 'action_controller'
+require 'action_view'
+
 require 'bot-proof-forms/builder'
 require 'bot-proof-forms/param_parser'
 require 'bot-proof-forms/action_controller/request'

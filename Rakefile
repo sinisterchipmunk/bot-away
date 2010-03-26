@@ -11,11 +11,8 @@ Hoe.plugin :newgem
 # Generate all the Rake tasks
 # Run 'rake -T' to see list of generated tasks (from gem root directory)
 $hoe = Hoe.spec 'bot-proof-forms' do
-  self.developer 'FIXME full name', 'FIXME email'
-  self.post_install_message = 'PostInstall.txt' # TODO remove if post-install message not required
-  self.rubyforge_name       = self.name # TODO this is default value
-  # self.extra_deps         = [['activesupport','>= 2.0.2']]
-
+  self.developer 'Colin MacKenzie IV', 'sinisterchipmunk@gmail.com'
+  self.extra_deps         = [['action_controller','>= 2.3.5'],['action_view','>= 2.3.5']]
 end
 
 require 'newgem/tasks'

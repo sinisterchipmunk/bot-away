@@ -1,5 +1,4 @@
 require 'rubygems'
-require 'active_support'
 require 'action_controller'
 require 'action_view'
 
