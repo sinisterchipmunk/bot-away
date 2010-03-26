@@ -1,30 +1,28 @@
 module BotProofForms
   class Builder < ActionView::Helpers::FormBuilder
-    attr_reader :timestamp, :client_ip, :entry_id, :secret, :spinner, :template
+    attr_reader :timestamp, :client_ip, :entry_id, :template, :spinner
     
     def initialize(object_name, object, template, options, proc)
-      @secret    = template.form_authenticity_token
-      @spinner = Digest::MD5.hexdigest(File.join(Time.now.to_i.to_s,
-                                                 template.controller.request.ip,
-                                                 object_name.to_s,
-                                                 secret))
-      #puts self.class.field_helpers
+      @spinner    = BotProofForms::Spinner.new(template.controller.request.ip,
+                                               object_name.to_s,
+                                               template.form_authenticity_token)
+
       super(object_name, object, template, options, proc)
     end
 
     def text_field_with_hashes(method, options = {})
       options = options.dup
       options.merge!(object.send(method)) if object && object.respond_to?(method)
-      template.send("text_field", secret_field_name(object_name), secret_field_name(method), objectify_options(options))
+      template.send("text_field", spinner.encode(object_name), spinner.encode(method), objectify_options(options))
     end
 
-    def text_field_with_honeypot(method, options = {})
+    def text_field_honeypot(method, options = {})
       disguise(text_field_without_obfuscation(method, options))
     end
 
     def text_field_with_obfuscation(method, options = {})
       if template.controller.send(:protect_against_forgery?)
-        text_field_with_honeypot(method, options) + text_field_with_hashes(method, options)
+        text_field_honeypot(method, options) + text_field_with_hashes(method, options)
       else
         # no forgery protection means no authenticity token, means no secret.
         # We could feasibly code around this, but if forgery protection is disabled then it is so for a reason,
@@ -46,11 +44,6 @@ module BotProofForms
         else # this should never happen?
           disguise(element)
       end
-    end
-
-    private
-    def secret_field_name(real_field_name)
-      Digest::MD5.hexdigest(File.join(real_field_name.to_s, spinner, secret))
     end
   end
 end
