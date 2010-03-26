@@ -24,11 +24,10 @@ a brief run-down of what's going on:
     so they can't be predicted.
   * When data is submitted, bot-proof-forms steps in and 1.) validates that no honeypots have been filled in; and 2)
     converts the hashed elements back into the field names that you are expecting (replacing the honeypot fields).
-  * If a honeypot has been filled in, or a discrepancy between honeypots and hashes is found (for instance, a hash
-    exists where a corresponding honeypot does not, or vice versa), then the request is considered to be spam, and the
-    entire params hash is cleared. Since this happens at the lowest level, the most likely result is that Rails will
-    complain that the user's authenticity token is invalid. If that does not happen, then your code will be passed an
-    empty params hash, and an error will result. Either way, the spambot has been foiled!
+  * If a honeypot has been filled in, then the request is considered to be spam, and the entire params hash is emptied.
+    Since this happens at the lowest level, the most likely result is that Rails will complain that the user's
+    authenticity token is invalid. If that does not happen, then your code will be passed an empty params hash, and an
+    error will result. Either way, the spambot has been foiled!
 
 == FEATURES/PROBLEMS:
 

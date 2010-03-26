@@ -42,7 +42,7 @@ describe BotProofForms::ParamParser do
     subject { r = BotProofForms::ParamParser.new(@ip, @params); puts r.params.to_yaml; r }
 
     it "drops all parameters" do
-      subject.params.should be_empty
+      subject.params.should == { "suspected_bot" => true }
     end
   end
 
@@ -51,7 +51,7 @@ describe BotProofForms::ParamParser do
     subject { r = BotProofForms::ParamParser.new(@ip, @params); puts r.params.to_yaml; r }
 
     it "drops all parameters" do
-      subject.params.should be_empty
+      subject.params.should == { "suspected_bot" => true }
     end
   end
 end

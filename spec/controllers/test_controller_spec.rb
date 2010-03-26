@@ -97,7 +97,7 @@ describe TestController do
              }
       post 'proc_form', form
       puts @response.body
-      @response.template.controller.params.should be_empty
+      @response.template.controller.params.should == { 'suspected_bot' => true }
     end
   end
 

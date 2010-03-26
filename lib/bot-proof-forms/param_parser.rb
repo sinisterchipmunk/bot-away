@@ -13,6 +13,7 @@ module BotProofForms
         if catch(:bastard) { while !deobfuscate! ; end } == :took_the_bait
           # we caught a spambot... Just drop the whole request.
           params.clear
+          params[:suspected_bot] = true
         end
       end
     end

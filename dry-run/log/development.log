@@ -1,0 +1,24 @@
+
+
+Processing TestController#index (for 127.0.0.1 at 2010-03-26 12:05:00) [GET]
+Rendering test/index
+Rendered test/_form (16.7ms)
+Completed in 63ms (View: 27, DB: 0) | 200 OK [http://localhost/test]
+
+
+Processing TestController#index (for 127.0.0.1 at 2010-03-26 12:05:12) [GET]
+Rendering test/index
+Rendered test/_form (5.1ms)
+Completed in 16ms (View: 6, DB: 0) | 200 OK [http://localhost/test]
+
+
+Processing TestController#index (for 127.0.0.1 at 2010-03-26 12:05:13) [GET]
+Rendering test/index
+Rendered test/_form (5.4ms)
+Completed in 12ms (View: 6, DB: 0) | 200 OK [http://localhost/test]
+
+
+Processing TestController#index (for 127.0.0.1 at 2010-03-26 12:05:15) [GET]
+Rendering test/index
+Rendered test/_form (5.7ms)
+Completed in 12ms (View: 7, DB: 0) | 200 OK [http://localhost/test]
