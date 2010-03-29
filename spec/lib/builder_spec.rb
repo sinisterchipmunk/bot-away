@@ -3,7 +3,6 @@ require 'spec_helper'
 class MockObject; def method_name; 'method_value'; end; end
 
 describe BotProofForms::Builder do
-  include ObfuscationHelper
   subject { builder }
 
   # select(method, choices, options = {}, html_options = {})
