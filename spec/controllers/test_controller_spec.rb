@@ -55,31 +55,7 @@ describe TestController do
       (class << @controller; self; end).send(:protect_from_forgery)
       prepare!
     end
-
-    def self.should_obfuscate(type, result = '4644938bcf10443347cf092b6eb11e6b[550d0c771b007a3ba3af86d726bd4058]',
-            message = "produces obfuscated #{type} element", &block)
-      it message do
-        @response.template.send(:fields_for, :post, :url => { :action => 'proc_form' }) do |f|
-          puts(t = yield(f))
-          t.should match(/name="#{Regexp::escape result}"/)
-        end
-      end
-    end
-
-    %w(hidden_field text_field text_area file_field password_field check_box).each do |field|
-      should_obfuscate(field) { |f| f.send(field, :field) }
-    end
-    should_obfuscate(:radio_button) do |f|
-      f.radio_button :field, :value
-    end
-
-    it "links labels to their obfuscated elements" do
-      @response.template.send(:fields_for, :post, :url => { :action => 'proc_form' }) do |f|
-        puts(t = f.label(:field))
-        t.should match(/for=\"4644938bcf10443347cf092b6eb11e6b_550d0c771b007a3ba3af86d726bd4058\"/)
-      end
-    end
-
+    
     it "processes valid obfuscated form post" do
       form = { 'authenticity_token' => 'aVjGViz+pIphXt2pxrWfXgRXShOI0KXOILR23yw0WBo=',
                'test' => { 'name' => '' },

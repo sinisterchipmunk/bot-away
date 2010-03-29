@@ -7,6 +7,7 @@ require 'action_view'
 require 'bot-proof-forms/builder'
 require 'bot-proof-forms/param_parser'
 require 'bot-proof-forms/action_controller/request'
+require 'bot-proof-forms/action_view/helpers/instance_tag'
 require 'bot-proof-forms/spinner'
 
 module BotProofForms
