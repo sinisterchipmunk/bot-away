@@ -7,4 +7,9 @@ class TestController < ApplicationController
 #    end
   end
 
+  def save
+    @post = Post.new(params[:post])
+    @post.save
+    render :action => :index
+  end
 end

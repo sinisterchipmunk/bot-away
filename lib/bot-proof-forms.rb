@@ -4,6 +4,7 @@ $:.unshift(File.dirname(__FILE__)) unless
 require 'action_controller'
 require 'action_view'
 
+require 'bot-proof-forms/builder/honeypots'
 require 'bot-proof-forms/builder'
 require 'bot-proof-forms/param_parser'
 require 'bot-proof-forms/action_controller/request'
@@ -14,7 +15,7 @@ module BotProofForms
   VERSION = '0.0.1'
 end
 
-ActionView::Base.default_form_builder = BotProofForms::Builder
+#ActionView::Base.default_form_builder = BotProofForms::Builder
 
 # WHY do I have to do this???
 ActionView::Base.send :include, ActionView::Helpers

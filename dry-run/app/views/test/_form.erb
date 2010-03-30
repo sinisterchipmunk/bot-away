@@ -1,4 +1,7 @@
-<%form_for @post do |f|%>
+<%form_for @post, :url => { :controller => :test, :action => :save } do |f|%>
+  <p>
+    <%=f.error_messages%>
+  </p>
   <p>
     <%=f.label :subject%><br/>
     <%=f.text_field :subject%>

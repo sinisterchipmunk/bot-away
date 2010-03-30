@@ -5,6 +5,10 @@ class MockObject; attr_accessor :method_name; def initialize; @method_name = 'me
 describe BotProofForms::Builder do
   subject { builder }
 
+  it "should not create honeypots with default values" do
+    builder.text_field(:method_name).should match(/name="object_name\[method_name\]"[^>]*?value=""/)
+  end
+
   # select(method, choices, options = {}, html_options = {})
   obfuscates(:select) { builder.select(:method_name, {1 => :a, 2 => :b }) }
 

@@ -1,5 +1,7 @@
 module BotProofForms
   class Builder < ActionView::Helpers::FormBuilder
+    include BotProofForms::Builder::Honeypots
+
     attr_reader :timestamp, :client_ip, :entry_id, :template, :spinner
     
     def initialize(object_name, object, template, options, proc)
@@ -85,10 +87,6 @@ module BotProofForms
        datetime_select time_select).each do |field|
       line = __LINE__ + 2
       code = <<-end_code
-        def #{field}_honeypot(method, *args)                                        # def text_field_honeypot(method, *args)
-          disguise(#{field}_without_obfuscation(method, *args))                     #   disguise(text_field_without_obfuscation(method, *args)
-        end                                                                         # end
-
         def #{field}_with_obfuscation(method, *args)                                # def text_field_with_obfuscation(method, *args)
           if template.controller.send(:protect_against_forgery?)                    # if template.controller.send(:protect_against_forgery?)
             #{field}_honeypot(method, *args) + #{field}_with_hashes(method, *args)  #   text_field_honeypot(method, *args) + text_field_with_hashes(method, *args)
