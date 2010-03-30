@@ -36,7 +36,8 @@ module BotProofForms
                                 objectify_options(options), @default_options.merge(html_options))
     end
 
-    %w(hidden_field text_field text_area file_field password_field).each do |field|
+    %w(hidden_field text_field text_area file_field password_field date_select datetime_select time_select
+       ).each do |field|
       line = __LINE__ + 2
       code = <<-end_code
         def #{field}_with_hashes(method, options = {}, *args)
@@ -80,7 +81,8 @@ module BotProofForms
     end
 
     %w(hidden_field text_field text_area file_field password_field check_box radio_button
-       select collection_select grouped_collection_select time_zone_select).each do |field|
+       select collection_select grouped_collection_select time_zone_select date_select
+       datetime_select time_select).each do |field|
       line = __LINE__ + 2
       code = <<-end_code
         def #{field}_honeypot(method, *args)                                        # def text_field_honeypot(method, *args)
@@ -107,7 +109,8 @@ module BotProofForms
     def options_with_value(options, method)
       options = options.dup
       if object && object.respond_to?(method)
-        options.reverse_merge! :value => object.send(method).to_s
+        value = object.send(method)
+        options.reverse_merge! :value => (caller[0][/date|time/] ? value : value.to_s)
       end
       options
     end

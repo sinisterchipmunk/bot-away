@@ -52,6 +52,6 @@ module ObfuscationHelper
 end
 
 Spec::Runner.configure do |config|
-  config.include ObfuscationHelper
   config.extend  ObfuscationHelper
+  config.include ObfuscationHelper
 end

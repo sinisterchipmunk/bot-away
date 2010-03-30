@@ -10,10 +10,8 @@
 #text_area
 #text_field
 #time_zone_select
+#date_select
+#datetime_select
+#time_select
 
-date_select
-datetime_select
 error_message_on
-reset
-submit
-time_select

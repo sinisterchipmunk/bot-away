@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-class MockObject; def method_name; 'method_value'; end; end
+class MockObject; attr_accessor :method_name; def initialize; @method_name = 'method_value'; end; end
 
 describe BotProofForms::Builder do
   subject { builder }
@@ -24,6 +24,10 @@ describe BotProofForms::Builder do
 
   %w(hidden_field text_field text_area file_field password_field check_box).each do |field|
     obfuscates(field) { builder.send(field, method_name) }
+  end
+
+  %w(date_select time_select datetime_select).each do |field|
+    obfuscates(field) { builder.object.method_name = Time.now; builder.send(field, method_name) }
   end
 
   obfuscates(:radio_button) { builder.radio_button method_name, :value }
