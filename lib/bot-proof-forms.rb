@@ -14,7 +14,7 @@ require 'bot-proof-forms/action_view/helpers/instance_tag'
 require 'bot-proof-forms/spinner'
 
 module BotProofForms
-  VERSION = '0.0.1'
+  VERSION = '1.0.0'
 end
 
 #ActionView::Base.default_form_builder = BotProofForms::Builder
