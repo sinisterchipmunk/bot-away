@@ -11,33 +11,39 @@ discussed by Ned Batchelder at http://nedbatchelder.com/text/stopbots.html
 If a submission is detected, the params hash is cleared, so the data can't be used. Since this includes the authenticity
 token, Rails should barf due to an invalid or missing authenticity token. Congrats, spam blocked.
 
-The specifics of the techniques employed for filtering spambots are discussed at the above location; however, here's
-a brief run-down of what's going on:
+The specifics of the techniques employed for filtering spambots are discussed Ned's site at the above location; however,
+here's a brief run-down of what's going on:
 
-  * Your code stays the same. After the bot-proof-forms gem has been activated, all Rails-generated forms on your site
-    will automatically be transformed into bot-proof forms.
-  * All of the form elements that you create (for instance, a "comment" model with a "body" field) are turned into
-    dummy elements, or honeypots, and are made invisible to the end user. This is done using div elements and inline CSS
-    stylesheets. In the rare event that a user actually can see the element, it has a label next to it along the lines
-    of "Leave this blank" -- though the exact message is randomized to help prevent detection.
-  * All of the form elements are mirrored by hashes. The hashes are generated using the session's authenticity token,
-    so they can't be predicted.
-  * When data is submitted, bot-proof-forms steps in and 1.) validates that no honeypots have been filled in; and 2)
-    converts the hashed elements back into the field names that you are expecting (replacing the honeypot fields).
-  * If a honeypot has been filled in, then the request is considered to be spam, and the entire params hash is emptied.
-    Since this happens at the lowest level, the most likely result is that Rails will complain that the user's
-    authenticity token is invalid. If that does not happen, then your code will be passed an empty params hash, and an
-    error will result. Either way, the spambot has been foiled!
+* Your code stays the same. After the bot-proof-forms gem has been activated, all Rails-generated forms on your site
+  will automatically be transformed into bot-proof forms.
+* All of the form elements that you create (for instance, a "comment" model with a "body" field) are turned into
+  dummy elements, or honeypots, and are made invisible to the end user. This is done using div elements and inline CSS
+  stylesheets. There are several ways an element can be hidden, and these approaches are chosen at random to help
+  minimize predictability. In the rare event that a real user actually can see the element, it has a label next to it
+  along the lines of "Leave this blank" -- though the exact message is randomized to help prevent detection.
+* All of the form elements are mirrored by hashes. The hashes are generated using the session's authenticity token,
+  so they can't be predicted.
+* When data is submitted, bot-proof-forms steps in and 1.) validates that no honeypots have been filled in; and 2)
+  converts the hashed elements back into the field names that you are expecting (replacing the honeypot fields).
+* If a honeypot has been filled in, or a hashed element is missing where it was expected, then the request is
+  considered to be either spam, or tampered with; and the entire params hash is emptied. Since this happens at the
+  lowest level, the most likely result is that Rails will complain that the user's authenticity token is invalid. If
+  that does not happen, then your code will be passed a params hash containing only a "suspected_bot" key, and an error
+  will result. Either way, the spambot has been foiled!
 
 == FEATURES/PROBLEMS:
 
 * Wherever protection from forgery is not enabled in your Rails app, the Rails forms will be generated as if this gem
-  did not exist. By default, protection from forgery is enabled for all Rails controllers. For more details on forgery
-  protection, see http://api.rubyonrails.org/classes/ActionController/RequestForgeryProtection/ClassMethods.html
+  did not exist. That means hashed elements won't be generated, honeypots won't be generated, and posted forms will not
+  be intercepted.
+
+* By default, protection from forgery is enabled for all Rails controllers, so by default the above-mentioned checks
+  will also be triggered. For more details on forgery protection, see:
+  http://api.rubyonrails.org/classes/ActionController/RequestForgeryProtection/ClassMethods.html
   
-* This method will be very, very difficult for a spambot to circumvent. However, keep in mind that since the pages have
-  to be machine-readable just to ensure the browser will run properly, and since it also has to follow certain protocols
-  in order to prevent confusing lots of humans (such as hiding the honeypots), it is always theoretically possible for
+* The techniques implemented by this library will be very difficult for a spambot to circumvent. However, keep in mind
+  that since the pages have to be machine-readable by definition, and since this gem has to follow certain protocols
+  in order to avoid confusing lots of humans (such as hiding the honeypots), it is always theoretically possible for
   a spambot to get around it. It's just very, very difficult.
 
 == REQUIREMENTS:

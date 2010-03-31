@@ -13,7 +13,20 @@ Hoe.plugin :newgem
 $hoe = Hoe.spec 'bot-proof-forms' do
   self.developer 'Colin MacKenzie IV', 'sinisterchipmunk@gmail.com'
   self.extra_deps         = [['action_controller','>= 2.3.5'],['action_view','>= 2.3.5'],['sc-core-ext','>= 1.1.1']]
+  self.readme_file = "README.rdoc"
 end
+
+Rake::RDocTask.new(:docs) do |rdoc|
+  files = ['README.rdoc', # 'LICENSE', 'CHANGELOG',
+           'lib/**/*.rb', 'doc/**/*.rdoc']#, 'spec/*.rb']
+  rdoc.rdoc_files.add(files)
+  rdoc.main = 'README.rdoc'
+  rdoc.title = 'EVE Documentation'
+  #rdoc.template = '/path/to/gems/allison-2.0/lib/allison'
+  rdoc.rdoc_dir = 'doc'
+  rdoc.options << '--line-numbers' << '--inline-source'
+end
+
 
 require 'newgem/tasks'
 Dir['tasks/**/*.rake'].each { |t| load t }
