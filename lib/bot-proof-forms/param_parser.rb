@@ -16,10 +16,7 @@ module BotProofForms
 
     def deobfuscate!(current = params, object_name = nil)
       if object_name
-        puts "Spinner create: #{ip}, #{object_name}, #{authenticity_token}"
         spinner = BotProofForms::Spinner.new(ip, object_name, authenticity_token)
-        puts object_name+":"
-        puts spinner.inspect
       end
       
       current.each do |key, value|

@@ -56,7 +56,7 @@ class ActionView::Helpers::InstanceTag
     else
       # this should cover all Rails selects.
       if spinner && options && (options.keys.include?('id') || options.keys.include?('name'))
-        disguise(content_tag_without_obfuscation(name, content_or_options_with_block, honeypot_options(options), *args)) +
+        disguise(content_tag_without_obfuscation(name, '', honeypot_options(options), *args)) +
                 content_tag_without_obfuscation(name, content_or_options_with_block, obfuscate_options(options), *args)
       else
         content_tag_without_obfuscation(name, content_or_options_with_block, options, *args)

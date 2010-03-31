@@ -155,3 +155,96 @@ Rendering template within layouts/test
 Rendering test/index
 Rendered test/_form (17.6ms)
 Completed in 42ms (View: 33, DB: 0) | 200 OK [http://localhost/test/save]
+
+
+Processing TestController#index (for 127.0.0.1 at 2010-03-31 11:22:17) [GET]
+Rendering template within layouts/test
+Rendering test/index
+Rendered test/_form (15.4ms)
+Completed in 63ms (View: 29, DB: 0) | 200 OK [http://localhost/test]
+
+
+Processing TestController#index (for 127.0.0.1 at 2010-03-31 11:22:20) [POST]
+  Parameters: {"suspected_bot"=>true}
+
+ActionController::InvalidAuthenticityToken (ActionController::InvalidAuthenticityToken):
+  /opt/ruby-1.8.7-p248/lib/ruby/1.8/webrick/httpserver.rb:104:in `service'
+  /opt/ruby-1.8.7-p248/lib/ruby/1.8/webrick/httpserver.rb:65:in `run'
+  /opt/ruby-1.8.7-p248/lib/ruby/1.8/webrick/server.rb:173:in `start_thread'
+  /opt/ruby-1.8.7-p248/lib/ruby/1.8/webrick/server.rb:162:in `start'
+  /opt/ruby-1.8.7-p248/lib/ruby/1.8/webrick/server.rb:162:in `start_thread'
+  /opt/ruby-1.8.7-p248/lib/ruby/1.8/webrick/server.rb:95:in `start'
+  /opt/ruby-1.8.7-p248/lib/ruby/1.8/webrick/server.rb:92:in `each'
+  /opt/ruby-1.8.7-p248/lib/ruby/1.8/webrick/server.rb:92:in `start'
+  /opt/ruby-1.8.7-p248/lib/ruby/1.8/webrick/server.rb:23:in `start'
+  /opt/ruby-1.8.7-p248/lib/ruby/1.8/webrick/server.rb:82:in `start'
+
+Rendered rescues/_trace (98.2ms)
+Rendered rescues/_request_and_response (1.3ms)
+Rendering rescues/layout (unprocessable_entity)
+
+
+Processing TestController#index (for 127.0.0.1 at 2010-03-31 11:25:32) [POST]
+  Parameters: {"suspected_bot"=>true}
+
+ActionController::InvalidAuthenticityToken (ActionController::InvalidAuthenticityToken):
+  /opt/ruby-1.8.7-p248/lib/ruby/1.8/webrick/httpserver.rb:104:in `service'
+  /opt/ruby-1.8.7-p248/lib/ruby/1.8/webrick/httpserver.rb:65:in `run'
+  /opt/ruby-1.8.7-p248/lib/ruby/1.8/webrick/server.rb:173:in `start_thread'
+  /opt/ruby-1.8.7-p248/lib/ruby/1.8/webrick/server.rb:162:in `start'
+  /opt/ruby-1.8.7-p248/lib/ruby/1.8/webrick/server.rb:162:in `start_thread'
+  /opt/ruby-1.8.7-p248/lib/ruby/1.8/webrick/server.rb:95:in `start'
+  /opt/ruby-1.8.7-p248/lib/ruby/1.8/webrick/server.rb:92:in `each'
+  /opt/ruby-1.8.7-p248/lib/ruby/1.8/webrick/server.rb:92:in `start'
+  /opt/ruby-1.8.7-p248/lib/ruby/1.8/webrick/server.rb:23:in `start'
+  /opt/ruby-1.8.7-p248/lib/ruby/1.8/webrick/server.rb:82:in `start'
+
+Rendered rescues/_trace (38.3ms)
+Rendered rescues/_request_and_response (1.2ms)
+Rendering rescues/layout (unprocessable_entity)
+
+
+Processing TestController#index (for 127.0.0.1 at 2010-03-31 11:35:59) [GET]
+Rendering template within layouts/test
+Rendering test/index
+Rendered test/_form (16.1ms)
+Completed in 66ms (View: 31, DB: 0) | 200 OK [http://localhost/test]
+
+
+Processing TestController#save (for 127.0.0.1 at 2010-03-31 11:36:11) [POST]
+  Parameters: {"commit"=>"Save changes", "post"=>{"body"=>"enter a body", "subscribers"=>"12", "subject"=>""}, "authenticity_token"=>"CX3a/gnEjabXdc+CqYUk6+fEfGvKjEHA1oWiB8g26I0="}
+Rendering template within layouts/test
+Rendering test/index
+Rendered test/_form (10.9ms)
+Completed in 18ms (View: 12, DB: 0) | 200 OK [http://localhost/test/save]
+
+
+Processing TestController#save (for 127.0.0.1 at 2010-03-31 11:36:16) [POST]
+  Parameters: {"commit"=>"Save changes", "post"=>{"body"=>"", "subscribers"=>"12", "subject"=>""}, "authenticity_token"=>"CX3a/gnEjabXdc+CqYUk6+fEfGvKjEHA1oWiB8g26I0="}
+Rendering template within layouts/test
+Rendering test/index
+Rendered test/_form (9.3ms)
+Completed in 17ms (View: 11, DB: 0) | 200 OK [http://localhost/test/save]
+
+
+Processing TestController#save (for 127.0.0.1 at 2010-03-31 11:36:23) [POST]
+  Parameters: {"commit"=>"Save changes", "post"=>{"body"=>"enter a body", "subscribers"=>"12", "subject"=>""}, "authenticity_token"=>"CX3a/gnEjabXdc+CqYUk6+fEfGvKjEHA1oWiB8g26I0="}
+Rendering template within layouts/test
+Rendering test/index
+Rendered test/_form (10.6ms)
+Completed in 21ms (View: 13, DB: 0) | 200 OK [http://localhost/test/save]
+
+
+Processing TestController#index (for 127.0.0.1 at 2010-03-31 11:36:25) [GET]
+Rendering template within layouts/test
+Rendering test/index
+Rendered test/_form (5.9ms)
+Completed in 15ms (View: 8, DB: 0) | 200 OK [http://localhost/test]
+
+
+Processing TestController#save (for 127.0.0.1 at 2010-03-31 11:36:26) [POST]
+  Parameters: {"commit"=>"Save changes", "post"=>{"body"=>"enter a body", "subscribers"=>"12", "subject"=>""}, "authenticity_token"=>"CX3a/gnEjabXdc+CqYUk6+fEfGvKjEHA1oWiB8g26I0="}
+Rendering template within layouts/test
+Rendering test/index
+Rendered test/_form (9.4ms)
+Completed in 17ms (View: 11, DB: 0) | 200 OK [http://localhost/test/save]

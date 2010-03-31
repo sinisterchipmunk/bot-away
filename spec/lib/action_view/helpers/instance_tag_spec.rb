@@ -20,6 +20,16 @@ end
 describe ActionView::Helpers::InstanceTag do
   subject { default_instance_tag }
 
+  context "with a valid text area tag" do
+    subject do
+      dump { default_instance_tag.to_text_area_tag }
+    end
+
+    it "should produce blank honeypot value" do
+      subject.should_not =~ /name="object_name\[method_name\]"[^>]+>method_value<\/textarea>/
+    end
+  end
+
   context "with a valid input type=text tag" do
     subject do
       dump { default_instance_tag.tag("input", :type => 'text', 'name' => 'object_name[method_name]', 'id' => 'object_name_method_name', 'value' => 'method_value') }
