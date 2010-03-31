@@ -5,9 +5,9 @@ module ObfuscationHelper
     end
   end
 
-  def is_obfuscated_as(object_name, method_name)
-    it "is obfuscated as #{object_name}[#{method_name}]" do
-      subject.should be_obfuscated_as(object_name, method_name)
+  def is_obfuscated_as(id, name)
+    it "is obfuscated as #{id}, #{name}" do
+      subject.should be_obfuscated_as(id, name)
     end
   end
 
@@ -21,25 +21,25 @@ module ObfuscationHelper
                                                                          'REMOTE_ADDR' => '127.0.0.1'}))
     response.template.controller.request_forgery_protection_token = :authenticity_token
     response.template.controller.session[:_csrf_token] = '1234'
-    @builder = BotProofForms::Builder.new(:object_name, MockObject.new, response.template, {}, proc {})
+    @builder = ActionView::Helpers::FormBuilder.new(:object_name, MockObject.new, response.template, {}, proc {})
   end
 
-  def obfuscates(method)
+  def obfuscates(method, obfuscated_id = self.obfuscated_id, obfuscated_name = self.obfuscated_name)
     value = yield
     context "##{method}" do
       subject { proc { dump { value } } }
 
       includes_honeypot(object_name, method_name)
-      is_obfuscated_as(obfuscated_object_name, obfuscated_method_name)
+      is_obfuscated_as(obfuscated_id, obfuscated_name)
     end
   end
 
-  def obfuscated_object_name
-    "50206624c6a61ddd6f3e6eddb2ac02d3"
+  def obfuscated_id
+    "e21372563297c728093bf74c3cb6b96c"
   end
 
-  def obfuscated_method_name
-    "76042ec523072e08e3313cb0ea54aca6"
+  def obfuscated_name
+    "a0844d45bf150668ff1d86a6eb491969"
   end
 
   def object_name

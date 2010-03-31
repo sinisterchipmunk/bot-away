@@ -12,7 +12,7 @@ Hoe.plugin :newgem
 # Run 'rake -T' to see list of generated tasks (from gem root directory)
 $hoe = Hoe.spec 'bot-proof-forms' do
   self.developer 'Colin MacKenzie IV', 'sinisterchipmunk@gmail.com'
-  self.extra_deps         = [['action_controller','>= 2.3.5'],['action_view','>= 2.3.5']]
+  self.extra_deps         = [['action_controller','>= 2.3.5'],['action_view','>= 2.3.5'],['sc-core-ext','>= 1.1.1']]
 end
 
 require 'newgem/tasks'

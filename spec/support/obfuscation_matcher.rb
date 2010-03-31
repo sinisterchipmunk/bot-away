@@ -1,15 +1,17 @@
 class ObfuscationMatcher
-  def initialize(object_name, method_name)
-    @object_name, @method_name = object_name, method_name
+  def initialize(id, name)
+    @id, @name = id, name
   end
 
   def matches?(target)
     target = target.call if target.kind_of?(Proc)
     @target = target
-    @rx = /name="#{Regexp::escape @object_name}\[#{Regexp::escape @method_name}/m
-#    @rx = "name=\"#{@object_name}[#{@method_name}]\""
+    match(:id) && match(:name)
+  end
+
+  def match(which)
+    @rx = /#{which}=['"]#{Regexp::escape instance_variable_get("@#{which}")}/
     @target[@rx]
-#    @target =~ /#{Regexp::escape @rx}/
   end
 
   def failure_message
@@ -21,6 +23,6 @@ class ObfuscationMatcher
   end
 end
 
-def be_obfuscated_as(object_name, method_name)
-  ObfuscationMatcher.new(object_name, method_name)
+def be_obfuscated_as(id, name)
+  ObfuscationMatcher.new(id, name)
 end

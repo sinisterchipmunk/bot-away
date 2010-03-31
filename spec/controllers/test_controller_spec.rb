@@ -55,21 +55,23 @@ describe TestController do
       (class << @controller; self; end).send(:protect_from_forgery)
       prepare!
     end
+    #"object_name_method_name" name="object_name[method_name]" size="30" type="text" value="" /></div>
+    #<input id="e21372563297c728093bf74c3cb6b96c" name="a0844d45bf150668ff1d86a6eb491969" size="30" type="text" value="method_value" />
     
     it "processes valid obfuscated form post" do
-      form = { 'authenticity_token' => 'aVjGViz+pIphXt2pxrWfXgRXShOI0KXOILR23yw0WBo=',
-               'test' => { 'name' => '' },
-               'ccd346990f191d7a89a8fc555acd7cfe' => { '223c595232840668232310c41665996e' => 'colin' }
+      form = { 'authenticity_token' => '1234',
+               'object_name' => { 'method_name' => '' },
+               '842d8d1c80014ce9f3d974614338605c' => 'some_value'
              }
       post 'proc_form', form
       puts @response.body
-      @response.template.controller.params.should_not be_empty
+      @response.template.controller.params[:object_name].should == { 'method_name' => 'some_value' }
     end
 
     it "drops invalid obfuscated form post" do
-      form = { 'authenticity_token' => 'aVjGViz+pIphXt2pxrWfXgRXShOI0KXOILR23yw0WBo=',
-               'test' => { 'name' => 'test' },
-               'ccd346990f191d7a89a8fc555acd7cfe' => { '223c595232840668232310c41665996e' => 'test' }
+      form = { 'authenticity_token' => '1234',
+               'object_name' => { 'method_name' => 'test' },
+               '842d8d1c80014ce9f3d974614338605c' => 'some_value'
              }
       post 'proc_form', form
       puts @response.body
@@ -83,12 +85,13 @@ describe TestController do
     end
 
     it "processes non-obfuscated form post" do
-      form = { 'authenticity_token' => 'aVjGViz+pIphXt2pxrWfXgRXShOI0KXOILR23yw0WBo=',
-               'test' => { 'name' => 'test' }
+      form = { #'authenticity_token' => '1234',
+               'object_name' => { 'method_name' => 'test' }
              }
       post 'proc_form', form
       puts @response.body
-      @response.template.controller.params.should_not be_empty
+      @response.template.controller.params.should_not == { 'suspected_bot' => true }
+      @response.template.controller.params[:object_name].should == { 'method_name' => 'test' }
     end
 
     it "produces non-obfuscated form elements" do

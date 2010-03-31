@@ -1,8 +1,14 @@
+###
+# The original implementation of BotProofForms extended ActionView::Helpers::FormBuilder, and these tests were written
+# for it. This approach has since been abandoned in favor of a direct override of ActionView::Helpers::InstanceTag for
+# reasons of efficiency. The FormBuilder tests have been kept around simply for an extra layer of functional testing.
+###
+
 require 'spec_helper'
 
 class MockObject; attr_accessor :method_name; def initialize; @method_name = 'method_value'; end; end
 
-describe BotProofForms::Builder do
+describe ActionView::Helpers::FormBuilder do
   subject { builder }
 
   it "should not create honeypots with default values" do
@@ -30,17 +36,13 @@ describe BotProofForms::Builder do
     obfuscates(field) { builder.send(field, method_name) }
   end
 
-  %w(date_select time_select datetime_select).each do |field|
-    obfuscates(field) { builder.object.method_name = Time.now; builder.send(field, method_name) }
-  end
-
-  obfuscates(:radio_button) { builder.radio_button method_name, :value }
+  obfuscates(:radio_button, '53640013be550817d040597218884288') { builder.radio_button method_name, :value }
 
   context "#label" do
     subject { dump { builder.label(method_name) } }
 
     it "links labels to their obfuscated elements" do
-      subject.should match(/for=\"50206624c6a61ddd6f3e6eddb2ac02d3_76042ec523072e08e3313cb0ea54aca6\"/)
+      subject.should match(/for=\"e21372563297c728093bf74c3cb6b96c\"/)
     end
   end
 end

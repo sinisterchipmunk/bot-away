@@ -1,7 +1,43 @@
 module BotProofForms
   class ParamParser
     class ObfuscationMissing < StandardError; end #:nodoc:
-    
+
+    attr_reader :params, :ip, :authenticity_token
+
+    def initialize(ip, params, authenticity_token = params[:authenticity_token])
+      @ip, @params, @authenticity_token = ip, params, authenticity_token
+      if authenticity_token
+        if catch(:bastard) { deobfuscate! } == :took_the_bait
+          params.clear
+          params[:suspected_bot] = true
+        end
+      end
+    end
+
+    def deobfuscate!(current = params, object_name = nil)
+      if object_name
+        puts "Spinner create: #{ip}, #{object_name}, #{authenticity_token}"
+        spinner = BotProofForms::Spinner.new(ip, object_name, authenticity_token)
+        puts object_name+":"
+        puts spinner.inspect
+      end
+      
+      current.each do |key, value|
+        if object_name
+          if value.blank? && params.keys.include?(spun_key = spinner.encode("#{object_name}[#{key}]"))
+            current[key] = params.delete(spun_key)
+          else
+            throw :bastard, :took_the_bait
+          end
+        end
+        if value.kind_of?(Hash)
+          deobfuscate!(value, object_name ? "#{object_name}[#{key}]" : key)
+        end
+      end
+    end
+
+
+=begin
     attr_reader :params, :ip, :authenticity_token, :spinner
 
     def initialize(ip, params, authenticity_token = params[:authenticity_token], spinner = nil)
@@ -79,5 +115,6 @@ module BotProofForms
       objects.each { |o| return true if o.kind_of?(type) }
       false
     end
+=end
   end
 end

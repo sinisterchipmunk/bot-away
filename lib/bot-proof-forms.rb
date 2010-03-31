@@ -1,11 +1,13 @@
 $:.unshift(File.dirname(__FILE__)) unless
   $:.include?(File.dirname(__FILE__)) || $:.include?(File.expand_path(File.dirname(__FILE__)))
 
+require 'rubygems' unless defined?(Gem)
 require 'action_controller'
 require 'action_view'
+require 'sc-core-ext'
 
-require 'bot-proof-forms/builder/honeypots'
-require 'bot-proof-forms/builder'
+#require 'bot-proof-forms/builder/honeypots'
+#require 'bot-proof-forms/builder'
 require 'bot-proof-forms/param_parser'
 require 'bot-proof-forms/action_controller/request'
 require 'bot-proof-forms/action_view/helpers/instance_tag'

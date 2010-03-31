@@ -1,18 +1,14 @@
 describe BotProofForms::ParamParser do
   def params(honeypots)
-    @params = { 'authenticity_token' => 'hvOox8HTm31KyTalk60MwelhWvQwq5HuztjcmV1hx3o=',
-             '62e70bf492873ce0b088ed3ed4d0251b' => { '1c5b4f68648b1d78a7a62566b2089736' => 'colin',
-                                                     '732cc190ad260f9f9319e3a476325e75' => [1, 2] }
+    @params = { 'authenticity_token' => '1234',
+                'bdf3e1964ac3a82c5f1c7385ed0100e4' => 'colin',
+                'ed8fc4fe67d66bc7aeaf0b4817bd1311' => [1, 2]
            }.merge(honeypots).with_indifferent_access
   end
 
   before(:each) do
-    # Root level is encoded with 208.77.188.166/test/hvOox8HTm31KyTalk60MwelhWvQwq5HuztjcmV1hx3o=
-    #    which resolves to a spinner of 67ee1c4264c7689606030f435dc9b9ab
-    #
-    # 'posts' is treated as being constructed with #fields_for, so it is encoded with
-    #    208.77.188.166/posts/hvOox8HTm31KyTalk60MwelhWvQwq5HuztjcmV1hx3o=
-    #    which resolves to a spinner of f4f561e383b50e824e980ffcaca82d46
+    # Root level is encoded with 208.77.188.166/test/1234
+    #    which resolves to a spinner digest of 86ba3fd99e851587a849ad9ed9817f9b
     @ip = '208.77.188.166'
     @params = params('test' => { 'name' => '', 'posts' => [] })
   end
@@ -21,19 +17,21 @@ describe BotProofForms::ParamParser do
 
   context "with blank honeypots" do
     it "drops obfuscated params" do
-      subject.params.keys.should_not include('62e70bf492873ce0b088ed3ed4d0251b')
+      subject.params.keys.should_not include('bdf3e1964ac3a82c5f1c7385ed0100e4')
+    end
+
+    it "drops obfuscated subparams" do
+      subject.params.keys.should_not include('ed8fc4fe67d66bc7aeaf0b4817bd1311')
     end
 
     it "replaces honeypots" do
       subject.params[:test].should_not be_blank
     end
 
-    it "drops obfuscated subparams" do
-      subject.params[:test].keys.should_not include('1c5b4f68648b1d78a7a62566b2089736')
-    end
-
-    it "replaces subhoneypot values with subparam values" do
+    it "replaces subhoneypots" do
+      subject.params.keys.should include('test')
       subject.params[:test][:name].should == 'colin'
+      subject.params[:test][:posts].should == [1,2]
     end
   end
 

@@ -1,108 +1,84 @@
 class ActionView::Helpers::InstanceTag
-=begin
   attr_reader :spinner
 
   def initialize_with_spinner(object_name, method_name, template_object, object = nil)
     initialize_without_spinner(object_name, method_name, template_object, object)
     if template_object.controller.send(:protect_against_forgery?)
-      @spinner = Spinner.new(template_object.ip, object_name, template_object.form_authenticity_token)
+      @spinner = BotProofForms::Spinner.new(template_object.request.ip, object_name, template_object.form_authenticity_token)
     end
   end
 
-  def to_input_field_tag_with_honeypot(field_type, options = {})
-    options = options.stringify_keys
-    options["size"] = options["maxlength"] || DEFAULT_FIELD_OPTIONS["size"] unless options.key?("size")
-    options = DEFAULT_FIELD_OPTIONS.merge(options)
-    if field_type == "hidden"
-      options.delete("size")
-    end
-    options["type"] = field_type
-    options["value"] = options["value"].to_s if options.key?("value")
-    options["value"] ||= value_before_type_cast(object) unless field_type == "file"
-    options["value"] &&= html_escape(options["value"])
+  def obfuscate_options(options)
     add_default_name_and_id(options)
-    disguise(tag("input", options)) + to_input_field_tag_without_honeypot(field_type, options)
+    assuming(spinner && options) do
+      options['name'] &&= spinner.encode(options['name'])
+      options['id'] &&= spinner.encode(options['id'])
+    end
   end
 
-  #def add_default_name_and_id_with_obfuscation(options)
-  #  add_default_name_and_id_without_obfuscation(options)
-  #  options["name"] = spinner.encode(options["name"])
-  #  options["id"] = spinner.encode(options["id"])
-  #end
-
-  def tag_with_obfuscation(name, options = nil, open = false, escape = true)
-    if options
-      options['id'] = spinner.encode(options['id']) if options.key?('id')
-      options['name'] = spinner.encode(options['name']) if options.key?('name')
+  def honeypot_options(options)
+    add_default_name_and_id(options)
+    assuming(spinner && options) do
+      options['value'] &&= ''
     end
-    tag_without_obfuscation(name, options, open, escape)
+  end
+
+  def assuming(object)
+    yield if object
+    object
+  end
+
+  def tag_with_honeypot(name, options = nil, *args)
+    if spinner
+      disguise(tag_without_honeypot(name, honeypot_options(options.dup? || {}), *args)) +
+              tag_without_honeypot(name, obfuscate_options(options.dup? || {}), *args)
+    else
+      tag_without_honeypot(name, options, *args)
+    end
+  end
+
+  # Special case
+  def to_label_tag_with_obfuscation(text = nil, options = {})
+    # TODO: Can this be simplified? It's pretty similar to to_label_tag_without_obfuscation...
+    options = options.stringify_keys
+    tag_value = options.delete("value")
+    name_and_id = options.dup
+    name_and_id["id"] = name_and_id["for"]
+    add_default_name_and_id_for_value(tag_value, name_and_id)
+    options["for"] ||= name_and_id["id"]
+    options["for"] = spinner.encode(options["for"]) if spinner && options["for"]
+    to_label_tag_without_obfuscation(text, options)
+  end
+
+  def content_tag_with_obfuscation(name, content_or_options_with_block = nil, options = nil, *args, &block)
+    if block_given?
+      content_tag_without_obfuscation(name, content_or_options_with_block, options, *args, &block)
+    else
+      # this should cover all Rails selects.
+      if spinner && options && (options.keys.include?('id') || options.keys.include?('name'))
+        disguise(content_tag_without_obfuscation(name, content_or_options_with_block, honeypot_options(options), *args)) +
+                content_tag_without_obfuscation(name, content_or_options_with_block, obfuscate_options(options), *args)
+      else
+        content_tag_without_obfuscation(name, content_or_options_with_block, options, *args)
+      end
+    end
   end
 
   alias_method_chain :initialize, :spinner
-  alias_method_chain :tag, :obfuscation
-  alias_method_chain :to_input_field_tag, :honeypot
+  alias_method_chain :tag, :honeypot
+  alias_method_chain :to_label_tag, :obfuscation
+  alias_method_chain :content_tag, :obfuscation
 
-  def disguise(tag)
-    "disguise { #{tag} }"
-  end
-=end
-
-  def error_message
-    object.errors.on(BotProofForms::Spinner.new(ip, @method_name, secret).encode(@method_name))
-  end
-
-  def datetime_selector(options, html_options)
-    datetime = options.key?(:value) ? options.delete(:value) : value(object) || default_datetime(options)
-
-    options = options.dup
-    options[:field_name]           = @method_name
-    options[:include_position]     = true
-    options[:prefix]             ||= @object_name
-    options[:index]                = @auto_index if defined?(@auto_index) && @auto_index && !options.has_key?(:index)
-    options[:datetime_separator] ||= ' &mdash; '
-    options[:time_separator]     ||= ' : '
-
-    ActionView::Helpers::DateTimeSelector.new(datetime, options.merge(:tag => true), html_options)
-  end
-
-  def to_select_tag(choices, options, html_options)
-    html_options = html_options.stringify_keys
-    add_default_name_and_id(html_options)
-    value = options.key?(:value) ? options.delete(:value) : value(object)
-    selected_value = options.has_key?(:selected) ? options[:selected] : value
-    disabled_value = options.has_key?(:disabled) ? options[:disabled] : nil
-    content_tag("select", add_options(options_for_select(choices, :selected => selected_value, :disabled => disabled_value), options, selected_value), html_options)
-  end
-
-  def to_collection_select_tag(collection, value_method, text_method, options, html_options)
-    html_options = html_options.stringify_keys
-    add_default_name_and_id(html_options)
-    value = options.key?(:value) ? options.delete(:value) : value(object)
-    disabled_value = options.has_key?(:disabled) ? options[:disabled] : nil
-    selected_value = options.has_key?(:selected) ? options[:selected] : value
-    content_tag(
-      "select", add_options(options_from_collection_for_select(collection, value_method, text_method, :selected => selected_value, :disabled => disabled_value), options, value), html_options
-    )
-  end
-
-  def to_grouped_collection_select_tag(collection, group_method, group_label_method, option_key_method, option_value_method, options, html_options)
-    html_options = html_options.stringify_keys
-    add_default_name_and_id(html_options)
-    value = options.key?(:value) ? options.delete(:value) : value(object)
-    content_tag(
-      "select", add_options(option_groups_from_collection_for_select(collection, group_method, group_label_method, option_key_method, option_value_method, value), options, value), html_options
-    )
-  end
-
-  def to_time_zone_select_tag(priority_zones, options, html_options)
-    html_options = html_options.stringify_keys
-    add_default_name_and_id(html_options)
-    value = options.key?(:value) ? options.delete(:value) : value(object)
-    content_tag("select",
-      add_options(
-        time_zone_options_for_select(value || options[:default], priority_zones, options[:model] || ActiveSupport::TimeZone),
-        options, value
-      ), html_options
-    )
+  def disguise(element)
+    case rand(3)
+      when 0 # Hidden
+        "<div style='display:none;'>Leave this empty: #{element}</div>"
+      when 1 # Off-screen
+        "<div style='position:absolute;left:-1000px;top:-1000px;'>Don't fill this in: #{element}</div>"
+      when 2 # Negligible size
+        "<div style='position:absolute;width:0px;height:1px;z-index:-1;color:transparent;overflow:hidden;'>Keep this blank: #{element}</div>"
+      else # this should never happen?
+        disguise(element)
+    end
   end
 end
