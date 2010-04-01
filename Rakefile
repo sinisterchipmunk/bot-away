@@ -21,7 +21,7 @@ Rake::RDocTask.new(:docs) do |rdoc|
            'lib/**/*.rb', 'doc/**/*.rdoc']#, 'spec/*.rb']
   rdoc.rdoc_files.add(files)
   rdoc.main = 'README.rdoc'
-  rdoc.title = 'EVE Documentation'
+  rdoc.title = 'Bot-Away Documentation'
   #rdoc.template = '/path/to/gems/allison-2.0/lib/allison'
   rdoc.rdoc_dir = 'doc'
   rdoc.options << '--line-numbers' << '--inline-source'
