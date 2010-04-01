@@ -3,11 +3,11 @@ Manifest.txt
 PostInstall.txt
 README.rdoc
 Rakefile
-lib/bot-proof-forms.rb
-lib/bot-proof-forms/action_controller/request.rb
-lib/bot-proof-forms/action_view/helpers/instance_tag.rb
-lib/bot-proof-forms/param_parser.rb
-lib/bot-proof-forms/spinner.rb
+lib/bot-away.rb
+lib/bot-away/action_controller/request.rb
+lib/bot-away/action_view/helpers/instance_tag.rb
+lib/bot-away/param_parser.rb
+lib/bot-away/spinner.rb
 script/console
 script/destroy
 script/generate

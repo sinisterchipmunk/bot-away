@@ -1,6 +1,6 @@
-= bot-proof-forms
+= bot-away
 
-* http://github.com/sinisterchipmunk/bot-proof-forms
+* http://github.com/sinisterchipmunk/bot-away
 
 == DESCRIPTION:
 
@@ -14,8 +14,8 @@ token, Rails should barf due to an invalid or missing authenticity token. Congra
 The specifics of the techniques employed for filtering spambots are discussed Ned's site at the above location; however,
 here's a brief run-down of what's going on:
 
-* Your code stays the same. After the bot-proof-forms gem has been activated, all Rails-generated forms on your site
-  will automatically be transformed into bot-proof forms.
+* Your code stays the same. After the bot-away gem has been activated, all Rails-generated forms on your site
+  will automatically be transformed into bot-resistent forms.
 * All of the form elements that you create (for instance, a "comment" model with a "body" field) are turned into
   dummy elements, or honeypots, and are made invisible to the end user. This is done using div elements and inline CSS
   stylesheets. There are several ways an element can be hidden, and these approaches are chosen at random to help
@@ -23,7 +23,7 @@ here's a brief run-down of what's going on:
   along the lines of "Leave this blank" -- though the exact message is randomized to help prevent detection.
 * All of the form elements are mirrored by hashes. The hashes are generated using the session's authenticity token,
   so they can't be predicted.
-* When data is submitted, bot-proof-forms steps in and 1.) validates that no honeypots have been filled in; and 2)
+* When data is submitted, bot-away steps in and 1.) validates that no honeypots have been filled in; and 2)
   converts the hashed elements back into the field names that you are expecting (replacing the honeypot fields).
 * If a honeypot has been filled in, or a hashed element is missing where it was expected, then the request is
   considered to be either spam, or tampered with; and the entire params hash is emptied. Since this happens at the
@@ -52,13 +52,13 @@ here's a brief run-down of what's going on:
 
 == INSTALL:
 
-* sudo gem install bot-proof-forms
+* sudo gem install bot-away
 
 == USAGE:
 
 In your Rails config/environment.rb:
 
-* config.gem 'bot-proof-forms'
+* config.gem 'bot-away'
 
 That's it.
 

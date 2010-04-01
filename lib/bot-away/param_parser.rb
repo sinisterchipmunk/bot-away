@@ -1,4 +1,4 @@
-module BotProofForms
+module BotAway
   class ParamParser
     class ObfuscationMissing < StandardError; end #:nodoc:
 
@@ -16,7 +16,7 @@ module BotProofForms
 
     def deobfuscate!(current = params, object_name = nil)
       if object_name
-        spinner = BotProofForms::Spinner.new(ip, object_name, authenticity_token)
+        spinner = BotAway::Spinner.new(ip, object_name, authenticity_token)
       end
       
       current.each do |key, value|

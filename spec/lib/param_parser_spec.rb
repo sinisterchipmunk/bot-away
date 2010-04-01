@@ -1,4 +1,4 @@
-describe BotProofForms::ParamParser do
+describe BotAway::ParamParser do
   def params(honeypots)
     @params = { 'authenticity_token' => '1234',
                 'bdf3e1964ac3a82c5f1c7385ed0100e4' => 'colin',
@@ -13,7 +13,7 @@ describe BotProofForms::ParamParser do
     @params = params('test' => { 'name' => '', 'posts' => [] })
   end
 
-  subject { r = BotProofForms::ParamParser.new(@ip, @params); puts r.params.to_yaml; r }
+  subject { r = BotAway::ParamParser.new(@ip, @params); puts r.params.to_yaml; r }
 
   context "with blank honeypots" do
     it "drops obfuscated params" do
@@ -37,7 +37,7 @@ describe BotProofForms::ParamParser do
 
   context "with a filled honeypot" do
     before(:each) { @params = params({'test' => {'name' => 'colin', 'posts' => []}}) }
-    subject { r = BotProofForms::ParamParser.new(@ip, @params); puts r.params.to_yaml; r }
+    subject { r = BotAway::ParamParser.new(@ip, @params); puts r.params.to_yaml; r }
 
     it "drops all parameters" do
       subject.params.should == { "suspected_bot" => true }
@@ -46,7 +46,7 @@ describe BotProofForms::ParamParser do
 
   context "with a filled sub-honeypot" do
     before(:each) { @params = params({'test' => {'name' => '', 'posts' => [1, 2]}}) }
-    subject { r = BotProofForms::ParamParser.new(@ip, @params); puts r.params.to_yaml; r }
+    subject { r = BotAway::ParamParser.new(@ip, @params); puts r.params.to_yaml; r }
 
     it "drops all parameters" do
       subject.params.should == { "suspected_bot" => true }

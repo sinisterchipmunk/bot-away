@@ -4,7 +4,7 @@ class ActionView::Helpers::InstanceTag
   def initialize_with_spinner(object_name, method_name, template_object, object = nil)
     initialize_without_spinner(object_name, method_name, template_object, object)
     if template_object.controller.send(:protect_against_forgery?)
-      @spinner = BotProofForms::Spinner.new(template_object.request.ip, object_name, template_object.form_authenticity_token)
+      @spinner = BotAway::Spinner.new(template_object.request.ip, object_name, template_object.form_authenticity_token)
     end
   end
 

@@ -6,12 +6,12 @@ require 'action_controller'
 require 'action_view'
 require 'sc-core-ext'
 
-require 'bot-proof-forms/param_parser'
-require 'bot-proof-forms/action_controller/request'
-require 'bot-proof-forms/action_view/helpers/instance_tag'
-require 'bot-proof-forms/spinner'
+require 'bot-away/param_parser'
+require 'bot-away/action_controller/request'
+require 'bot-away/action_view/helpers/instance_tag'
+require 'bot-away/spinner'
 
-module BotProofForms
+module BotAway
   VERSION = '1.0.0'
 end
 

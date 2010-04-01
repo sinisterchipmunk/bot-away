@@ -2,7 +2,7 @@ require 'rubygems'
 gem 'hoe', '>= 2.1.0'
 require 'hoe'
 require 'fileutils'
-require './lib/bot-proof-forms'
+require './lib/bot-away'
 
 Hoe.plugin :newgem
 # Hoe.plugin :website
@@ -10,7 +10,7 @@ Hoe.plugin :newgem
 
 # Generate all the Rake tasks
 # Run 'rake -T' to see list of generated tasks (from gem root directory)
-$hoe = Hoe.spec 'bot-proof-forms' do
+$hoe = Hoe.spec 'bot-away' do
   self.developer 'Colin MacKenzie IV', 'sinisterchipmunk@gmail.com'
   self.extra_deps         = [['actionpack','>= 2.3.5'],['sc-core-ext','>= 1.1.1']]
   self.readme_file = "README.rdoc"

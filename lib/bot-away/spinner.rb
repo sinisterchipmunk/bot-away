@@ -1,4 +1,4 @@
-class BotProofForms::Spinner
+class BotAway::Spinner
   def initialize(ip, key, secret)
     raise "Shouldn't have a nil ip" unless ip
     raise "Shouldn't have a nil secret" unless secret
