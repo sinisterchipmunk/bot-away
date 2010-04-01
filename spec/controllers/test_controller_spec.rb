@@ -12,7 +12,7 @@ describe TestController do
       raise @response.template.instance_variable_get("@exception")
     end
   end
-
+  
   before :each do
     @request = ActionController::TestRequest.new
     # can the authenticity token so that we can predict the generated element names
@@ -76,6 +76,33 @@ describe TestController do
       post 'proc_form', form
       puts @response.body
       @response.template.controller.params.should == { 'suspected_bot' => true }
+    end
+
+    it "does not drop valid authentication request" do
+      #@request.session[:_csrf_token] = 'yPgTAsngzpBO8k1v83RGH26sTrQYD50Ou2oiMT4r/iw='
+      form = { 'authenticity_token' => 'yPgTAsngzpBO8k1v83RGH26sTrQYD50Ou2oiMT4r/iw=',
+               'user_session' => {
+                 'login' => '',
+                 'password' => '',
+                 'remember_me' => ''
+               },
+               'commit' => 'Log In',
+               '89dce8f562b119a2f88da6d29f535a0d' => 'admin',
+               '4b9bab79bc1b1cd5229041c357750e0c' => 'pwpwpw',
+               '256307a36284445cc84014dae651f2ed' => '1'
+             }
+      @request.remote_addr = '127.0.0.1'
+      post 'proc_form', form
+      puts @response.template.controller.params.inspect
+      @response.template.controller.params.should == { 'action' => 'proc_form', 'controller' => 'test',
+                                                       'authenticity_token' => 'yPgTAsngzpBO8k1v83RGH26sTrQYD50Ou2oiMT4r/iw=',
+                                                       'user_session' => {
+                                                          'login' => 'admin',
+                                                          'password' => 'pwpwpw',
+                                                          'remember_me' => '1'
+                                                       },
+                                                       'commit' => 'Log In'
+      }
     end
   end
 

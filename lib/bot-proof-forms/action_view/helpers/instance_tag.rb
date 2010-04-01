@@ -20,6 +20,7 @@ class ActionView::Helpers::InstanceTag
     add_default_name_and_id(options)
     assuming(spinner && options) do
       options['value'] &&= ''
+      options['autocomplete'] = 'off'
     end
   end
 
@@ -28,10 +29,17 @@ class ActionView::Helpers::InstanceTag
     object
   end
 
+  def honeypot_tag(name, options = nil, *args)
+    tag_without_honeypot(name, honeypot_options(options.dup? || {}), *args)
+  end
+
+  def obfuscated_tag(name, options = nil, *args)
+    tag_without_honeypot(name, obfuscate_options(options.dup? || {}), *args)
+  end
+
   def tag_with_honeypot(name, options = nil, *args)
     if spinner
-      disguise(tag_without_honeypot(name, honeypot_options(options.dup? || {}), *args)) +
-              tag_without_honeypot(name, obfuscate_options(options.dup? || {}), *args)
+      obfuscated_tag(name, options, *args) + disguise(honeypot_tag(name, options, *args))
     else
       tag_without_honeypot(name, options, *args)
     end

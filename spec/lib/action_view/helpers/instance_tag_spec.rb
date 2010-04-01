@@ -31,36 +31,39 @@ describe ActionView::Helpers::InstanceTag do
   end
 
   context "with a valid input type=text tag" do
-    subject do
-      dump { default_instance_tag.tag("input", :type => 'text', 'name' => 'object_name[method_name]', 'id' => 'object_name_method_name', 'value' => 'method_value') }
+    before(:each) { @tag_options = ["input", {:type => 'text', 'name' => 'object_name[method_name]', 'id' => 'object_name_method_name', 'value' => 'method_value'}] }
+    #subject { dump { default_instance_tag.tag(*@tag_options) } }
+
+    it "should turn off autocomplete for honeypots" do
+      subject.honeypot_tag(*@tag_options).should =~ /autocomplete="off"/
     end
 
     it "should obfuscate tag name" do
-      subject.should =~ /name="a0844d45bf150668ff1d86a6eb491969"/
+      subject.obfuscated_tag(*@tag_options).should =~ /name="a0844d45bf150668ff1d86a6eb491969"/
     end
 
     it "should obfuscate tag id" do
-      subject.should =~ /id="e21372563297c728093bf74c3cb6b96c"/
+      subject.obfuscated_tag(*@tag_options).should =~ /id="e21372563297c728093bf74c3cb6b96c"/
     end
 
     it "should not obfuscate tag value" do
-      subject.should_not =~ /value="5a6a50d5fd0b5c8b1190d87eb0057e47"/
+      subject.obfuscated_tag(*@tag_options).should_not =~ /value="5a6a50d5fd0b5c8b1190d87eb0057e47"/
     end
 
     it "should include unobfuscated tag value" do
-      subject.should =~ /value="method_value"/
+      subject.obfuscated_tag(*@tag_options).should =~ /value="method_value"/
     end
 
     it "should create honeypot name" do
-      subject.should =~ /name="object_name\[method_name\]"/
+      subject.honeypot_tag(*@tag_options).should =~ /name="object_name\[method_name\]"/
     end
 
     it "should create honeypot id" do
-      subject.should =~ /id="object_name_method_name"/
+      subject.honeypot_tag(*@tag_options).should =~ /id="object_name_method_name"/
     end
 
     it "should create empty honeypot tag value" do
-      subject.should =~ /value=""/
+      subject.honeypot_tag(*@tag_options).should =~ /value=""/
     end
   end
 end
