@@ -1,7 +1,5 @@
 module BotAway
   class ParamParser
-    class ObfuscationMissing < StandardError; end #:nodoc:
-
     attr_reader :params, :ip, :authenticity_token
 
     def initialize(ip, params, authenticity_token = params[:authenticity_token])
@@ -20,10 +18,12 @@ module BotAway
       end
       
       current.each do |key, value|
-        if object_name
+        if object_name && !value.kind_of?(Hash) && !ActionController::Request.unfiltered_params.include?(key)
           if value.blank? && params.keys.include?(spun_key = spinner.encode("#{object_name}[#{key}]"))
             current[key] = params.delete(spun_key)
           else
+            #puts "throwing on #{object_name}[#{key}] because its not blank" if !value.blank?
+            #puts "throwing on #{object_name}[#{key}] because its not found" if defined?(spun_key) && !spun_key.nil?
             throw :bastard, :took_the_bait
           end
         end

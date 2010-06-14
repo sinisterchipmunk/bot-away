@@ -78,6 +78,18 @@ describe TestController do
       @response.template.controller.params.should == { 'suspected_bot' => true }
     end
 
+    it "processes no params" do
+      post 'proc_form', { 'authenticity_token' => '1234' }
+      @response.template.controller.params.should_not == { 'suspected_bot' => true }
+    end
+
+    it "should not fail on unfiltered params" do
+      ActionController::Request.accepts_unfiltered_params :role_ids
+      @request.remote_addr = '127.0.0.1'
+      post 'proc_form', {'authenticity_token' => '1234', 'user' => { 'role_ids' => [1, 2] }}
+      @response.template.controller.params.should_not == { 'suspected_bot' => true }
+    end
+
     it "does not drop valid authentication request" do
       #@request.session[:_csrf_token] = 'yPgTAsngzpBO8k1v83RGH26sTrQYD50Ou2oiMT4r/iw='
       form = { 'authenticity_token' => 'yPgTAsngzpBO8k1v83RGH26sTrQYD50Ou2oiMT4r/iw=',

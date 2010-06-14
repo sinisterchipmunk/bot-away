@@ -1,3 +1,20 @@
+=== 1.0.3 2010-06-13
+* Bugfixes:
+  * Resolved: On or before Rails 2.3.8, honeypots were generated as escaped HTML. This was because Rails started
+    using ActiveSupport::SafeBuffer to generate the content, and Bot-Away did not. (It does now.)
+
+=== 1.0.2 2010-04-02
+* Bugfixes:
+  * Resolved: Would sometimes generate honeypot tabindex of 0 instead of -1, interfering with keyboard operations
+
+=== 1.0.1 2010-04-02
+* 2 minor enhancements:
+  * ActionController::Request.accepts_unfiltered_params creates an array of params that will not be checked
+  * Took all honeypots out of the keyboard tab order using randomized negative indexes.
+
+* Bugfixes:
+  * Empty select tags no longer raise errors
+
 === 0.0.1 2010-03-24
 
 * 1 major enhancement:

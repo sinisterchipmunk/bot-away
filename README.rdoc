@@ -5,13 +5,15 @@
 == DESCRIPTION:
 
 Unobtrusively detects form submissions made by spambots, and silently drops those submissions. The key word here is
-"unobtrusive" -- this is NOT a CAPTCHA. This is transparent, modular implementation of the bot-catching techniques
-discussed by Ned Batchelder at http://nedbatchelder.com/text/stopbots.html
+"unobtrusive" -- this is NOT a CAPTCHA. This is a transparent, modular implementation of the bot-catching techniques
+discussed by Ned Batchelder at http://nedbatchelder.com/text/stopbots.html.
 
-If a submission is detected, the params hash is cleared, so the data can't be used. Since this includes the authenticity
-token, Rails should barf due to an invalid or missing authenticity token. Congrats, spam blocked.
+== WHAT'S GOING ON:
 
-The specifics of the techniques employed for filtering spambots are discussed Ned's site at the above location; however,
+If a bot submission is detected, the params hash is cleared, so the data can't be used. Since this includes the
+authenticity token, Rails should complain about an invalid or missing authenticity token. Congrats, spam blocked.
+
+The specifics of the techniques employed for filtering spambots are discussed Ned's site in the description; however,
 here's a brief run-down of what's going on:
 
 * Your code stays the same. After the bot-away gem has been activated, all Rails-generated forms on your site
@@ -45,6 +47,19 @@ here's a brief run-down of what's going on:
   that since the pages have to be machine-readable by definition, and since this gem has to follow certain protocols
   in order to avoid confusing lots of humans (such as hiding the honeypots), it is always theoretically possible for
   a spambot to get around it. It's just very, very difficult.
+
+* I feel this library has been fairly well-tested (99.5% test coverage as of this writing), but if you discover a bug
+  and can't be bothered to let me know about it (or you just don't have time to wait for a fix or fix it yourself),
+  then you can simply add the name of the offending form element to the ActionController::Request.unfiltered_params
+  array like so:
+    ActionController::Request.accepts_unfiltered_params 'role_ids'
+    ActionController::Request.accepts_unfiltered_params 'user' # this can be called multiple times
+  You should also take note that this is an array, not a hash. So if you have a user[role_ids] as well as a
+  group[role_ids], the +role_ids+ will not be matched on EITHER of these models.
+
+* Currently, there's no direct support for per-request configuration of unfiltered params. This is mostly due to
+  Bot-Away's low-level approach to filtering bots: the params have already been filtered by the time your controller
+  is created. I'd like to revisit per-request filtering sometime in the future, once I figure out the best way to do it.
 
 == REQUIREMENTS:
 

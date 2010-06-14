@@ -21,6 +21,7 @@ class ActionView::Helpers::InstanceTag
     assuming(spinner && options) do
       options['value'] &&= ''
       options['autocomplete'] = 'off'
+      options['tabindex'] = -rand(10) - 1
     end
   end
 
@@ -64,7 +65,12 @@ class ActionView::Helpers::InstanceTag
     else
       # this should cover all Rails selects.
       if spinner && options && (options.keys.include?('id') || options.keys.include?('name'))
-        disguise(content_tag_without_obfuscation(name, '', honeypot_options(options), *args)) +
+        if name == 'select' && !content_or_options_with_block.empty?
+          content = '<option selected value=""></option>'
+        else
+          content = ""
+        end
+        disguise(content_tag_without_obfuscation(name, content, honeypot_options(options), *args)) +
                 content_tag_without_obfuscation(name, content_or_options_with_block, obfuscate_options(options), *args)
       else
         content_tag_without_obfuscation(name, content_or_options_with_block, options, *args)
@@ -80,11 +86,11 @@ class ActionView::Helpers::InstanceTag
   def disguise(element)
     case rand(3)
       when 0 # Hidden
-        "<div style='display:none;'>Leave this empty: #{element}</div>"
+        element.replace "<div style='display:none;'>Leave this empty: #{element}</div>"
       when 1 # Off-screen
-        "<div style='position:absolute;left:-1000px;top:-1000px;'>Don't fill this in: #{element}</div>"
+        element.replace "<div style='position:absolute;left:-1000px;top:-1000px;'>Don't fill this in: #{element}</div>"
       when 2 # Negligible size
-        "<div style='position:absolute;width:0px;height:1px;z-index:-1;color:transparent;overflow:hidden;'>Keep this blank: #{element}</div>"
+        element.replace "<div style='position:absolute;width:0px;height:1px;z-index:-1;color:transparent;overflow:hidden;'>Keep this blank: #{element}</div>"
       else # this should never happen?
         disguise(element)
     end

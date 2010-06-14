@@ -12,7 +12,7 @@ require 'bot-away/action_view/helpers/instance_tag'
 require 'bot-away/spinner'
 
 module BotAway
-  VERSION = '1.0.0'
+  VERSION = '1.0.3'
 end
 
 # WHY do I have to do this???
