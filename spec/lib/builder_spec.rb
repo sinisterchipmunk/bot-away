@@ -14,7 +14,22 @@ describe ActionView::Helpers::FormBuilder do
   it "should not create honeypots with default values" do
     builder.text_field(:method_name).should match(/name="object_name\[method_name\]"[^>]*?value=""/)
   end
-
+  
+  context "with BotAway.show_honeypots == true" do
+    before(:each) { BotAway.show_honeypots = true }
+    after(:each) { BotAway.show_honeypots = false }
+    
+    it "should not disguise honeypots" do
+      builder.text_area(method_name).should_not match(/<\/div>/)
+    end
+  end
+  
+  it "should not obfuscate names that have been explicitly ignored" do
+    BotAway.accepts_unfiltered_params 'method_name'
+    builder.text_field('method_name').should_not match(/name="a0844d45bf150668ff1d86a6eb491969/)
+    BotAway.unfiltered_params.delete 'method_name'
+  end
+  
   # select(method, choices, options = {}, html_options = {})
   obfuscates(:select) { builder.select(:method_name, {1 => :a, 2 => :b }) }
 

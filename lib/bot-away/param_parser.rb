@@ -4,6 +4,7 @@ module BotAway
 
     def initialize(ip, params, authenticity_token = params[:authenticity_token])
       @ip, @params, @authenticity_token = ip, params, authenticity_token
+      Rails.logger.debug(params.inspect) if BotAway.dump_params
       if authenticity_token
         if catch(:bastard) { deobfuscate! } == :took_the_bait
           params.clear
@@ -18,7 +19,7 @@ module BotAway
       end
       
       current.each do |key, value|
-        if object_name && !value.kind_of?(Hash) && !ActionController::Request.unfiltered_params.include?(key)
+        if object_name && !value.kind_of?(Hash) && !BotAway.excluded?(object_name, key)
           if value.blank? && params.keys.include?(spun_key = spinner.encode("#{object_name}[#{key}]"))
             current[key] = params.delete(spun_key)
           else

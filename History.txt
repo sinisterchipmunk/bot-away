@@ -1,3 +1,15 @@
+=== 1.1.0 2010-06-21
+* Minor enhancements:
+  * ActionController::Request.accepts_unfiltered_params is now accessible as BotAway.accepts_unfiltered_params
+  * BotAway.show_honeypots = true will show honeypots as visible elements within the form, for debugging.
+  * BotAway.dump_params = true will dump the params hash as it was before BotAway modified it, for debugging.
+  * BotAway will no longer generate hashes for, or disguise, elements whose names have been added to
+    BotAway.unfiltered_params. This should resolve issues where JavaScript is involved (case in point:
+    Calendar Date Select).
+* Bugfix:
+  * Resolved: Unfiltered params were not matched if they were of differing types (ie Symbol vs String). This caused
+    problems in particular with Calendar Date Select.
+    
 === 1.0.3 2010-06-13
 * Bugfixes:
   * Resolved: On or before Rails 2.3.8, honeypots were generated as escaped HTML. This was because Rails started

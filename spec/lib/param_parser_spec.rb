@@ -14,6 +14,17 @@ describe BotAway::ParamParser do
   end
 
   subject { r = BotAway::ParamParser.new(@ip, @params); puts r.params.to_yaml; r }
+  
+  context "with dump_params == true" do
+    before(:each) { BotAway.dump_params = true }
+    after(:each) { BotAway.dump_params = false }
+    
+    it "should dump params as debug to Rails logger" do
+      @params = { 'test' => "hello", :posts => [1] }
+      Rails.logger.should_receive(:debug).with(@params.inspect)
+      subject
+    end
+  end
 
   context "with blank honeypots" do
     it "drops obfuscated params" do

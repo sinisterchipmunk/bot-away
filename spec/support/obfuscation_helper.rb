@@ -24,12 +24,23 @@ module ObfuscationHelper
     @builder = ActionView::Helpers::FormBuilder.new(:object_name, MockObject.new, response.template, {}, proc {})
   end
 
-  def obfuscates(method, obfuscated_id = self.obfuscated_id, obfuscated_name = self.obfuscated_name)
+  def obfuscates(method, options = {}, unused = nil)
+    if !options.kind_of?(Hash)
+      options = { :obfuscated_id => options, :obfuscated_name => unused }
+    end
+    
+    obfuscated_id   = options[:obfuscated_id] || self.obfuscated_id
+    obfuscated_name = options[:obfuscatd_name] || self.obfuscated_name
+    
     value = yield
     context "##{method}" do
       subject { proc { dump { value } } }
 
-      includes_honeypot(object_name, method_name)
+      if options[:name]
+        includes_honeypot(options[:name], nil)
+      else
+        includes_honeypot(options[:object_name] || object_name, options[:method_name] || method_name)
+      end
       is_obfuscated_as(obfuscated_id, obfuscated_name)
     end
   end

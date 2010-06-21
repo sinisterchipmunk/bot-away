@@ -33,7 +33,7 @@ describe ActionView::Helpers::InstanceTag do
   context "with a valid input type=text tag" do
     before(:each) { @tag_options = ["input", {:type => 'text', 'name' => 'object_name[method_name]', 'id' => 'object_name_method_name', 'value' => 'method_value'}] }
     #subject { dump { default_instance_tag.tag(*@tag_options) } }
-
+    
     it "should turn off autocomplete for honeypots" do
       subject.honeypot_tag(*@tag_options).should =~ /autocomplete="off"/
     end

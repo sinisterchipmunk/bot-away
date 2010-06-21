@@ -3,7 +3,7 @@ class ActionView::Helpers::InstanceTag
 
   def initialize_with_spinner(object_name, method_name, template_object, object = nil)
     initialize_without_spinner(object_name, method_name, template_object, object)
-    if template_object.controller.send(:protect_against_forgery?)
+    if template_object.controller.send(:protect_against_forgery?) && !BotAway.excluded?(object_name, method_name)
       @spinner = BotAway::Spinner.new(template_object.request.ip, object_name, template_object.form_authenticity_token)
     end
   end
@@ -29,7 +29,7 @@ class ActionView::Helpers::InstanceTag
     yield if object
     object
   end
-
+  
   def honeypot_tag(name, options = nil, *args)
     tag_without_honeypot(name, honeypot_options(options.dup? || {}), *args)
   end
@@ -84,6 +84,7 @@ class ActionView::Helpers::InstanceTag
   alias_method_chain :content_tag, :obfuscation
 
   def disguise(element)
+    return element.replace("Honeypot(#{element})") if BotAway.show_honeypots
     case rand(3)
       when 0 # Hidden
         element.replace "<div style='display:none;'>Leave this empty: #{element}</div>"

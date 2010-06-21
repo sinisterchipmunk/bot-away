@@ -6,7 +6,11 @@ class HoneypotMatcher
   def matches?(target)
     target = target.call if target.kind_of?(Proc)
     @target = target
-    @rx = /name="#{Regexp::escape @object_name}\[#{Regexp::escape @method_name}/m
+    if @method_name.nil?
+      @rx = /name="#{Regexp::escape @object_name}/m
+    else
+      @rx = /name="#{Regexp::escape @object_name}\[#{Regexp::escape @method_name}/m
+    end
     @target[@rx]
   end
 
