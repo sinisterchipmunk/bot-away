@@ -1,5 +1,12 @@
+=== 1.2.0 2010-10-14
+* Enhancements:
+  * Rails 3 / RSpec 2 support! Yay!
+  * ActionController::Request#accepts_unfiltered_params has been removed. Use BotAway#accepts_unfiltered_params instead.
+  * Exclusion of bot-filtering on a per-controller, per-action and/or per-runmode basis is now possible via
+    BotAway#disabled_for
+
 === 1.1.0 2010-06-21
-* Minor enhancements:
+* Enhancements:
   * ActionController::Request.accepts_unfiltered_params is now accessible as BotAway.accepts_unfiltered_params
   * BotAway.show_honeypots = true will show honeypots as visible elements within the form, for debugging.
   * BotAway.dump_params = true will dump the params hash as it was before BotAway modified it, for debugging.
