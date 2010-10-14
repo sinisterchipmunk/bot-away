@@ -5,15 +5,17 @@ module BotAway
     def initialize(ip, params, authenticity_token = params[:authenticity_token])
       @ip, @params, @authenticity_token = ip, params, authenticity_token
       
-      if BotAway.dump_params || true
-        Rails.logger.debug("IP: #{@ip}")
-        Rails.logger.debug("Authenticity token: #{@authenticity_token}")
-        Rails.logger.debug("Parameters: #{params.inspect}")
+      if BotAway.dump_params
+        Rails.logger.debug("[BotAway] IP: #{@ip}")
+        Rails.logger.debug("[BotAway] Authenticity token: #{@authenticity_token}")
+        Rails.logger.debug("[BotAway] Parameters: #{params.inspect}")
       end
       
       if authenticity_token
         if catch(:bastard) { deobfuscate! } == :took_the_bait
-          params.clear
+          #params.clear
+          # don't clear the controller or action keys, as Rails 3 needs them
+          params.keys.each { |key| params.delete(key) unless %w(controller action).include?(key) }
           params[:suspected_bot] = true
         end
       end

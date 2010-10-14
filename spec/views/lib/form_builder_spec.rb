@@ -1,12 +1,6 @@
-###
-# The original implementation of BotAway extended ActionView::Helpers::FormBuilder, and these tests were written
-# for it. This approach has since been abandoned in favor of a direct override of ActionView::Helpers::InstanceTag for
-# reasons of efficiency. The FormBuilder tests have been kept around simply for an extra layer of functional testing.
-###
-
 require 'spec_helper'
 
-describe ActionView::Helpers::FormBuilder, :type => :controller do
+describe ActionView::Helpers::FormBuilder do
   subject { builder }
 
   it "should not create honeypots with default values" do

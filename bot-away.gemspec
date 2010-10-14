@@ -9,7 +9,7 @@ Gem::Specification.new do |s|
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Colin MacKenzie IV"]
-  s.date = %q{2010-10-13}
+  s.date = %q{2010-10-14}
   s.description = %q{Unobtrusively detects form submissions made by spambots, and silently drops those submissions.}
   s.email = %q{sinisterchipmunk@gmail.com}
   s.extra_rdoc_files = [
@@ -24,8 +24,9 @@ Gem::Specification.new do |s|
      "README.rdoc",
      "Rakefile",
      "VERSION",
+     "bot-away.gemspec",
      "lib/bot-away.rb",
-     "lib/bot-away/action_controller/request.rb",
+     "lib/bot-away/action_dispatch/request.rb",
      "lib/bot-away/action_view/helpers/instance_tag.rb",
      "lib/bot-away/param_parser.rb",
      "lib/bot-away/spinner.rb",
@@ -43,9 +44,8 @@ Gem::Specification.new do |s|
      "spec/support/views/test/index.html.erb",
      "spec/support/views/test/model_form.html.erb",
      "spec/views/lib/action_view/helpers/instance_tag_spec.rb",
-     "spec/views/lib/builder_spec.rb",
      "spec/views/lib/disabled_for_spec.rb",
-     "spec/views/lib/erb_spec.rb",
+     "spec/views/lib/form_builder_spec.rb",
      "spec/views/lib/param_parser_spec.rb"
   ]
   s.homepage = %q{http://www.thoughtsincomputation.com}
@@ -63,9 +63,8 @@ Gem::Specification.new do |s|
      "spec/support/rails/mock_logger.rb",
      "spec/support/test_controller.rb",
      "spec/views/lib/action_view/helpers/instance_tag_spec.rb",
-     "spec/views/lib/builder_spec.rb",
      "spec/views/lib/disabled_for_spec.rb",
-     "spec/views/lib/erb_spec.rb",
+     "spec/views/lib/form_builder_spec.rb",
      "spec/views/lib/param_parser_spec.rb"
   ]
 

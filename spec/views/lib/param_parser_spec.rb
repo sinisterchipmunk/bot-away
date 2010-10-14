@@ -17,6 +17,10 @@ describe BotAway::ParamParser do
 
   subject { dump { BotAway::ParamParser.new(@ip, @params) } }
   
+  it "should default BotAway.dump_params => false" do
+    (!!BotAway.dump_params).should == false
+  end
+  
   context "with dump_params == true" do
     before(:each) { BotAway.dump_params = true }
     after(:each) { BotAway.dump_params = false }

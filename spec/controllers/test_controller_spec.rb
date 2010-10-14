@@ -102,19 +102,20 @@ describe TestController do
                '842d8d1c80014ce9f3d974614338605c' => 'some_value'
              }
       post 'proc_form', form
-      controller.params.should == { 'suspected_bot' => true }
+      controller.params['suspected_bot'].should == true
+      controller.params.keys.should_not include('object_name')
     end
 
     it "processes no params" do
       post 'proc_form', { 'authenticity_token' => '1234' }
-      controller.params.should_not == { 'suspected_bot' => true }
+      controller.params['suspected_bot'].should_not == true
     end
 
     it "should not fail on unfiltered params" do
       BotAway.accepts_unfiltered_params :role_ids
       @request.remote_addr = '127.0.0.1'
       post 'proc_form', {'authenticity_token' => '1234', 'user' => { 'role_ids' => [1, 2] }}
-      controller.params.should_not == { 'suspected_bot' => true }
+      controller.params['suspected_bot'].should_not == true
     end
 
     it "does not drop valid authentication request" do
