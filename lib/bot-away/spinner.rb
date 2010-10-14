@@ -7,9 +7,7 @@ class BotAway::Spinner
                                                key.to_s,
                                                secret)
 
-    #puts secret
     @spinner = Digest::MD5.hexdigest(secret)
-    #puts @spinner
   end
 
   def spinner

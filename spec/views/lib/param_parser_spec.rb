@@ -1,3 +1,5 @@
+require 'spec_helper'
+
 describe BotAway::ParamParser do
   def params(honeypots)
     @params = { 'authenticity_token' => '1234',
@@ -13,7 +15,7 @@ describe BotAway::ParamParser do
     @params = params('test' => { 'name' => '', 'posts' => [] })
   end
 
-  subject { r = BotAway::ParamParser.new(@ip, @params); puts r.params.to_yaml; r }
+  subject { dump { BotAway::ParamParser.new(@ip, @params) } }
   
   context "with dump_params == true" do
     before(:each) { BotAway.dump_params = true }
@@ -21,7 +23,7 @@ describe BotAway::ParamParser do
     
     it "should dump params as debug to Rails logger" do
       @params = { 'test' => "hello", :posts => [1] }
-      Rails.logger.should_receive(:debug).with(@params.inspect)
+      Rails.logger.should_receive(:debug).exactly(3).times #with(@params.inspect)
       subject
     end
   end
@@ -48,7 +50,7 @@ describe BotAway::ParamParser do
 
   context "with a filled honeypot" do
     before(:each) { @params = params({'test' => {'name' => 'colin', 'posts' => []}}) }
-    subject { r = BotAway::ParamParser.new(@ip, @params); puts r.params.to_yaml; r }
+    subject { dump { BotAway::ParamParser.new(@ip, @params) } }
 
     it "drops all parameters" do
       subject.params.should == { "suspected_bot" => true }
@@ -57,7 +59,7 @@ describe BotAway::ParamParser do
 
   context "with a filled sub-honeypot" do
     before(:each) { @params = params({'test' => {'name' => '', 'posts' => [1, 2]}}) }
-    subject { r = BotAway::ParamParser.new(@ip, @params); puts r.params.to_yaml; r }
+    subject {  dump { BotAway::ParamParser.new(@ip, @params) } }
 
     it "drops all parameters" do
       subject.params.should == { "suspected_bot" => true }

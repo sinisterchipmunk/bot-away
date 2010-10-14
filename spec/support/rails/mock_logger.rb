@@ -6,7 +6,10 @@ module Rails
       return @logger if @logger
       @logger = Object.new
       klass = class << @logger; self; end
-      klass.send(:include, Spec::Mocks::Methods)
+      if RSPEC_VERSION < "2.0"
+        klass.send(:include, Spec::Mocks::Methods)
+      else
+      end
       
       def @logger.debug(message); end
       def @logger.info(message); end

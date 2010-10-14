@@ -3,7 +3,11 @@ class ActionView::Helpers::InstanceTag
 
   def initialize_with_spinner(object_name, method_name, template_object, object = nil)
     initialize_without_spinner(object_name, method_name, template_object, object)
-    if template_object.controller.send(:protect_against_forgery?) && !BotAway.excluded?(object_name, method_name)
+    
+    if template_object.controller.send(:protect_against_forgery?) &&
+               !BotAway.excluded?(:object_name => object_name, :method_name => method_name) &&
+               !BotAway.excluded?(:controller => template_object.controller.controller_name,
+                                  :action => template_object.controller.action_name)
       @spinner = BotAway::Spinner.new(template_object.request.ip, object_name, template_object.form_authenticity_token)
     end
   end
@@ -47,12 +51,18 @@ class ActionView::Helpers::InstanceTag
   end
 
   # Special case
-  def to_label_tag_with_obfuscation(text = nil, options = {})
+  def to_label_tag_with_obfuscation(text = nil, options = {}, &block)
     # TODO: Can this be simplified? It's pretty similar to to_label_tag_without_obfuscation...
     options = options.stringify_keys
     tag_value = options.delete("value")
     name_and_id = options.dup
-    name_and_id["id"] = name_and_id["for"]
+
+    if name_and_id["for"]
+      name_and_id["id"] = name_and_id["for"]
+    else
+      name_and_id.delete("id")
+    end
+
     add_default_name_and_id_for_value(tag_value, name_and_id)
     options["for"] ||= name_and_id["id"]
     options["for"] = spinner.encode(options["for"]) if spinner && options["for"]

@@ -6,9 +6,7 @@
 
 require 'spec_helper'
 
-class MockObject; attr_accessor :method_name; def initialize; @method_name = 'method_value'; end; end
-
-describe ActionView::Helpers::FormBuilder do
+describe ActionView::Helpers::FormBuilder, :type => :controller do
   subject { builder }
 
   it "should not create honeypots with default values" do
@@ -26,7 +24,7 @@ describe ActionView::Helpers::FormBuilder do
   
   it "should not obfuscate names that have been explicitly ignored" do
     BotAway.accepts_unfiltered_params 'method_name'
-    builder.text_field('method_name').should_not match(/name="a0844d45bf150668ff1d86a6eb491969/)
+    builder.text_field('method_name').should_not match(/name="#{obfuscated_name}/)
     BotAway.unfiltered_params.delete 'method_name'
   end
   
@@ -39,7 +37,7 @@ describe ActionView::Helpers::FormBuilder do
   #grouped_collection_select(method, collection, group_method, group_label_method, option_key_method,
   #                          option_value_method, options = {}, html_options = {})
   obfuscates(:grouped_collection_select) do
-    builder.grouped_collection_select method_name, [MockObject.new], :method_name, :method_name, :to_s, :to_s
+    builder.grouped_collection_select method_name, [MockObject.new], object_name, method_name, method_name, :to_s
   end
   
   #time_zone_select(method, priority_zones = nil, options = {}, html_options = {})
@@ -51,13 +49,14 @@ describe ActionView::Helpers::FormBuilder do
     obfuscates(field) { builder.send(field, method_name) }
   end
 
-  obfuscates(:radio_button, '53640013be550817d040597218884288') { builder.radio_button method_name, :value }
+  obfuscates(:radio_button, RAILS_VERSION >= "3.0" ? "767c870add970ab6d64803043c4ccfbb" :
+          "53640013be550817d040597218884288") { builder.radio_button method_name, :value }
 
   context "#label" do
     subject { dump { builder.label(method_name) } }
 
     it "links labels to their obfuscated elements" do
-      subject.should match(/for=\"e21372563297c728093bf74c3cb6b96c\"/)
+      subject.should match(/for=\"#{obfuscated_id}\"/)
     end
   end
 end
