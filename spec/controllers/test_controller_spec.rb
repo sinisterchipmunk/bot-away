@@ -95,6 +95,24 @@ describe TestController do
       #puts @response.body
       controller.params[:object_name].should == { 'method_name' => 'some_value' }
     end
+    
+    context "after processing valid obfuscated post" do
+      before(:each) do
+        post 'proc_form', { 'authenticity_token' => '1234',
+                 'object_name' => { 'method_name' => '' },
+                 '842d8d1c80014ce9f3d974614338605c' => 'some_value'
+        }
+      end
+      it "should allow params to be changed" do
+        # Whether it's best practice or not, the Rails params hash can normally be modified from the controller.
+        # So, it makes sense to verify that BotAway doesn't change this.
+        controller.params[:object_name][:method_name] = "a different value"
+        controller.params[:object_name][:method_name].should == "a different value"
+        
+        controller.params.clear
+        controller.params.should == {}
+      end
+    end
 
     it "drops invalid obfuscated form post" do
       form = { 'authenticity_token' => '1234',

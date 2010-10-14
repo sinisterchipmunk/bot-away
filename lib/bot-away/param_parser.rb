@@ -2,7 +2,9 @@ module BotAway
   class ParamParser
     attr_reader :params, :ip, :authenticity_token
 
-    def initialize(ip, params, authenticity_token = params[:authenticity_token])
+    def initialize(ip, params, authenticity_token = nil)
+      params = params.with_indifferent_access if !params.kind_of?(HashWithIndifferentAccess)
+      authenticity_token ||= params[:authenticity_token]
       @ip, @params, @authenticity_token = ip, params, authenticity_token
       
       if BotAway.dump_params
@@ -22,7 +24,7 @@ module BotAway
     end
 
     def deobfuscate!(current = params, object_name = nil)
-      #return current if !BotAway.excluded?(:controller => params[:controller], :action => params[:action])
+      return current if BotAway.excluded?(:controller => params[:controller], :action => params[:action])
       
       if object_name
         spinner = BotAway::Spinner.new(ip, object_name, authenticity_token)

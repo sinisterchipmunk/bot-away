@@ -14,6 +14,7 @@ begin
     gem.add_dependency "sc-core-ext", ">= 1.1.1"
     gem.add_development_dependency "jeweler", ">= 1.4.0"
     gem.add_development_dependency "rspec", ">= 1.3.0"
+    gem.add_development_dependency "rspec-rails", ">= 1.3.2"
   end
   Jeweler::GemcutterTasks.new
 rescue LoadError

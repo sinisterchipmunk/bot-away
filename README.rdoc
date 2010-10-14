@@ -168,7 +168,7 @@ useful for debugging false positives (that is, Bot-Away thinks you're a bot, but
     BotAway.accepts_unfiltered_params 'role_ids'
     BotAway.accepts_unfiltered_params 'user' # this can be called multiple times
   You should also take note that this is an array, not a hash. So if you have a user[role_ids] as well as a
-  group[role_ids], the +role_ids+ will not be matched on EITHER of these models.
+  group[role_ids], the +role_ids+ will not be filtered on EITHER of these models.
 
 * Currently, there's no direct support for per-request configuration of unfiltered params. This is mostly due to
   Bot-Away's low-level approach to filtering bots: the params have already been filtered by the time your controller

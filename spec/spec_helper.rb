@@ -53,6 +53,10 @@ require File.join(File.dirname(__FILE__), "rspec_version")
 class MockObject
   attr_accessor :method_name
   
+  def id
+    1
+  end
+  
   # for testing grouped_collection_select
   def object_name
     [self]
