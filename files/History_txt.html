@@ -1,0 +1,223 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>File: History.txt</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <meta http-equiv="Content-Script-Type" content="text/javascript" />
+  <link rel="stylesheet" href=".././rdoc-style.css" type="text/css" media="screen" />
+  <script type="text/javascript">
+  // <![CDATA[
+
+  function popupCode( url ) {
+    window.open(url, "Code", "resizable=yes,scrollbars=yes,toolbar=no,status=no,height=150,width=400")
+  }
+
+  function toggleCode( id ) {
+    if ( document.getElementById )
+      elem = document.getElementById( id );
+    else if ( document.all )
+      elem = eval( "document.all." + id );
+    else
+      return false;
+
+    elemStyle = elem.style;
+    
+    if ( elemStyle.display != "block" ) {
+      elemStyle.display = "block"
+    } else {
+      elemStyle.display = "none"
+    }
+
+    return true;
+  }
+  
+  // Make codeblocks hidden by default
+  document.writeln( "<style type=\"text/css\">div.method-source-code { display: none }</style>" )
+  
+  // ]]>
+  </script>
+
+</head>
+<body>
+
+
+
+  <div id="fileHeader">
+    <h1>History.txt</h1>
+    <table class="header-table">
+    <tr class="top-aligned-row">
+      <td><strong>Path:</strong></td>
+      <td>History.txt
+      </td>
+    </tr>
+    <tr class="top-aligned-row">
+      <td><strong>Last Update:</strong></td>
+      <td>Wed Dec 15 08:46:58 -0500 2010</td>
+    </tr>
+    </table>
+  </div>
+  <!-- banner header -->
+
+  <div id="bodyContent">
+
+
+
+  <div id="contextContent">
+
+    <div id="description">
+      <h3>1.2.0 2010-10-14</h3>
+<ul>
+<li>Enhancements:
+
+<ul>
+<li><a href="../classes/Rails.html">Rails</a> 3 / RSpec 2 support! Yay!
+
+</li>
+<li>ActionController::Request#accepts_unfiltered_params has been removed. Use
+BotAway#accepts_unfiltered_params instead.
+
+</li>
+<li>Exclusion of bot-filtering on a per-controller, per-action and/or
+per-runmode basis is now possible via <a
+href="../classes/BotAway.html#M000040">BotAway#disabled_for</a>
+
+</li>
+</ul>
+</li>
+</ul>
+<h3>1.1.0 2010-06-21</h3>
+<ul>
+<li>Enhancements:
+
+<ul>
+<li>ActionController::Request.accepts_unfiltered_params is now accessible as
+BotAway.accepts_unfiltered_params
+
+</li>
+<li>BotAway.show_honeypots = true will show honeypots as visible elements
+within the form, for debugging.
+
+</li>
+<li>BotAway.dump_params = true will dump the params hash as it was before <a
+href="../classes/BotAway.html">BotAway</a> modified it, for debugging.
+
+</li>
+<li><a href="../classes/BotAway.html">BotAway</a> will no longer generate
+hashes for, or disguise, elements whose names have been added to <a
+href="../classes/BotAway.html#M000036">BotAway.unfiltered_params</a>. This
+should resolve issues where JavaScript is involved (case in point: Calendar
+Date Select).
+
+</li>
+</ul>
+</li>
+<li>Bugfix:
+
+<ul>
+<li>Resolved: Unfiltered params were not matched if they were of differing
+types (ie Symbol vs String). This caused problems in particular with
+Calendar Date Select.
+
+</li>
+</ul>
+</li>
+</ul>
+<h3>1.0.3 2010-06-13</h3>
+<ul>
+<li>Bugfixes:
+
+<ul>
+<li>Resolved: On or before <a href="../classes/Rails.html">Rails</a> 2.3.8,
+honeypots were generated as escaped HTML. This was because <a
+href="../classes/Rails.html">Rails</a> started using
+ActiveSupport::SafeBuffer to generate the content, and Bot-Away did not.
+(It does now.)
+
+</li>
+</ul>
+</li>
+</ul>
+<h3>1.0.2 2010-04-02</h3>
+<ul>
+<li>Bugfixes:
+
+<ul>
+<li>Resolved: Would sometimes generate honeypot tabindex of 0 instead of -1,
+interfering with keyboard operations
+
+</li>
+</ul>
+</li>
+</ul>
+<h3>1.0.1 2010-04-02</h3>
+<ul>
+<li>2 minor enhancements:
+
+<ul>
+<li>ActionController::Request.accepts_unfiltered_params creates an array of
+params that will not be checked
+
+</li>
+<li>Took all honeypots out of the keyboard tab order using randomized negative
+indexes.
+
+</li>
+</ul>
+</li>
+<li>Bugfixes:
+
+<ul>
+<li>Empty select tags no longer raise errors
+
+</li>
+</ul>
+</li>
+</ul>
+<h3>0.0.1 2010-03-24</h3>
+<ul>
+<li>1 major enhancement:
+
+<ul>
+<li>Initial release
+
+</li>
+</ul>
+</li>
+</ul>
+
+    </div>
+
+
+   </div>
+
+
+  </div>
+
+
+    <!-- if includes -->
+
+    <div id="section">
+
+
+
+
+
+      
+
+
+    <!-- if method_list -->
+
+
+  </div>
+
+
+<div id="validator-badges">
+  <p><small><a href="http://validator.w3.org/check/referer">[Validate]</a></small></p>
+</div>
+
+</body>
+</html>

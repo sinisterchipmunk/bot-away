@@ -1,0 +1,611 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>Module: BotAway</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <meta http-equiv="Content-Script-Type" content="text/javascript" />
+  <link rel="stylesheet" href=".././rdoc-style.css" type="text/css" media="screen" />
+  <script type="text/javascript">
+  // <![CDATA[
+
+  function popupCode( url ) {
+    window.open(url, "Code", "resizable=yes,scrollbars=yes,toolbar=no,status=no,height=150,width=400")
+  }
+
+  function toggleCode( id ) {
+    if ( document.getElementById )
+      elem = document.getElementById( id );
+    else if ( document.all )
+      elem = eval( "document.all." + id );
+    else
+      return false;
+
+    elemStyle = elem.style;
+    
+    if ( elemStyle.display != "block" ) {
+      elemStyle.display = "block"
+    } else {
+      elemStyle.display = "none"
+    }
+
+    return true;
+  }
+  
+  // Make codeblocks hidden by default
+  document.writeln( "<style type=\"text/css\">div.method-source-code { display: none }</style>" )
+  
+  // ]]>
+  </script>
+
+</head>
+<body>
+
+
+
+    <div id="classHeader">
+        <table class="header-table">
+        <tr class="top-aligned-row">
+          <td><strong>Module</strong></td>
+          <td class="class-name-in-header">BotAway</td>
+        </tr>
+        <tr class="top-aligned-row">
+            <td><strong>In:</strong></td>
+            <td>
+                <a href="../files/lib/bot-away_rb.html">
+                lib/bot-away.rb
+                </a>
+        <br />
+                <a href="../files/lib/bot-away/param_parser_rb.html">
+                lib/bot-away/param_parser.rb
+                </a>
+        <br />
+                <a href="../files/lib/bot-away_rb.html">
+                lib/bot-away.rb
+                </a>
+        <br />
+                <a href="../files/lib/bot-away/param_parser_rb.html">
+                lib/bot-away/param_parser.rb
+                </a>
+        <br />
+            </td>
+        </tr>
+
+        </table>
+    </div>
+  <!-- banner header -->
+
+  <div id="bodyContent">
+
+
+
+  <div id="contextContent">
+
+
+
+   </div>
+
+    <div id="method-list">
+      <h3 class="section-bar">Methods</h3>
+
+      <div class="name-list">
+      <a href="#M000040">disabled_for</a>&nbsp;&nbsp;
+      <a href="#M000046">disabled_for</a>&nbsp;&nbsp;
+      <a href="#M000045">disabled_for?</a>&nbsp;&nbsp;
+      <a href="#M000039">disabled_for?</a>&nbsp;&nbsp;
+      <a href="#M000037">excluded?</a>&nbsp;&nbsp;
+      <a href="#M000043">excluded?</a>&nbsp;&nbsp;
+      <a href="#M000041">reset!</a>&nbsp;&nbsp;
+      <a href="#M000047">reset!</a>&nbsp;&nbsp;
+      <a href="#M000042">unfiltered_params</a>&nbsp;&nbsp;
+      <a href="#M000036">unfiltered_params</a>&nbsp;&nbsp;
+      <a href="#M000038">unfiltered_params_include?</a>&nbsp;&nbsp;
+      <a href="#M000044">unfiltered_params_include?</a>&nbsp;&nbsp;
+      </div>
+    </div>
+
+  </div>
+
+
+    <!-- if includes -->
+
+    <div id="section">
+
+    <div id="class-list">
+      <h3 class="section-bar">Classes and Modules</h3>
+
+      Class <a href="BotAway/ParamParser.html" class="link">BotAway::ParamParser</a><br />
+Class <a href="BotAway/Spinner.html" class="link">BotAway::Spinner</a><br />
+
+    </div>
+
+    <div id="constants-list">
+      <h3 class="section-bar">Constants</h3>
+
+      <div class="name-list">
+        <table summary="Constants">
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">VERSION</td>
+          <td>=</td>
+          <td class="context-item-value">File.read(File.join(File.dirname(__FILE__), &quot;../VERSION&quot;)) unless defined?(VERSION)</td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">VERSION</td>
+          <td>=</td>
+          <td class="context-item-value">File.read(File.join(File.dirname(__FILE__), &quot;../VERSION&quot;)) unless defined?(VERSION)</td>
+        </tr>
+        </table>
+      </div>
+    </div>
+
+    <div id="aliases-list">
+      <h3 class="section-bar">External Aliases</h3>
+
+      <div class="name-list">
+                        <table summary="aliases">
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">unfiltered_params</td>
+          <td>-&gt;</td>
+          <td class="context-item-value">accepts_unfiltered_params</td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">unfiltered_params</td>
+          <td>-&gt;</td>
+          <td class="context-item-value">accepts_unfiltered_params</td>
+        </tr>
+                        </table>
+      </div>
+    </div>
+
+
+    <div id="attribute-list">
+      <h3 class="section-bar">Attributes</h3>
+
+      <div class="name-list">
+        <table>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">dump_params</td>
+          <td class="context-item-value">&nbsp;[RW]&nbsp;</td>
+          <td class="context-item-desc"></td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">dump_params</td>
+          <td class="context-item-value">&nbsp;[RW]&nbsp;</td>
+          <td class="context-item-desc"></td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">show_honeypots</td>
+          <td class="context-item-value">&nbsp;[RW]&nbsp;</td>
+          <td class="context-item-desc"></td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">show_honeypots</td>
+          <td class="context-item-value">&nbsp;[RW]&nbsp;</td>
+          <td class="context-item-desc"></td>
+        </tr>
+        </table>
+      </div>
+    </div>
+      
+
+
+    <!-- if method_list -->
+    <div id="methods">
+      <h3 class="section-bar">Public Class methods</h3>
+
+      <div id="method-M000040" class="method-detail">
+        <a name="M000040"></a>
+
+        <div class="method-heading">
+          <a href="#M000040" class="method-signature">
+          <span class="method-name">disabled_for</span><span class="method-args">(options = {})</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000040-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000040-source">
+<pre>
+<span class="ruby-comment cmt"># File lib/bot-away.rb, line 81</span>
+    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">disabled_for</span>(<span class="ruby-identifier">options</span> = {})
+      <span class="ruby-ivar">@disabled_for</span> <span class="ruby-operator">||=</span> []
+      <span class="ruby-keyword kw">if</span> <span class="ruby-operator">!</span><span class="ruby-identifier">options</span>.<span class="ruby-identifier">empty?</span>
+        <span class="ruby-ivar">@disabled_for</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">options</span>.<span class="ruby-identifier">stringify_keys</span>
+      <span class="ruby-keyword kw">end</span>
+      <span class="ruby-ivar">@disabled_for</span>
+    <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000046" class="method-detail">
+        <a name="M000046"></a>
+
+        <div class="method-heading">
+          <a href="#M000046" class="method-signature">
+          <span class="method-name">disabled_for</span><span class="method-args">(options = {})</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000046-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000046-source">
+<pre>
+<span class="ruby-comment cmt"># File lib/bot-away.rb, line 81</span>
+    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">disabled_for</span>(<span class="ruby-identifier">options</span> = {})
+      <span class="ruby-ivar">@disabled_for</span> <span class="ruby-operator">||=</span> []
+      <span class="ruby-keyword kw">if</span> <span class="ruby-operator">!</span><span class="ruby-identifier">options</span>.<span class="ruby-identifier">empty?</span>
+        <span class="ruby-ivar">@disabled_for</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">options</span>.<span class="ruby-identifier">stringify_keys</span>
+      <span class="ruby-keyword kw">end</span>
+      <span class="ruby-ivar">@disabled_for</span>
+    <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000045" class="method-detail">
+        <a name="M000045"></a>
+
+        <div class="method-heading">
+          <a href="#M000045" class="method-signature">
+          <span class="method-name">disabled_for?</span><span class="method-args">(options)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Returns true if the given options match the options set via <a
+href="BotAway.html#M000040">disabled_for</a>, or if the <a
+href="Rails.html">Rails</a> run mode matches any run modes set via <a
+href="BotAway.html#M000040">disabled_for</a>.
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000045-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000045-source">
+<pre>
+<span class="ruby-comment cmt"># File lib/bot-away.rb, line 55</span>
+    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">disabled_for?</span>(<span class="ruby-identifier">options</span>)
+      <span class="ruby-keyword kw">return</span> <span class="ruby-keyword kw">false</span> <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@disabled_for</span>.<span class="ruby-identifier">nil?</span> <span class="ruby-operator">||</span> <span class="ruby-identifier">options</span>.<span class="ruby-identifier">empty?</span>
+      <span class="ruby-identifier">options</span> = <span class="ruby-identifier">options</span>.<span class="ruby-identifier">stringify_keys</span>
+<span class="ruby-comment cmt">#      p options</span>
+<span class="ruby-comment cmt">#      p &quot;====&quot;</span>
+      <span class="ruby-ivar">@disabled_for</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">set</span><span class="ruby-operator">|</span>
+        <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">set</span>.<span class="ruby-identifier">key?</span>(<span class="ruby-value str">'mode'</span>)
+          <span class="ruby-keyword kw">next</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-constant">ENV</span>[<span class="ruby-value str">'RAILS_ENV'</span>] <span class="ruby-operator">==</span> <span class="ruby-identifier">set</span>[<span class="ruby-value str">'mode'</span>].<span class="ruby-identifier">to_s</span>
+          <span class="ruby-keyword kw">return</span> <span class="ruby-keyword kw">true</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">set</span>.<span class="ruby-identifier">keys</span>.<span class="ruby-identifier">length</span> <span class="ruby-operator">==</span> <span class="ruby-value">1</span>
+          <span class="ruby-comment cmt"># if there are more keys, then it looks something like:</span>
+          <span class="ruby-comment cmt">#   disabled_for :mode =&gt; 'development', :controller =&gt; 'tests'</span>
+          <span class="ruby-comment cmt"># and that means we need to check the next few conditions.</span>
+        <span class="ruby-keyword kw">end</span>
+        
+<span class="ruby-comment cmt">#        p set</span>
+        <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">set</span>.<span class="ruby-identifier">key?</span>(<span class="ruby-value str">'controller'</span>) <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">set</span>.<span class="ruby-identifier">key?</span>(<span class="ruby-value str">'action'</span>)
+          <span class="ruby-keyword kw">return</span> <span class="ruby-keyword kw">true</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">set</span>[<span class="ruby-value str">'controller'</span>] <span class="ruby-operator">==</span> <span class="ruby-identifier">options</span>[<span class="ruby-value str">'controller'</span>] <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">set</span>[<span class="ruby-value str">'action'</span>] <span class="ruby-operator">==</span> <span class="ruby-identifier">options</span>[<span class="ruby-value str">'action'</span>]
+        <span class="ruby-keyword kw">elsif</span> <span class="ruby-identifier">set</span>.<span class="ruby-identifier">key?</span>(<span class="ruby-value str">'controller'</span>) <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-operator">!</span><span class="ruby-identifier">set</span>.<span class="ruby-identifier">key?</span>(<span class="ruby-value str">'action'</span>)
+          <span class="ruby-keyword kw">return</span> <span class="ruby-keyword kw">true</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">set</span>[<span class="ruby-value str">'controller'</span>] <span class="ruby-operator">==</span> <span class="ruby-identifier">options</span>[<span class="ruby-value str">'controller'</span>]
+        <span class="ruby-keyword kw">elsif</span> <span class="ruby-identifier">set</span>.<span class="ruby-identifier">key?</span>(<span class="ruby-value str">'action'</span>)
+          <span class="ruby-keyword kw">return</span> <span class="ruby-keyword kw">true</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">set</span>[<span class="ruby-value str">'action'</span>] <span class="ruby-operator">==</span> <span class="ruby-identifier">options</span>[<span class="ruby-value str">'action'</span>]
+        <span class="ruby-keyword kw">end</span>
+      <span class="ruby-keyword kw">end</span>
+      <span class="ruby-keyword kw">false</span>
+    <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000039" class="method-detail">
+        <a name="M000039"></a>
+
+        <div class="method-heading">
+          <a href="#M000039" class="method-signature">
+          <span class="method-name">disabled_for?</span><span class="method-args">(options)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Returns true if the given options match the options set via <a
+href="BotAway.html#M000040">disabled_for</a>, or if the <a
+href="Rails.html">Rails</a> run mode matches any run modes set via <a
+href="BotAway.html#M000040">disabled_for</a>.
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000039-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000039-source">
+<pre>
+<span class="ruby-comment cmt"># File lib/bot-away.rb, line 55</span>
+    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">disabled_for?</span>(<span class="ruby-identifier">options</span>)
+      <span class="ruby-keyword kw">return</span> <span class="ruby-keyword kw">false</span> <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@disabled_for</span>.<span class="ruby-identifier">nil?</span> <span class="ruby-operator">||</span> <span class="ruby-identifier">options</span>.<span class="ruby-identifier">empty?</span>
+      <span class="ruby-identifier">options</span> = <span class="ruby-identifier">options</span>.<span class="ruby-identifier">stringify_keys</span>
+<span class="ruby-comment cmt">#      p options</span>
+<span class="ruby-comment cmt">#      p &quot;====&quot;</span>
+      <span class="ruby-ivar">@disabled_for</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">set</span><span class="ruby-operator">|</span>
+        <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">set</span>.<span class="ruby-identifier">key?</span>(<span class="ruby-value str">'mode'</span>)
+          <span class="ruby-keyword kw">next</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-constant">ENV</span>[<span class="ruby-value str">'RAILS_ENV'</span>] <span class="ruby-operator">==</span> <span class="ruby-identifier">set</span>[<span class="ruby-value str">'mode'</span>].<span class="ruby-identifier">to_s</span>
+          <span class="ruby-keyword kw">return</span> <span class="ruby-keyword kw">true</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">set</span>.<span class="ruby-identifier">keys</span>.<span class="ruby-identifier">length</span> <span class="ruby-operator">==</span> <span class="ruby-value">1</span>
+          <span class="ruby-comment cmt"># if there are more keys, then it looks something like:</span>
+          <span class="ruby-comment cmt">#   disabled_for :mode =&gt; 'development', :controller =&gt; 'tests'</span>
+          <span class="ruby-comment cmt"># and that means we need to check the next few conditions.</span>
+        <span class="ruby-keyword kw">end</span>
+        
+<span class="ruby-comment cmt">#        p set</span>
+        <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">set</span>.<span class="ruby-identifier">key?</span>(<span class="ruby-value str">'controller'</span>) <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">set</span>.<span class="ruby-identifier">key?</span>(<span class="ruby-value str">'action'</span>)
+          <span class="ruby-keyword kw">return</span> <span class="ruby-keyword kw">true</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">set</span>[<span class="ruby-value str">'controller'</span>] <span class="ruby-operator">==</span> <span class="ruby-identifier">options</span>[<span class="ruby-value str">'controller'</span>] <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">set</span>[<span class="ruby-value str">'action'</span>] <span class="ruby-operator">==</span> <span class="ruby-identifier">options</span>[<span class="ruby-value str">'action'</span>]
+        <span class="ruby-keyword kw">elsif</span> <span class="ruby-identifier">set</span>.<span class="ruby-identifier">key?</span>(<span class="ruby-value str">'controller'</span>) <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-operator">!</span><span class="ruby-identifier">set</span>.<span class="ruby-identifier">key?</span>(<span class="ruby-value str">'action'</span>)
+          <span class="ruby-keyword kw">return</span> <span class="ruby-keyword kw">true</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">set</span>[<span class="ruby-value str">'controller'</span>] <span class="ruby-operator">==</span> <span class="ruby-identifier">options</span>[<span class="ruby-value str">'controller'</span>]
+        <span class="ruby-keyword kw">elsif</span> <span class="ruby-identifier">set</span>.<span class="ruby-identifier">key?</span>(<span class="ruby-value str">'action'</span>)
+          <span class="ruby-keyword kw">return</span> <span class="ruby-keyword kw">true</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">set</span>[<span class="ruby-value str">'action'</span>] <span class="ruby-operator">==</span> <span class="ruby-identifier">options</span>[<span class="ruby-value str">'action'</span>]
+        <span class="ruby-keyword kw">end</span>
+      <span class="ruby-keyword kw">end</span>
+      <span class="ruby-keyword kw">false</span>
+    <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000037" class="method-detail">
+        <a name="M000037"></a>
+
+        <div class="method-heading">
+          <a href="#M000037" class="method-signature">
+          <span class="method-name">excluded?</span><span class="method-args">(options)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+options include:
+</p>
+<pre>
+  :controller
+  :action
+  :object_name
+  :method_name
+</pre>
+<p>
+<a href="BotAway.html#M000037">excluded?</a> will also check the current <a
+href="Rails.html">Rails</a> run mode against <a
+href="BotAway.html#M000040">disabled_for</a>[:mode]
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000037-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000037-source">
+<pre>
+<span class="ruby-comment cmt"># File lib/bot-away.rb, line 34</span>
+    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">excluded?</span>(<span class="ruby-identifier">options</span>)
+      <span class="ruby-identifier">options</span> = <span class="ruby-identifier">options</span>.<span class="ruby-identifier">stringify_keys</span>
+      <span class="ruby-identifier">nonparams</span> = <span class="ruby-identifier">options</span>.<span class="ruby-identifier">stringify_keys</span>.<span class="ruby-identifier">without</span>(<span class="ruby-value str">'object_name'</span>, <span class="ruby-value str">'method_name'</span>)
+      (<span class="ruby-identifier">options</span>[<span class="ruby-value str">'object_name'</span>] <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">options</span>[<span class="ruby-value str">'method_name'</span>] <span class="ruby-operator">&amp;&amp;</span>
+              <span class="ruby-identifier">unfiltered_params_include?</span>(<span class="ruby-identifier">options</span>[<span class="ruby-value str">'object_name'</span>], <span class="ruby-identifier">options</span>[<span class="ruby-value str">'method_name'</span>])) <span class="ruby-operator">||</span> <span class="ruby-identifier">disabled_for?</span>(<span class="ruby-identifier">nonparams</span>)
+    <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000043" class="method-detail">
+        <a name="M000043"></a>
+
+        <div class="method-heading">
+          <a href="#M000043" class="method-signature">
+          <span class="method-name">excluded?</span><span class="method-args">(options)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+options include:
+</p>
+<pre>
+  :controller
+  :action
+  :object_name
+  :method_name
+</pre>
+<p>
+<a href="BotAway.html#M000037">excluded?</a> will also check the current <a
+href="Rails.html">Rails</a> run mode against <a
+href="BotAway.html#M000040">disabled_for</a>[:mode]
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000043-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000043-source">
+<pre>
+<span class="ruby-comment cmt"># File lib/bot-away.rb, line 34</span>
+    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">excluded?</span>(<span class="ruby-identifier">options</span>)
+      <span class="ruby-identifier">options</span> = <span class="ruby-identifier">options</span>.<span class="ruby-identifier">stringify_keys</span>
+      <span class="ruby-identifier">nonparams</span> = <span class="ruby-identifier">options</span>.<span class="ruby-identifier">stringify_keys</span>.<span class="ruby-identifier">without</span>(<span class="ruby-value str">'object_name'</span>, <span class="ruby-value str">'method_name'</span>)
+      (<span class="ruby-identifier">options</span>[<span class="ruby-value str">'object_name'</span>] <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">options</span>[<span class="ruby-value str">'method_name'</span>] <span class="ruby-operator">&amp;&amp;</span>
+              <span class="ruby-identifier">unfiltered_params_include?</span>(<span class="ruby-identifier">options</span>[<span class="ruby-value str">'object_name'</span>], <span class="ruby-identifier">options</span>[<span class="ruby-value str">'method_name'</span>])) <span class="ruby-operator">||</span> <span class="ruby-identifier">disabled_for?</span>(<span class="ruby-identifier">nonparams</span>)
+    <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000041" class="method-detail">
+        <a name="M000041"></a>
+
+        <div class="method-heading">
+          <a href="#M000041" class="method-signature">
+          <span class="method-name">reset!</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000041-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000041-source">
+<pre>
+<span class="ruby-comment cmt"># File lib/bot-away.rb, line 89</span>
+    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">reset!</span>
+      <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">show_honeypots</span> = <span class="ruby-keyword kw">false</span>
+      <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">dump_params</span> = <span class="ruby-keyword kw">false</span>
+      <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">unfiltered_params</span>.<span class="ruby-identifier">clear</span>
+      <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">disabled_for</span>.<span class="ruby-identifier">clear</span>
+    <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000047" class="method-detail">
+        <a name="M000047"></a>
+
+        <div class="method-heading">
+          <a href="#M000047" class="method-signature">
+          <span class="method-name">reset!</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000047-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000047-source">
+<pre>
+<span class="ruby-comment cmt"># File lib/bot-away.rb, line 89</span>
+    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">reset!</span>
+      <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">show_honeypots</span> = <span class="ruby-keyword kw">false</span>
+      <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">dump_params</span> = <span class="ruby-keyword kw">false</span>
+      <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">unfiltered_params</span>.<span class="ruby-identifier">clear</span>
+      <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">disabled_for</span>.<span class="ruby-identifier">clear</span>
+    <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000042" class="method-detail">
+        <a name="M000042"></a>
+
+        <div class="method-heading">
+          <a href="#M000042" class="method-signature">
+          <span class="method-name">unfiltered_params</span><span class="method-args">(*keys)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000042-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000042-source">
+<pre>
+<span class="ruby-comment cmt"># File lib/bot-away.rb, line 19</span>
+    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">unfiltered_params</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">keys</span>)
+      <span class="ruby-identifier">unfiltered_params</span> = <span class="ruby-identifier">instance_variable_get</span>(<span class="ruby-value str">&quot;@unfiltered_params&quot;</span>) <span class="ruby-operator">||</span> <span class="ruby-identifier">instance_variable_set</span>(<span class="ruby-value str">&quot;@unfiltered_params&quot;</span>, [])
+      <span class="ruby-identifier">unfiltered_params</span>.<span class="ruby-identifier">concat</span> <span class="ruby-identifier">keys</span>.<span class="ruby-identifier">flatten</span>.<span class="ruby-identifier">collect</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">k</span><span class="ruby-operator">|</span> <span class="ruby-identifier">k</span>.<span class="ruby-identifier">to_s</span> }
+      <span class="ruby-identifier">unfiltered_params</span>
+    <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000036" class="method-detail">
+        <a name="M000036"></a>
+
+        <div class="method-heading">
+          <a href="#M000036" class="method-signature">
+          <span class="method-name">unfiltered_params</span><span class="method-args">(*keys)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000036-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000036-source">
+<pre>
+<span class="ruby-comment cmt"># File lib/bot-away.rb, line 19</span>
+    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">unfiltered_params</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">keys</span>)
+      <span class="ruby-identifier">unfiltered_params</span> = <span class="ruby-identifier">instance_variable_get</span>(<span class="ruby-value str">&quot;@unfiltered_params&quot;</span>) <span class="ruby-operator">||</span> <span class="ruby-identifier">instance_variable_set</span>(<span class="ruby-value str">&quot;@unfiltered_params&quot;</span>, [])
+      <span class="ruby-identifier">unfiltered_params</span>.<span class="ruby-identifier">concat</span> <span class="ruby-identifier">keys</span>.<span class="ruby-identifier">flatten</span>.<span class="ruby-identifier">collect</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">k</span><span class="ruby-operator">|</span> <span class="ruby-identifier">k</span>.<span class="ruby-identifier">to_s</span> }
+      <span class="ruby-identifier">unfiltered_params</span>
+    <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000038" class="method-detail">
+        <a name="M000038"></a>
+
+        <div class="method-heading">
+          <a href="#M000038" class="method-signature">
+          <span class="method-name">unfiltered_params_include?</span><span class="method-args">(object_name, method_name)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000038-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000038-source">
+<pre>
+<span class="ruby-comment cmt"># File lib/bot-away.rb, line 41</span>
+    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">unfiltered_params_include?</span>(<span class="ruby-identifier">object_name</span>, <span class="ruby-identifier">method_name</span>)
+      <span class="ruby-identifier">unfiltered_params</span>.<span class="ruby-identifier">collect!</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">u</span><span class="ruby-operator">|</span> <span class="ruby-identifier">u</span>.<span class="ruby-identifier">to_s</span> }
+      <span class="ruby-keyword kw">if</span> (<span class="ruby-identifier">object_name</span> <span class="ruby-operator">&amp;&amp;</span>
+              (<span class="ruby-identifier">unfiltered_params</span>.<span class="ruby-identifier">include?</span>(<span class="ruby-identifier">object_name</span>.<span class="ruby-identifier">to_s</span>) <span class="ruby-operator">||</span>
+                      <span class="ruby-identifier">unfiltered_params</span>.<span class="ruby-identifier">include?</span>(<span class="ruby-node">&quot;#{object_name}[#{method_name}]&quot;</span>)) <span class="ruby-operator">||</span>
+          <span class="ruby-identifier">unfiltered_params</span>.<span class="ruby-identifier">include?</span>(<span class="ruby-identifier">method_name</span>.<span class="ruby-identifier">to_s</span>))
+        <span class="ruby-keyword kw">true</span>
+      <span class="ruby-keyword kw">else</span>
+        <span class="ruby-keyword kw">false</span>
+      <span class="ruby-keyword kw">end</span>
+    <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000044" class="method-detail">
+        <a name="M000044"></a>
+
+        <div class="method-heading">
+          <a href="#M000044" class="method-signature">
+          <span class="method-name">unfiltered_params_include?</span><span class="method-args">(object_name, method_name)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000044-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000044-source">
+<pre>
+<span class="ruby-comment cmt"># File lib/bot-away.rb, line 41</span>
+    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">unfiltered_params_include?</span>(<span class="ruby-identifier">object_name</span>, <span class="ruby-identifier">method_name</span>)
+      <span class="ruby-identifier">unfiltered_params</span>.<span class="ruby-identifier">collect!</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">u</span><span class="ruby-operator">|</span> <span class="ruby-identifier">u</span>.<span class="ruby-identifier">to_s</span> }
+      <span class="ruby-keyword kw">if</span> (<span class="ruby-identifier">object_name</span> <span class="ruby-operator">&amp;&amp;</span>
+              (<span class="ruby-identifier">unfiltered_params</span>.<span class="ruby-identifier">include?</span>(<span class="ruby-identifier">object_name</span>.<span class="ruby-identifier">to_s</span>) <span class="ruby-operator">||</span>
+                      <span class="ruby-identifier">unfiltered_params</span>.<span class="ruby-identifier">include?</span>(<span class="ruby-node">&quot;#{object_name}[#{method_name}]&quot;</span>)) <span class="ruby-operator">||</span>
+          <span class="ruby-identifier">unfiltered_params</span>.<span class="ruby-identifier">include?</span>(<span class="ruby-identifier">method_name</span>.<span class="ruby-identifier">to_s</span>))
+        <span class="ruby-keyword kw">true</span>
+      <span class="ruby-keyword kw">else</span>
+        <span class="ruby-keyword kw">false</span>
+      <span class="ruby-keyword kw">end</span>
+    <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+
+    </div>
+
+
+  </div>
+
+
+<div id="validator-badges">
+  <p><small><a href="http://validator.w3.org/check/referer">[Validate]</a></small></p>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,391 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>File: README.rdoc</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <meta http-equiv="Content-Script-Type" content="text/javascript" />
+  <link rel="stylesheet" href=".././rdoc-style.css" type="text/css" media="screen" />
+  <script type="text/javascript">
+  // <![CDATA[
+
+  function popupCode( url ) {
+    window.open(url, "Code", "resizable=yes,scrollbars=yes,toolbar=no,status=no,height=150,width=400")
+  }
+
+  function toggleCode( id ) {
+    if ( document.getElementById )
+      elem = document.getElementById( id );
+    else if ( document.all )
+      elem = eval( "document.all." + id );
+    else
+      return false;
+
+    elemStyle = elem.style;
+    
+    if ( elemStyle.display != "block" ) {
+      elemStyle.display = "block"
+    } else {
+      elemStyle.display = "none"
+    }
+
+    return true;
+  }
+  
+  // Make codeblocks hidden by default
+  document.writeln( "<style type=\"text/css\">div.method-source-code { display: none }</style>" )
+  
+  // ]]>
+  </script>
+
+</head>
+<body>
+
+
+
+  <div id="fileHeader">
+    <h1>README.rdoc</h1>
+    <table class="header-table">
+    <tr class="top-aligned-row">
+      <td><strong>Path:</strong></td>
+      <td>README.rdoc
+      </td>
+    </tr>
+    <tr class="top-aligned-row">
+      <td><strong>Last Update:</strong></td>
+      <td>Wed Dec 15 08:46:58 -0500 2010</td>
+    </tr>
+    </table>
+  </div>
+  <!-- banner header -->
+
+  <div id="bodyContent">
+
+
+
+  <div id="contextContent">
+
+    <div id="description">
+      <h1>bot-away</h1>
+<ul>
+<li><a
+href="http://github.com/sinisterchipmunk/bot-away">github.com/sinisterchipmunk/bot-away</a>
+
+</li>
+</ul>
+<p>
+Unobtrusively detects form submissions made by spambots, and silently drops
+those submissions. The key word here is &quot;unobtrusive&quot; &#8212;
+this is NOT a CAPTCHA. This is a transparent, modular implementation of the
+bot-catching techniques discussed by Ned Batchelder at <a
+href="http://nedbatchelder.com/text/stopbots.html">nedbatchelder.com/text/stopbots.html</a>.
+</p>
+<h2>How It Works</h2>
+<p>
+If a bot submission is detected, the params hash is cleared, so the data
+can&#8216;t be used. Since this includes the authenticity token, <a
+href="../classes/Rails.html">Rails</a> should complain about an invalid or
+missing authenticity token. Congrats, spam blocked.
+</p>
+<p>
+The specifics of the techniques employed for filtering spambots are
+discussed Ned&#8216;s site in the description; however, here&#8216;s a
+brief run-down of what&#8216;s going on:
+</p>
+<ul>
+<li>Your code stays the same. After the Bot-Away gem has been activated, all <a
+href="../classes/Rails.html">Rails</a>-generated forms on your site will
+automatically be transformed into bot-resistent forms.
+
+</li>
+<li>All of the form elements that you create (for instance, a
+&quot;comment&quot; model with a &quot;body&quot; field) are turned into
+dummy elements, or honeypots, and are made invisible to the end user. This
+is done using div elements and inline CSS stylesheets (I decided against a
+JavaScript option because it&#8216;s the most likely to be disabled on a
+legitimate client). There are several ways an element can be hidden, and
+these approaches are chosen at random to help minimize predictability.
+
+<p>
+In the rare event that a real user actually can see the element, it has a
+label next to it along the lines of &quot;Leave this blank&quot; &#8212;
+though the exact message is randomized to help prevent detection.
+</p>
+</li>
+<li>All of the form elements are mirrored by hashes. The hashes are generated
+using the session&#8216;s authenticity token, so they can&#8216;t be
+predicted.
+
+</li>
+<li>When data is submitted, Bot-Away steps in and
+
+<ol>
+<li>validates that no honeypots have been filled in; and
+
+</li>
+<li>converts the hashed elements back into the field names that you are
+expecting (replacing the honeypot fields). Your code is never aware of the
+difference; it&#8216;s just business as usual as long as the user is
+legitimate.
+
+</li>
+</ol>
+</li>
+<li>If a honeypot has been filled in, or a hashed element is missing where it
+was expected, then the request is considered to be either spam, or tampered
+with; and the entire params hash is emptied. Since this happens at the
+lowest level, the most likely result is that <a
+href="../classes/Rails.html">Rails</a> will complain that the user&#8216;s
+authenticity token is invalid. If that does not happen, then your code will
+be passed a params hash containing only a &quot;suspected_bot&quot; key,
+and an error will result. Either way, the spambot has been foiled!
+
+</li>
+</ul>
+<h2>Installation:</h2>
+<ul>
+<li>gem install bot-away
+
+</li>
+</ul>
+<h2>Usage:</h2>
+<p>
+Whether you&#8216;re on <a href="../classes/Rails.html">Rails</a> 2 or <a
+href="../classes/Rails.html">Rails</a> 3, adding Bot-Away to your project
+is as easy as telling <a href="../classes/Rails.html">Rails</a> where to
+find it.
+</p>
+<h3><a href="../classes/Rails.html">Rails</a> 2.x</h3>
+<p>
+In your <a href="../classes/Rails.html">Rails</a> config/environment.rb:
+</p>
+<pre>
+  config.gem 'bot-away'
+</pre>
+<h3><a href="../classes/Rails.html">Rails</a> 3</h3>
+<p>
+In your Gemfile:
+</p>
+<pre>
+  gem 'bot-away'
+</pre>
+<p>
+That&#8216;s it.
+</p>
+<h2>Whitelists</h2>
+<p>
+Sometimes you don&#8216;t care about whether or not a bot is filling out a
+particular form. Even more, sometimes it&#8216;s preferable to make a form
+bot-friendly. I&#8216;m talking specifically about login forms, where all
+sorts of people use bots (their Web browsers, usually) in order to prefill
+the form with their login information. This is perfectly harmless, and even
+a malicious bot is not going to be able to cause any trouble on a form like
+this because it&#8216;ll only be denied access to the site.
+</p>
+<p>
+In cases like this, you&#8216;ll want to go ahead and disable Bot-Away.
+Since Bot-Away is only disabled on a per-controller or per-action basis, it
+stays active throughout the remainder of your site, which prevents bots
+from (for example) creating new users.
+</p>
+<p>
+To disable Bot-Away for an entire controller, add this line to a file
+called <em>config/initializers/bot-away.rb</em>:
+</p>
+<pre>
+  BotAway.disabled_for :controller =&gt; 'sessions'
+</pre>
+<p>
+And here&#8216;s how to do the same for a specific action, leaving Bot-Away
+active for all other actions:
+</p>
+<pre>
+  BotAway.disabled_for :controller =&gt; 'sessions', :action =&gt; 'login'
+</pre>
+<p>
+You can also disable Bot-Away for a given action in every controller, but
+I&#8216;m not sure how useful that is. In any case, here&#8216;s how to do
+it:
+</p>
+<pre>
+  BotAway.disabled_for :action =&gt; 'index' # all we did was omit :controller
+</pre>
+<p>
+This line can be specified multiple times, for each of the controllers
+and/or actions that you need it disabled for.
+</p>
+<h2>Disabling Bot-Away in Development</h2>
+<p>
+If, while developing your app, you find yourself viewing the HTML source
+code, it&#8216;ll probably be more helpful to have Bot-Away disabled
+entirely so that you&#8216;re not confused by MD5 tags and legions of
+honeypots. This is easy enough to do:
+</p>
+<pre>
+  BotAway.disabled_for :mode =&gt; :development
+</pre>
+<h2>Further Configuration (Mostly for Debugging):</h2>
+<p>
+In general, Bot-Away doesn&#8216;t have that much to configure. Most
+options only exist for your debugging pleasure, in case something
+isn&#8216;t quite working as you&#8216;d expected. As shown above, these
+settings should be specified in a file called
+<em>config/initializers/bot-away.rb</em>. Configuration options available
+to you are as follows:
+</p>
+<h3>Accepting Unfiltered Params</h3>
+<p>
+Sometimes you need to tell Bot-Away to explicitly <em>not</em> filter a
+parameter. This is most notable with fields you&#8216;ve dynamically added
+via JavaScript, since those can confuse Bot-Away&#8216;s catching
+techniques. (It tends to think Javascript- generated fields are honeypots,
+and raises an error based on that.) Here&#8216;s how to tell Bot-Away that
+such fields are not to be checked:
+</p>
+<pre>
+  BotAway.accepts_unfiltered_params &quot;name_of_param&quot;, &quot;name_of_another_param&quot;
+</pre>
+<p>
+Note that these parameters can be either model keys, field keys or exact
+matches. For example, imagine the following scenario: you have two models,
+User and Group, and each has_many :roles. That means you&#8216;ll likely
+have an administration screen somewhere with check boxes representing user
+roles and group roles. Here are the different ways you can control how
+Bot-Away interacts with these fields:
+</p>
+<pre>
+  BotAway.accepts_unfiltered_params &quot;user&quot;
+    # disables BotAway filtering for ALL fields belonging to 'user', but NO fields belonging to 'group'
+
+  BotAway.accepts_unfiltered_params 'user[role_ids]', 'group[role_ids]'
+    # disables BotAway filtering for ONLY the 'role_ids' field belonging to BOTH 'user' and 'group', while leaving
+    # filtering enabled for ALL OTHER fields.
+
+  BotAway.accepts_unfiltered_params 'role_ids'
+    # disables BotAway filtering for ONLY the 'role_ids' fields belonging to ALL MODELS, while leaving all
+    # other fields enabled.
+</pre>
+<p>
+You can specify this option as many times as you need to do.
+</p>
+<h3>Showing the Honeypots</h3>
+<p>
+Generally, you want to keep honeypots hidden, because they will clutter
+your interface and confuse your users. However, there was an issue awhile
+back (near the 1.0 release of Bot-Away) where Safari was a bit smarter than
+its competitors, successfully prefilling honeypots with data where Chrome,
+FF and IE all failed to do so. Eventually, I added the ability to show
+honeypots on the screen, proving my suspicion that Safari was being
+&quot;too smart&quot;. After resolving the issue, I decided to leave this
+option available to Bot-Away as a debugging tool for handling future
+issues. To enable:
+</p>
+<pre>
+  BotAway.show_honeypots = true
+</pre>
+<h3>Dumping Params</h3>
+<p>
+Like showing honeypots, above, this option is only useful if you&#8216;re
+debugging issues in development mode. You can enable this if you need to
+see exactly what <a href="../classes/Rails.html">Rails</a> sees
+<em>before</em> Bot-Away steps in to intervene. Enabling this is a major
+security risk in production mode because it&#8216;ll include sensitive data
+such as passwords; but it&#8216;s very useful for debugging false positives
+(that is, Bot-Away thinks you&#8216;re a bot, but you&#8216;re not).
+</p>
+<pre>
+  BotAway.dump_params = true
+</pre>
+<h2>Features / Problems:</h2>
+<ul>
+<li>Wherever protection from forgery is not enabled in your <a
+href="../classes/Rails.html">Rails</a> app, the <a
+href="../classes/Rails.html">Rails</a> forms will be generated as if this
+gem did not exist. That means hashed elements won&#8216;t be generated,
+honeypots won&#8216;t be generated, and posted forms will not be
+intercepted.
+
+</li>
+<li>By default, protection from forgery is enabled for all <a
+href="../classes/Rails.html">Rails</a> controllers, so by default the
+above-mentioned checks will also be triggered. For more details on forgery
+protection, see: <a
+href="http://api.rubyonrails.org/classes/ActionController/RequestForgeryProtection/ClassMethods.html">api.rubyonrails.org/classes/ActionController/RequestForgeryProtection/ClassMethods.html</a>
+
+</li>
+<li>The techniques implemented by this library will be very difficult for a
+spambot to circumvent. However, keep in mind that since the pages have to
+be machine-readable by definition, and since this gem has to follow certain
+protocols in order to avoid confusing lots of humans (such as hiding the
+honeypots), it is always theoretically possible for a spambot to get around
+it. It&#8216;s just very, very difficult.
+
+</li>
+<li>I feel this library has been fairly well-tested (99.5% test coverage as of
+this writing), but if you discover a bug and can&#8216;t be bothered to let
+me know about it (or you just don&#8216;t have time to wait for a fix or
+fix it yourself), then you can simply add the name of the offending form
+element to the <a
+href="../classes/BotAway.html#M000036">BotAway.unfiltered_params</a> array
+like so:
+
+<pre>
+  BotAway.accepts_unfiltered_params 'role_ids'
+  BotAway.accepts_unfiltered_params 'user' # this can be called multiple times
+</pre>
+<p>
+You should also take note that this is an array, not a hash. So if you have
+a user[role_ids] as well as a group[role_ids], the <tt>role_ids</tt> will
+not be filtered on EITHER of these models.
+</p>
+</li>
+<li>Currently, there&#8216;s no direct support for per-request configuration of
+unfiltered params. This is mostly due to Bot-Away&#8216;s low-level
+approach to filtering bots: the params have already been filtered by the
+time your controller is created. I&#8216;d like to revisit per-request
+filtering sometime in the future, once I figure out the best way to do it.
+
+</li>
+</ul>
+<h2>Requirements:</h2>
+<ul>
+<li><a href="../classes/Rails.html">Rails</a> 2.3.5 or better.
+
+</li>
+</ul>
+
+    </div>
+
+
+   </div>
+
+
+  </div>
+
+
+    <!-- if includes -->
+
+    <div id="section">
+
+
+
+
+
+      
+
+
+    <!-- if method_list -->
+
+
+  </div>
+
+
+<div id="validator-badges">
+  <p><small><a href="http://validator.w3.org/check/referer">[Validate]</a></small></p>
+</div>
+
+</body>
+</html>

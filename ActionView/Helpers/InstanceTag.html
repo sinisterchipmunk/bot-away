@@ -1,0 +1,603 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+	<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+
+	<title>Class: ActionView::Helpers::InstanceTag</title>
+
+	<link rel="stylesheet" href="../../rdoc.css" type="text/css" media="screen" />
+
+	<script src="../../js/jquery.js" type="text/javascript"
+		charset="utf-8"></script>
+	<script src="../../js/thickbox-compressed.js" type="text/javascript"
+		charset="utf-8"></script>
+	<script src="../../js/quicksearch.js" type="text/javascript"
+		charset="utf-8"></script>
+	<script src="../../js/darkfish.js" type="text/javascript"
+		charset="utf-8"></script>
+
+</head>
+<body class="class">
+
+	<div id="metadata">
+		<div id="home-metadata">
+			<div id="home-section" class="section">
+        <h3 class="section-header">
+          <a href="../../index.html">Home</a>
+          <a href="../../index.html#classes">Classes</a>
+          <a href="../../index.html#methods">Methods</a>
+        </h3>
+			</div>
+		</div>
+
+		<div id="file-metadata">
+			<div id="file-list-section" class="section">
+				<h3 class="section-header">In Files</h3>
+				<div class="section-body">
+					<ul>
+					
+						<li><a href="../../lib/bot-away/action_view/helpers/instance_tag_rb.html?TB_iframe=true&amp;height=550&amp;width=785"
+							class="thickbox" title="lib/bot-away/action_view/helpers/instance_tag.rb">lib/bot-away/action_view/helpers/instance_tag.rb</a></li>
+					
+					</ul>
+				</div>
+			</div>
+
+			
+		</div>
+
+		<div id="class-metadata">
+
+			<!-- Parent Class -->
+			
+			<div id="parent-class-section" class="section">
+				<h3 class="section-header">Parent</h3>
+				
+				<p class="link">Object</p>
+				
+			</div>
+			
+
+			<!-- Namespace Contents -->
+			
+
+			<!-- Method Quickref -->
+			
+			<div id="method-list-section" class="section">
+				<h3 class="section-header">Methods</h3>
+				<ul class="link-list">
+					
+					<li><a href="#method-i-assuming">#assuming</a></li>
+					
+					<li><a href="#method-i-content_tag_with_obfuscation">#content_tag_with_obfuscation</a></li>
+					
+					<li><a href="#method-i-disguise">#disguise</a></li>
+					
+					<li><a href="#method-i-honeypot_options">#honeypot_options</a></li>
+					
+					<li><a href="#method-i-honeypot_tag">#honeypot_tag</a></li>
+					
+					<li><a href="#method-i-initialize_with_spinner">#initialize_with_spinner</a></li>
+					
+					<li><a href="#method-i-obfuscate_options">#obfuscate_options</a></li>
+					
+					<li><a href="#method-i-obfuscated_tag">#obfuscated_tag</a></li>
+					
+					<li><a href="#method-i-tag_with_honeypot">#tag_with_honeypot</a></li>
+					
+					<li><a href="#method-i-to_label_tag_with_obfuscation">#to_label_tag_with_obfuscation</a></li>
+					
+				</ul>
+			</div>
+			
+
+			<!-- Included Modules -->
+			
+		</div>
+
+		<div id="project-metadata">
+			
+			
+			<div id="fileindex-section" class="section project-section">
+				<h3 class="section-header">Files</h3>
+				<ul>
+				
+					<li class="file"><a href="../../README_rdoc.html">README.rdoc</a></li>
+				
+				</ul>
+			</div>
+			
+
+			<div id="classindex-section" class="section project-section">
+				<h3 class="section-header">Class Index
+					<span class="search-toggle"><img src="../../images/find.png"
+						height="16" width="16" alt="[+]"
+						title="show/hide quicksearch" /></span></h3>
+				<form action="#" method="get" accept-charset="utf-8" class="initially-hidden">
+				<fieldset>
+					<legend>Quicksearch</legend>
+					<input type="text" name="quicksearch" value=""
+						class="quicksearch-field" />
+				</fieldset>
+				</form>
+
+				<ul class="link-list">
+				
+					<li><a href="../../ActionView.html">ActionView</a></li>
+				
+					<li><a href="../../ActionView/Helpers.html">ActionView::Helpers</a></li>
+				
+					<li><a href="../../ActionView/Helpers/InstanceTag.html">ActionView::Helpers::InstanceTag</a></li>
+				
+					<li><a href="../../BotAway.html">BotAway</a></li>
+				
+					<li><a href="../../BotAway/ParamParser.html">BotAway::ParamParser</a></li>
+				
+					<li><a href="../../BotAway/Spinner.html">BotAway::Spinner</a></li>
+				
+					<li><a href="../../ActionController.html">ActionController</a></li>
+				
+					<li><a href="../../ActionController/Request.html">ActionController::Request</a></li>
+				
+				</ul>
+				<div id="no-class-search-results" style="display: none;">No matching classes.</div>
+			</div>
+
+			
+		</div>
+	</div>
+
+	<div id="documentation">
+		<h1 class="class">ActionView::Helpers::InstanceTag</h1>
+
+		<div id="description">
+			
+		</div>
+
+		<!-- Constants -->
+		
+
+		<!-- Attributes -->
+		
+		<div id="attribute-method-details" class="method-section section">
+			<h3 class="section-header">Attributes</h3>
+
+			
+			<div id="spinner-attribute-method" class="method-detail">
+				<a name="spinner"></a>
+				
+				<div class="method-heading attribute-method-heading">
+					<span class="method-name">spinner</span><span
+						class="attribute-access-type">[R]</span>
+				</div>
+
+				<div class="method-description">
+				
+				
+				
+				</div>
+			</div>
+			
+		</div>
+		
+
+		<!-- Methods -->
+		
+		<div id="public-instance-method-details" class="method-section section">
+			<h3 class="section-header">Public Instance Methods</h3>
+
+		
+			<div id="assuming-method" class="method-detail ">
+				<a name="method-i-assuming"></a>
+
+				<div class="method-heading">
+				
+					<span class="method-name">assuming</span><span
+						class="method-args">(object)</span>
+					<span class="method-click-advice">click to toggle source</span>
+				
+				</div>
+
+				<div class="method-description">
+					
+					
+					
+
+					
+					<div class="method-source-code"
+						id="assuming-source">
+<pre>
+    <span class="ruby-comment cmt"># File lib/bot-away/action_view/helpers/instance_tag.rb, line 28</span>
+28:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">assuming</span>(<span class="ruby-identifier">object</span>)
+29:     <span class="ruby-keyword kw">yield</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">object</span>
+30:     <span class="ruby-identifier">object</span>
+31:   <span class="ruby-keyword kw">end</span></pre>
+					</div>
+					
+				</div>
+
+				
+
+				
+			</div>
+
+		
+			<div id="content-tag-with-obfuscation-method" class="method-detail ">
+				<a name="method-i-content_tag_with_obfuscation"></a>
+
+				<div class="method-heading">
+				
+					<span class="method-name">content_tag_with_obfuscation</span><span
+						class="method-args">(name, content_or_options_with_block = nil, options = nil, *args, &block)</span>
+					<span class="method-click-advice">click to toggle source</span>
+				
+				</div>
+
+				<div class="method-description">
+					
+					
+					
+
+					
+					<div class="method-source-code"
+						id="content-tag-with-obfuscation-source">
+<pre>
+    <span class="ruby-comment cmt"># File lib/bot-away/action_view/helpers/instance_tag.rb, line 62</span>
+62:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">content_tag_with_obfuscation</span>(<span class="ruby-identifier">name</span>, <span class="ruby-identifier">content_or_options_with_block</span> = <span class="ruby-keyword kw">nil</span>, <span class="ruby-identifier">options</span> = <span class="ruby-keyword kw">nil</span>, *<span class="ruby-identifier">args</span>, &amp;<span class="ruby-identifier">block</span>)
+63:     <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">block_given?</span>
+64:       <span class="ruby-identifier">content_tag_without_obfuscation</span>(<span class="ruby-identifier">name</span>, <span class="ruby-identifier">content_or_options_with_block</span>, <span class="ruby-identifier">options</span>, *<span class="ruby-identifier">args</span>, &amp;<span class="ruby-identifier">block</span>)
+65:     <span class="ruby-keyword kw">else</span>
+66:       <span class="ruby-comment cmt"># this should cover all Rails selects.</span>
+67:       <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">spinner</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">options</span> <span class="ruby-operator">&amp;&amp;</span> (<span class="ruby-identifier">options</span>.<span class="ruby-identifier">keys</span>.<span class="ruby-identifier">include?</span>(<span class="ruby-value str">'id'</span>) <span class="ruby-operator">||</span> <span class="ruby-identifier">options</span>.<span class="ruby-identifier">keys</span>.<span class="ruby-identifier">include?</span>(<span class="ruby-value str">'name'</span>))
+68:         <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">name</span> <span class="ruby-operator">==</span> <span class="ruby-value str">'select'</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-operator">!</span><span class="ruby-identifier">content_or_options_with_block</span>.<span class="ruby-identifier">empty?</span>
+69:           <span class="ruby-identifier">content</span> = <span class="ruby-value str">'&lt;option selected value=&quot;&quot;&gt;&lt;/option&gt;'</span>
+70:         <span class="ruby-keyword kw">else</span>
+71:           <span class="ruby-identifier">content</span> = <span class="ruby-value str">&quot;&quot;</span>
+72:         <span class="ruby-keyword kw">end</span>
+73:         <span class="ruby-identifier">disguise</span>(<span class="ruby-identifier">content_tag_without_obfuscation</span>(<span class="ruby-identifier">name</span>, <span class="ruby-identifier">content</span>, <span class="ruby-identifier">honeypot_options</span>(<span class="ruby-identifier">options</span>), *<span class="ruby-identifier">args</span>)) <span class="ruby-operator">+</span>
+74:                 <span class="ruby-identifier">content_tag_without_obfuscation</span>(<span class="ruby-identifier">name</span>, <span class="ruby-identifier">content_or_options_with_block</span>, <span class="ruby-identifier">obfuscate_options</span>(<span class="ruby-identifier">options</span>), *<span class="ruby-identifier">args</span>)
+75:       <span class="ruby-keyword kw">else</span>
+76:         <span class="ruby-identifier">content_tag_without_obfuscation</span>(<span class="ruby-identifier">name</span>, <span class="ruby-identifier">content_or_options_with_block</span>, <span class="ruby-identifier">options</span>, *<span class="ruby-identifier">args</span>)
+77:       <span class="ruby-keyword kw">end</span>
+78:     <span class="ruby-keyword kw">end</span>
+79:   <span class="ruby-keyword kw">end</span></pre>
+					</div>
+					
+				</div>
+
+				
+
+				
+			</div>
+
+		
+			<div id="disguise-method" class="method-detail ">
+				<a name="method-i-disguise"></a>
+
+				<div class="method-heading">
+				
+					<span class="method-name">disguise</span><span
+						class="method-args">(element)</span>
+					<span class="method-click-advice">click to toggle source</span>
+				
+				</div>
+
+				<div class="method-description">
+					
+					
+					
+
+					
+					<div class="method-source-code"
+						id="disguise-source">
+<pre>
+    <span class="ruby-comment cmt"># File lib/bot-away/action_view/helpers/instance_tag.rb, line 86</span>
+86:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">disguise</span>(<span class="ruby-identifier">element</span>)
+87:     <span class="ruby-keyword kw">case</span> <span class="ruby-identifier">rand</span>(<span class="ruby-value">3</span>)
+88:       <span class="ruby-keyword kw">when</span> <span class="ruby-value">0</span> <span class="ruby-comment cmt"># Hidden</span>
+89:         <span class="ruby-node">&quot;&lt;div style='display:none;'&gt;Leave this empty: #{element}&lt;/div&gt;&quot;</span>
+90:       <span class="ruby-keyword kw">when</span> <span class="ruby-value">1</span> <span class="ruby-comment cmt"># Off-screen</span>
+91:         <span class="ruby-node">&quot;&lt;div style='position:absolute;left:-1000px;top:-1000px;'&gt;Don't fill this in: #{element}&lt;/div&gt;&quot;</span>
+92:       <span class="ruby-keyword kw">when</span> <span class="ruby-value">2</span> <span class="ruby-comment cmt"># Negligible size</span>
+93:         <span class="ruby-node">&quot;&lt;div style='position:absolute;width:0px;height:1px;z-index:-1;color:transparent;overflow:hidden;'&gt;Keep this blank: #{element}&lt;/div&gt;&quot;</span>
+94:       <span class="ruby-keyword kw">else</span> <span class="ruby-comment cmt"># this should never happen?</span>
+95:         <span class="ruby-identifier">disguise</span>(<span class="ruby-identifier">element</span>)
+96:     <span class="ruby-keyword kw">end</span>
+97:   <span class="ruby-keyword kw">end</span></pre>
+					</div>
+					
+				</div>
+
+				
+
+				
+			</div>
+
+		
+			<div id="honeypot-options-method" class="method-detail ">
+				<a name="method-i-honeypot_options"></a>
+
+				<div class="method-heading">
+				
+					<span class="method-name">honeypot_options</span><span
+						class="method-args">(options)</span>
+					<span class="method-click-advice">click to toggle source</span>
+				
+				</div>
+
+				<div class="method-description">
+					
+					
+					
+
+					
+					<div class="method-source-code"
+						id="honeypot-options-source">
+<pre>
+    <span class="ruby-comment cmt"># File lib/bot-away/action_view/helpers/instance_tag.rb, line 19</span>
+19:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">honeypot_options</span>(<span class="ruby-identifier">options</span>)
+20:     <span class="ruby-identifier">add_default_name_and_id</span>(<span class="ruby-identifier">options</span>)
+21:     <span class="ruby-identifier">assuming</span>(<span class="ruby-identifier">spinner</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">options</span>) <span class="ruby-keyword kw">do</span>
+22:       <span class="ruby-identifier">options</span>[<span class="ruby-value str">'value'</span>] <span class="ruby-operator">&amp;&amp;=</span> <span class="ruby-value str">''</span>
+23:       <span class="ruby-identifier">options</span>[<span class="ruby-value str">'autocomplete'</span>] = <span class="ruby-value str">'off'</span>
+24:       <span class="ruby-identifier">options</span>[<span class="ruby-value str">'tabindex'</span>] = <span class="ruby-operator">-</span><span class="ruby-identifier">rand</span>(<span class="ruby-value">10</span>) <span class="ruby-operator">-</span> <span class="ruby-value">1</span>
+25:     <span class="ruby-keyword kw">end</span>
+26:   <span class="ruby-keyword kw">end</span></pre>
+					</div>
+					
+				</div>
+
+				
+
+				
+			</div>
+
+		
+			<div id="honeypot-tag-method" class="method-detail ">
+				<a name="method-i-honeypot_tag"></a>
+
+				<div class="method-heading">
+				
+					<span class="method-name">honeypot_tag</span><span
+						class="method-args">(name, options = nil, *args)</span>
+					<span class="method-click-advice">click to toggle source</span>
+				
+				</div>
+
+				<div class="method-description">
+					
+					
+					
+
+					
+					<div class="method-source-code"
+						id="honeypot-tag-source">
+<pre>
+    <span class="ruby-comment cmt"># File lib/bot-away/action_view/helpers/instance_tag.rb, line 33</span>
+33:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">honeypot_tag</span>(<span class="ruby-identifier">name</span>, <span class="ruby-identifier">options</span> = <span class="ruby-keyword kw">nil</span>, *<span class="ruby-identifier">args</span>)
+34:     <span class="ruby-identifier">tag_without_honeypot</span>(<span class="ruby-identifier">name</span>, <span class="ruby-identifier">honeypot_options</span>(<span class="ruby-identifier">options</span>.<span class="ruby-identifier">dup?</span> <span class="ruby-operator">||</span> {}), *<span class="ruby-identifier">args</span>)
+35:   <span class="ruby-keyword kw">end</span></pre>
+					</div>
+					
+				</div>
+
+				
+
+				
+			</div>
+
+		
+			<div id="initialize-with-spinner-method" class="method-detail ">
+				<a name="method-i-initialize_with_spinner"></a>
+
+				<div class="method-heading">
+				
+					<span class="method-name">initialize_with_spinner</span><span
+						class="method-args">(object_name, method_name, template_object, object = nil)</span>
+					<span class="method-click-advice">click to toggle source</span>
+				
+				</div>
+
+				<div class="method-description">
+					
+					
+					
+
+					
+					<div class="method-source-code"
+						id="initialize-with-spinner-source">
+<pre>
+   <span class="ruby-comment cmt"># File lib/bot-away/action_view/helpers/instance_tag.rb, line 4</span>
+4:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">initialize_with_spinner</span>(<span class="ruby-identifier">object_name</span>, <span class="ruby-identifier">method_name</span>, <span class="ruby-identifier">template_object</span>, <span class="ruby-identifier">object</span> = <span class="ruby-keyword kw">nil</span>)
+5:     <span class="ruby-identifier">initialize_without_spinner</span>(<span class="ruby-identifier">object_name</span>, <span class="ruby-identifier">method_name</span>, <span class="ruby-identifier">template_object</span>, <span class="ruby-identifier">object</span>)
+6:     <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">template_object</span>.<span class="ruby-identifier">controller</span>.<span class="ruby-identifier">send</span>(<span class="ruby-value">:protect_against_forgery?</span>)
+7:       <span class="ruby-ivar">@spinner</span> = <span class="ruby-constant">BotAway</span><span class="ruby-operator">::</span><span class="ruby-constant">Spinner</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">template_object</span>.<span class="ruby-identifier">request</span>.<span class="ruby-identifier">ip</span>, <span class="ruby-identifier">object_name</span>, <span class="ruby-identifier">template_object</span>.<span class="ruby-identifier">form_authenticity_token</span>)
+8:     <span class="ruby-keyword kw">end</span>
+9:   <span class="ruby-keyword kw">end</span></pre>
+					</div>
+					
+				</div>
+
+				
+
+				
+			</div>
+
+		
+			<div id="obfuscate-options-method" class="method-detail ">
+				<a name="method-i-obfuscate_options"></a>
+
+				<div class="method-heading">
+				
+					<span class="method-name">obfuscate_options</span><span
+						class="method-args">(options)</span>
+					<span class="method-click-advice">click to toggle source</span>
+				
+				</div>
+
+				<div class="method-description">
+					
+					
+					
+
+					
+					<div class="method-source-code"
+						id="obfuscate-options-source">
+<pre>
+    <span class="ruby-comment cmt"># File lib/bot-away/action_view/helpers/instance_tag.rb, line 11</span>
+11:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">obfuscate_options</span>(<span class="ruby-identifier">options</span>)
+12:     <span class="ruby-identifier">add_default_name_and_id</span>(<span class="ruby-identifier">options</span>)
+13:     <span class="ruby-identifier">assuming</span>(<span class="ruby-identifier">spinner</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">options</span>) <span class="ruby-keyword kw">do</span>
+14:       <span class="ruby-identifier">options</span>[<span class="ruby-value str">'name'</span>] <span class="ruby-operator">&amp;&amp;=</span> <span class="ruby-identifier">spinner</span>.<span class="ruby-identifier">encode</span>(<span class="ruby-identifier">options</span>[<span class="ruby-value str">'name'</span>])
+15:       <span class="ruby-identifier">options</span>[<span class="ruby-value str">'id'</span>] <span class="ruby-operator">&amp;&amp;=</span> <span class="ruby-identifier">spinner</span>.<span class="ruby-identifier">encode</span>(<span class="ruby-identifier">options</span>[<span class="ruby-value str">'id'</span>])
+16:     <span class="ruby-keyword kw">end</span>
+17:   <span class="ruby-keyword kw">end</span></pre>
+					</div>
+					
+				</div>
+
+				
+
+				
+			</div>
+
+		
+			<div id="obfuscated-tag-method" class="method-detail ">
+				<a name="method-i-obfuscated_tag"></a>
+
+				<div class="method-heading">
+				
+					<span class="method-name">obfuscated_tag</span><span
+						class="method-args">(name, options = nil, *args)</span>
+					<span class="method-click-advice">click to toggle source</span>
+				
+				</div>
+
+				<div class="method-description">
+					
+					
+					
+
+					
+					<div class="method-source-code"
+						id="obfuscated-tag-source">
+<pre>
+    <span class="ruby-comment cmt"># File lib/bot-away/action_view/helpers/instance_tag.rb, line 37</span>
+37:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">obfuscated_tag</span>(<span class="ruby-identifier">name</span>, <span class="ruby-identifier">options</span> = <span class="ruby-keyword kw">nil</span>, *<span class="ruby-identifier">args</span>)
+38:     <span class="ruby-identifier">tag_without_honeypot</span>(<span class="ruby-identifier">name</span>, <span class="ruby-identifier">obfuscate_options</span>(<span class="ruby-identifier">options</span>.<span class="ruby-identifier">dup?</span> <span class="ruby-operator">||</span> {}), *<span class="ruby-identifier">args</span>)
+39:   <span class="ruby-keyword kw">end</span></pre>
+					</div>
+					
+				</div>
+
+				
+
+				
+			</div>
+
+		
+			<div id="tag-with-honeypot-method" class="method-detail ">
+				<a name="method-i-tag_with_honeypot"></a>
+
+				<div class="method-heading">
+				
+					<span class="method-name">tag_with_honeypot</span><span
+						class="method-args">(name, options = nil, *args)</span>
+					<span class="method-click-advice">click to toggle source</span>
+				
+				</div>
+
+				<div class="method-description">
+					
+					
+					
+
+					
+					<div class="method-source-code"
+						id="tag-with-honeypot-source">
+<pre>
+    <span class="ruby-comment cmt"># File lib/bot-away/action_view/helpers/instance_tag.rb, line 41</span>
+41:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">tag_with_honeypot</span>(<span class="ruby-identifier">name</span>, <span class="ruby-identifier">options</span> = <span class="ruby-keyword kw">nil</span>, *<span class="ruby-identifier">args</span>)
+42:     <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">spinner</span>
+43:       <span class="ruby-identifier">obfuscated_tag</span>(<span class="ruby-identifier">name</span>, <span class="ruby-identifier">options</span>, *<span class="ruby-identifier">args</span>) <span class="ruby-operator">+</span> <span class="ruby-identifier">disguise</span>(<span class="ruby-identifier">honeypot_tag</span>(<span class="ruby-identifier">name</span>, <span class="ruby-identifier">options</span>, *<span class="ruby-identifier">args</span>))
+44:     <span class="ruby-keyword kw">else</span>
+45:       <span class="ruby-identifier">tag_without_honeypot</span>(<span class="ruby-identifier">name</span>, <span class="ruby-identifier">options</span>, *<span class="ruby-identifier">args</span>)
+46:     <span class="ruby-keyword kw">end</span>
+47:   <span class="ruby-keyword kw">end</span></pre>
+					</div>
+					
+				</div>
+
+				
+
+				
+			</div>
+
+		
+			<div id="to-label-tag-with-obfuscation-method" class="method-detail ">
+				<a name="method-i-to_label_tag_with_obfuscation"></a>
+
+				<div class="method-heading">
+				
+					<span class="method-name">to_label_tag_with_obfuscation</span><span
+						class="method-args">(text = nil, options = {})</span>
+					<span class="method-click-advice">click to toggle source</span>
+				
+				</div>
+
+				<div class="method-description">
+					
+					<p>
+Special case
+</p>
+					
+
+					
+					<div class="method-source-code"
+						id="to-label-tag-with-obfuscation-source">
+<pre>
+    <span class="ruby-comment cmt"># File lib/bot-away/action_view/helpers/instance_tag.rb, line 50</span>
+50:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">to_label_tag_with_obfuscation</span>(<span class="ruby-identifier">text</span> = <span class="ruby-keyword kw">nil</span>, <span class="ruby-identifier">options</span> = {})
+51:     <span class="ruby-comment cmt"># TODO: Can this be simplified? It's pretty similar to to_label_tag_without_obfuscation...</span>
+52:     <span class="ruby-identifier">options</span> = <span class="ruby-identifier">options</span>.<span class="ruby-identifier">stringify_keys</span>
+53:     <span class="ruby-identifier">tag_value</span> = <span class="ruby-identifier">options</span>.<span class="ruby-identifier">delete</span>(<span class="ruby-value str">&quot;value&quot;</span>)
+54:     <span class="ruby-identifier">name_and_id</span> = <span class="ruby-identifier">options</span>.<span class="ruby-identifier">dup</span>
+55:     <span class="ruby-identifier">name_and_id</span>[<span class="ruby-value str">&quot;id&quot;</span>] = <span class="ruby-identifier">name_and_id</span>[<span class="ruby-value str">&quot;for&quot;</span>]
+56:     <span class="ruby-identifier">add_default_name_and_id_for_value</span>(<span class="ruby-identifier">tag_value</span>, <span class="ruby-identifier">name_and_id</span>)
+57:     <span class="ruby-identifier">options</span>[<span class="ruby-value str">&quot;for&quot;</span>] <span class="ruby-operator">||=</span> <span class="ruby-identifier">name_and_id</span>[<span class="ruby-value str">&quot;id&quot;</span>]
+58:     <span class="ruby-identifier">options</span>[<span class="ruby-value str">&quot;for&quot;</span>] = <span class="ruby-identifier">spinner</span>.<span class="ruby-identifier">encode</span>(<span class="ruby-identifier">options</span>[<span class="ruby-value str">&quot;for&quot;</span>]) <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">spinner</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">options</span>[<span class="ruby-value str">&quot;for&quot;</span>]
+59:     <span class="ruby-identifier">to_label_tag_without_obfuscation</span>(<span class="ruby-identifier">text</span>, <span class="ruby-identifier">options</span>)
+60:   <span class="ruby-keyword kw">end</span></pre>
+					</div>
+					
+				</div>
+
+				
+
+				
+			</div>
+
+		
+		</div>
+	
+
+	</div>
+
+
+	<div id="rdoc-debugging-section-dump" class="debugging-section">
+	
+		<p>Disabled; run with --debug to generate this.</p>
+	
+	</div>
+
+	<div id="validator-badges">
+		<p><small><a href="http://validator.w3.org/check/referer">[Validate]</a></small></p>
+		<p><small>Generated with the <a href="http://deveiate.org/projects/Darkfish-Rdoc/">Darkfish
+			Rdoc Generator</a> 1.1.6</small>.</p>
+	</div>
+
+</body>
+</html>
+

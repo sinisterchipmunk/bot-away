@@ -1,0 +1,348 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>Module: ObfuscationHelper</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <meta http-equiv="Content-Script-Type" content="text/javascript" />
+  <link rel="stylesheet" href=".././rdoc-style.css" type="text/css" media="screen" />
+  <script type="text/javascript">
+  // <![CDATA[
+
+  function popupCode( url ) {
+    window.open(url, "Code", "resizable=yes,scrollbars=yes,toolbar=no,status=no,height=150,width=400")
+  }
+
+  function toggleCode( id ) {
+    if ( document.getElementById )
+      elem = document.getElementById( id );
+    else if ( document.all )
+      elem = eval( "document.all." + id );
+    else
+      return false;
+
+    elemStyle = elem.style;
+    
+    if ( elemStyle.display != "block" ) {
+      elemStyle.display = "block"
+    } else {
+      elemStyle.display = "none"
+    }
+
+    return true;
+  }
+  
+  // Make codeblocks hidden by default
+  document.writeln( "<style type=\"text/css\">div.method-source-code { display: none }</style>" )
+  
+  // ]]>
+  </script>
+
+</head>
+<body>
+
+
+
+    <div id="classHeader">
+        <table class="header-table">
+        <tr class="top-aligned-row">
+          <td><strong>Module</strong></td>
+          <td class="class-name-in-header">ObfuscationHelper</td>
+        </tr>
+        <tr class="top-aligned-row">
+            <td><strong>In:</strong></td>
+            <td>
+                <a href="../files/spec/support/obfuscation_helper_rb.html">
+                spec/support/obfuscation_helper.rb
+                </a>
+        <br />
+            </td>
+        </tr>
+
+        </table>
+    </div>
+  <!-- banner header -->
+
+  <div id="bodyContent">
+
+
+
+  <div id="contextContent">
+
+
+
+   </div>
+
+    <div id="method-list">
+      <h3 class="section-bar">Methods</h3>
+
+      <div class="name-list">
+      <a href="#M000083">builder</a>&nbsp;&nbsp;
+      <a href="#M000080">controller_class</a>&nbsp;&nbsp;
+      <a href="#M000081">dump</a>&nbsp;&nbsp;
+      <a href="#M000082">included</a>&nbsp;&nbsp;
+      <a href="#M000087">method_name</a>&nbsp;&nbsp;
+      <a href="#M000084">obfuscated_id</a>&nbsp;&nbsp;
+      <a href="#M000085">obfuscated_name</a>&nbsp;&nbsp;
+      <a href="#M000086">object_name</a>&nbsp;&nbsp;
+      </div>
+    </div>
+
+  </div>
+
+
+    <!-- if includes -->
+
+    <div id="section">
+
+    <div id="class-list">
+      <h3 class="section-bar">Classes and Modules</h3>
+
+      Module <a href="ObfuscationHelper/ClassMethods.html" class="link">ObfuscationHelper::ClassMethods</a><br />
+
+    </div>
+
+
+
+
+      
+
+
+    <!-- if method_list -->
+    <div id="methods">
+      <h3 class="section-bar">Public Class methods</h3>
+
+      <div id="method-M000082" class="method-detail">
+        <a name="M000082"></a>
+
+        <div class="method-heading">
+          <a href="#M000082" class="method-signature">
+          <span class="method-name">included</span><span class="method-args">(base)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000082-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000082-source">
+<pre>
+<span class="ruby-comment cmt"># File spec/support/obfuscation_helper.rb, line 13</span>
+    <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">included</span>(<span class="ruby-identifier">base</span>)
+      <span class="ruby-identifier">base</span>.<span class="ruby-identifier">before</span>(<span class="ruby-identifier">:each</span>) <span class="ruby-keyword kw">do</span>
+        <span class="ruby-identifier">session</span>[<span class="ruby-identifier">:_csrf_token</span>] = <span class="ruby-value str">'1234'</span>
+        <span class="ruby-identifier">controller</span>.<span class="ruby-identifier">stub!</span>(<span class="ruby-identifier">:protect_from_forgery?</span>).<span class="ruby-identifier">and_return</span>(<span class="ruby-keyword kw">true</span>)
+        <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">respond_to?</span>(<span class="ruby-identifier">:view</span>)
+          <span class="ruby-identifier">controller</span>.<span class="ruby-identifier">request</span>.<span class="ruby-identifier">path_parameters</span>[<span class="ruby-value str">&quot;action&quot;</span>] <span class="ruby-operator">||=</span> <span class="ruby-value str">&quot;index&quot;</span>
+          <span class="ruby-identifier">controller</span>.<span class="ruby-identifier">action_name</span> <span class="ruby-operator">||=</span> <span class="ruby-value str">&quot;index&quot;</span>
+          <span class="ruby-identifier">view</span>.<span class="ruby-identifier">stub!</span>(<span class="ruby-identifier">:request_forgery_protection_token</span>).<span class="ruby-identifier">and_return</span>(<span class="ruby-identifier">:authenticity_token</span>)
+          <span class="ruby-identifier">view</span>.<span class="ruby-identifier">stub!</span>(<span class="ruby-identifier">:form_authenticity_token</span>).<span class="ruby-identifier">and_return</span>(<span class="ruby-value str">'1234'</span>)
+        <span class="ruby-keyword kw">else</span>
+<span class="ruby-comment cmt">#          response.stub!(:request_forgery_protection_token).and_return(:authenticity_token)</span>
+<span class="ruby-comment cmt">#          response.stub!(:form_authenticity_token).and_return('1234')</span>
+        <span class="ruby-keyword kw">end</span>
+      <span class="ruby-keyword kw">end</span>
+    <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <h3 class="section-bar">Public Instance methods</h3>
+
+      <div id="method-M000083" class="method-detail">
+        <a name="M000083"></a>
+
+        <div class="method-heading">
+          <a href="#M000083" class="method-signature">
+          <span class="method-name">builder</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000083-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000083-source">
+<pre>
+<span class="ruby-comment cmt"># File spec/support/obfuscation_helper.rb, line 30</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">builder</span>
+    <span class="ruby-keyword kw">return</span> <span class="ruby-ivar">@builder</span> <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@builder</span>
+    <span class="ruby-keyword kw">if</span> <span class="ruby-constant">RAILS_VERSION</span> <span class="ruby-operator">&lt;</span> <span class="ruby-value str">&quot;3.0&quot;</span>
+      <span class="ruby-identifier">response</span> = <span class="ruby-constant">TestController</span>.<span class="ruby-identifier">call</span>(<span class="ruby-constant">Rack</span><span class="ruby-operator">::</span><span class="ruby-constant">MockRequest</span>.<span class="ruby-identifier">env_for</span>(<span class="ruby-value str">'/'</span>).<span class="ruby-identifier">merge</span>({<span class="ruby-value str">'REQUEST_URI'</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">'/'</span>,
+                                                                           <span class="ruby-value str">'REMOTE_ADDR'</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">'127.0.0.1'</span>}))
+      <span class="ruby-identifier">response</span>.<span class="ruby-identifier">template</span>.<span class="ruby-identifier">controller</span>.<span class="ruby-identifier">request_forgery_protection_token</span> = <span class="ruby-identifier">:authenticity_token</span>
+      <span class="ruby-identifier">response</span>.<span class="ruby-identifier">template</span>.<span class="ruby-identifier">controller</span>.<span class="ruby-identifier">session</span>[<span class="ruby-identifier">:_csrf_token</span>] = <span class="ruby-value str">'1234'</span>
+      <span class="ruby-ivar">@builder</span> = <span class="ruby-constant">ActionView</span><span class="ruby-operator">::</span><span class="ruby-constant">Helpers</span><span class="ruby-operator">::</span><span class="ruby-constant">FormBuilder</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">:object_name</span>, <span class="ruby-constant">MockObject</span>.<span class="ruby-identifier">new</span>, <span class="ruby-identifier">response</span>.<span class="ruby-identifier">template</span>, {}, <span class="ruby-identifier">proc</span> {})
+    <span class="ruby-keyword kw">else</span>
+      <span class="ruby-ivar">@builder</span> = <span class="ruby-constant">ActionView</span><span class="ruby-operator">::</span><span class="ruby-constant">Base</span>.<span class="ruby-identifier">default_form_builder</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">:object_name</span>, <span class="ruby-constant">MockObject</span>.<span class="ruby-identifier">new</span>, <span class="ruby-identifier">view</span>, {}, <span class="ruby-identifier">proc</span> {})
+    <span class="ruby-keyword kw">end</span>
+  <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000080" class="method-detail">
+        <a name="M000080"></a>
+
+        <div class="method-heading">
+          <a href="#M000080" class="method-signature">
+          <span class="method-name">controller_class</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000080-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000080-source">
+<pre>
+<span class="ruby-comment cmt"># File spec/support/obfuscation_helper.rb, line 2</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">controller_class</span>
+    <span class="ruby-constant">TestController</span>
+  <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000081" class="method-detail">
+        <a name="M000081"></a>
+
+        <div class="method-heading">
+          <a href="#M000081" class="method-signature">
+          <span class="method-name">dump</span><span class="method-args">() {|| ...}</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000081-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000081-source">
+<pre>
+<span class="ruby-comment cmt"># File spec/support/obfuscation_helper.rb, line 6</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">dump</span>
+    <span class="ruby-identifier">result</span> = <span class="ruby-keyword kw">yield</span>
+    <span class="ruby-identifier">puts</span> <span class="ruby-identifier">result</span> <span class="ruby-keyword kw">if</span> <span class="ruby-constant">ENV</span>[<span class="ruby-value str">'DUMP'</span>]
+    <span class="ruby-identifier">result</span>
+  <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000087" class="method-detail">
+        <a name="M000087"></a>
+
+        <div class="method-heading">
+          <a href="#M000087" class="method-signature">
+          <span class="method-name">method_name</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000087-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000087-source">
+<pre>
+<span class="ruby-comment cmt"># File spec/support/obfuscation_helper.rb, line 57</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">method_name</span>
+    <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">class</span>.<span class="ruby-identifier">method_name</span>
+  <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000084" class="method-detail">
+        <a name="M000084"></a>
+
+        <div class="method-heading">
+          <a href="#M000084" class="method-signature">
+          <span class="method-name">obfuscated_id</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+this is the obfuscated version of the string
+&quot;object_name_method_name&quot;
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000084-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000084-source">
+<pre>
+<span class="ruby-comment cmt"># File spec/support/obfuscation_helper.rb, line 44</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">obfuscated_id</span>
+    <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">class</span>.<span class="ruby-identifier">obfuscated_id</span>
+  <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000085" class="method-detail">
+        <a name="M000085"></a>
+
+        <div class="method-heading">
+          <a href="#M000085" class="method-signature">
+          <span class="method-name">obfuscated_name</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+this is the obfuscated version of the string &quot;<a
+href="ObfuscationHelper.html#M000086">object_name</a>[<a
+href="ObfuscationHelper.html#M000087">method_name</a>]&quot;
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000085-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000085-source">
+<pre>
+<span class="ruby-comment cmt"># File spec/support/obfuscation_helper.rb, line 49</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">obfuscated_name</span>
+    <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">class</span>.<span class="ruby-identifier">obfuscated_name</span>
+  <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000086" class="method-detail">
+        <a name="M000086"></a>
+
+        <div class="method-heading">
+          <a href="#M000086" class="method-signature">
+          <span class="method-name">object_name</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000086-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000086-source">
+<pre>
+<span class="ruby-comment cmt"># File spec/support/obfuscation_helper.rb, line 53</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">object_name</span>
+    <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">class</span>.<span class="ruby-identifier">object_name</span>
+  <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+
+    </div>
+
+
+  </div>
+
+
+<div id="validator-badges">
+  <p><small><a href="http://validator.w3.org/check/referer">[Validate]</a></small></p>
+</div>
+
+</body>
+</html>
