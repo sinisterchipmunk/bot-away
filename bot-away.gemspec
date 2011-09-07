@@ -4,7 +4,7 @@ require "bot-away/version"
 
 Gem::Specification.new do |s|
   s.name        = "bot-away"
-  s.version     = Bot::Away::VERSION
+  s.version     = BotAway::VERSION
   s.authors     = ["Colin MacKenzie IV"]
   s.email       = ["sinisterchipmunk@gmail.com"]
   s.homepage    = "http://github.com/sinisterchipmunk/bot-away"
