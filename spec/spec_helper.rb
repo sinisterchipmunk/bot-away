@@ -36,7 +36,12 @@ rescue
 
   class BotAwayApp < Rails::Application
     config.session_store :cookie_store, :key => "_myapp_session", :secret => "12345"*6
-    paths.app.views = File.expand_path(File.join(File.dirname(__FILE__), "support/views"))
+    # gets rid of deprecation warnings
+    if Rails::VERSION::STRING < "3.1"
+      paths.app.views = File.expand_path(File.join(File.dirname(__FILE__), "support/views"))
+    else
+      paths['app/views'] = File.expand_path(File.join(File.dirname(__FILE__), "support/views"))
+    end
     config.active_support.deprecation = :stderr
   end
   BotAwayApp.initialize!
