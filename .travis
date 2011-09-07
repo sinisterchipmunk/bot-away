@@ -7,7 +7,7 @@ rvm:
   - ruby-head
   - rbx-2.0
 
-env:
-  - "BUNDLE_GEMFILE=gemfiles/rails2"
-  - "BUNDLE_GEMFILE=gemfiles/rails3"
+gemfile:
+  - gemfiles/Gemfile.rails-2.3.x
+  - gemfiles/Gemfile.rails-3.0.x
 

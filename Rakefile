@@ -1,4 +1,4 @@
-ENV['BUNDLE_GEMFILE'] ||= File.expand_path("gemfiles/rails3", File.dirname(__FILE__))
+ENV['BUNDLE_GEMFILE'] ||= File.expand_path("gemfiles/Gemfile.rails-3.0.x", File.dirname(__FILE__))
 require 'bundler/gem_tasks'
 
 require File.join(File.dirname(__FILE__), "spec/rspec_version")
