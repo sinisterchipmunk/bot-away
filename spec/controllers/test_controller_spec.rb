@@ -1,54 +1,23 @@
 require 'spec_helper'
 
 describe TestController do
-  if RAILS_VERSION < "3.0"
-    # rails 2
-
-    def setup_default_controller
-      @request = ActionController::TestRequest.new
-      # can the authenticity token so that we can predict the generated element names
-      @request.session[:_csrf_token] = 'aVjGViz+pIphXt2pxrWfXgRXShOI0KXOILR23yw0WBo='
-      @request.remote_addr = '208.77.188.166' # example.com
-      @response = ActionController::TestResponse.new
-      @controller = TestController.new
-    
-      @controller.request = @request
-      @controller.params = {}
-      @controller.send(:initialize_current_url)
-      @controller
-    end
-  
-    include ActionController::TestProcess
-
-    def controller
-      @controller
-    end
-  else
-    # rails 3
-    def setup_default_controller
-      @controller.request.session[:_csrf_token] = 'aVjGViz+pIphXt2pxrWfXgRXShOI0KXOILR23yw0WBo='
-      @controller.request.remote_addr = '208.77.188.166'
-      
-      @controller
-    end
-    
-    #extend ActiveSupport::Concern
-    #include ActionController::TestCase::Behavior
-    delegate :session, :to => :controller
+  render_views
+  before :each do
+    request.session[:_csrf_token] = 'aVjGViz+pIphXt2pxrWfXgRXShOI0KXOILR23yw0WBo='
+    request.remote_addr = '208.77.188.166'
   end
-
+  
   def prepare!(action = 'index', method = 'get')
     controller
-    send(method, action)
-    if RAILS_VERSION < "3.0"
-      if @response.template.instance_variable_get("@exception")
-        raise @response.template.instance_variable_get("@exception")
+    send(method, action).tap do
+      if RAILS_VERSION < "3.0"
+        if response.template.instance_variable_get("@exception")
+          raise response.template.instance_variable_get("@exception")
+        end
       end
     end
   end
 
-  before(:each) { setup_default_controller }
-  
   after :each do
     # effectively disables forgery protection.
     TestController.request_forgery_protection_token = nil
@@ -63,7 +32,7 @@ describe TestController do
       end
 
       it "should work?" do
-        #puts @response.body
+        response.should have_selector("select")
       end
     end
 
@@ -73,7 +42,7 @@ describe TestController do
       end
 
       it "should work?" do
-        #puts @response.body
+        #puts response.body
       end
     end
   end
@@ -92,7 +61,7 @@ describe TestController do
                '842d8d1c80014ce9f3d974614338605c' => 'some_value'
              }
       post 'proc_form', form
-      #puts @response.body
+      #puts response.body
       controller.params[:object_name].should == { 'method_name' => 'some_value' }
     end
     
@@ -174,14 +143,14 @@ describe TestController do
                'object_name' => { 'method_name' => 'test' }
              }
       post 'proc_form', form
-      # puts @response.body
+      # puts response.body
       controller.params.should_not == { 'suspected_bot' => true }
       controller.params[:object_name].should == { 'method_name' => 'test' }
     end
 
     it "produces non-obfuscated form elements" do
       prepare! if RAILS_VERSION >= "3.0"
-      @response.body.should_not match(/<\/div><input/)
+      response.body.should_not match(/<\/div><input/)
     end
   end
 end

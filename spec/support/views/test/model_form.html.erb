@@ -3,4 +3,8 @@
     <%=f.label :subject%><br/>
     <%=f.text_field :subject%>
   </p>
+  
+  <p>
+    <%= f.select :subscribers, [["one", '1'], ['two', '2']] %>
+  </p>
 <%end%>

@@ -9,10 +9,9 @@ require 'bot-away/param_parser'
 require 'bot-away/action_dispatch/request'
 require 'bot-away/action_view/helpers/instance_tag'
 require 'bot-away/spinner'
+require 'bot-away/version'
 
 module BotAway
-  VERSION = File.read(File.join(File.dirname(__FILE__), "../VERSION")) unless defined?(VERSION)
-  
   class << self
     attr_accessor :show_honeypots, :dump_params
     

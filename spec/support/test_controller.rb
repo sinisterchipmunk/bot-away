@@ -1,6 +1,10 @@
 class Post
   attr_reader :subject, :body, :subscribers
   
+  def subscribers
+    []
+  end
+  
   if defined?(ActiveModel)
     extend ActiveModel::Naming
     
