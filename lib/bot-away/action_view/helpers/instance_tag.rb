@@ -35,11 +35,11 @@ class ActionView::Helpers::InstanceTag
   end
   
   def honeypot_tag(name, options = nil, *args)
-    tag_without_honeypot(name, honeypot_options(options.dup? || {}), *args)
+    tag_without_honeypot(name, honeypot_options(options ? options.dup : {}), *args)
   end
 
   def obfuscated_tag(name, options = nil, *args)
-    tag_without_honeypot(name, obfuscate_options(options.dup? || {}), *args)
+    tag_without_honeypot(name, obfuscate_options(options ? options.dup : {}), *args)
   end
 
   def tag_with_honeypot(name, options = nil, *args)

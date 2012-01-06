@@ -3,7 +3,6 @@ $:.unshift(File.dirname(__FILE__)) unless
 
 require 'action_controller'
 require 'action_view'
-require 'sc-core-ext'
 
 require 'bot-away/param_parser'
 require 'bot-away/action_dispatch/request'
@@ -32,7 +31,9 @@ module BotAway
     # excluded? will also check the current Rails run mode against disabled_for[:mode]
     def excluded?(options)
       options = options.stringify_keys
-      nonparams = options.stringify_keys.without('object_name', 'method_name')
+      nonparams = options.stringify_keys
+      nonparams.delete 'object_name'
+      nonparams.delete 'method_name'
       (options['object_name'] && options['method_name'] &&
               unfiltered_params_include?(options['object_name'], options['method_name'])) || disabled_for?(nonparams)
     end
