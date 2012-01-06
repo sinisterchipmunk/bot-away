@@ -46,15 +46,16 @@ Whether you're on Rails 2 or Rails 3, adding Bot-Away to your project is as easy
 
 === Rails 2.x
 
-In your Rails config/environment.rb:
+The Rails 2.x version will still receive bug fixes, but is no longer under active development. To use bot-away with Rails 2, pull in bot-away v1.x:
 
-  config.gem 'bot-away'
+  # in config/environment.rb:
+  config.gem 'bot-away', '~> 1.2'
 
 === Rails 3
 
 In your Gemfile:
 
-  gem 'bot-away'
+  gem 'bot-away', '~> 2.0'
 
 That's it.
 

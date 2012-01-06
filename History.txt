@@ -1,3 +1,7 @@
+=== 2.0.0 (Not Yet Released)
+* Bumped major version number to signify that the version for Rails v2.x is no longer under active development.
+  Use v1.2.x under Rails 2.
+
 === 1.2.0 2010-10-14
 * Enhancements:
   * Rails 3 / RSpec 2 support! Yay!
