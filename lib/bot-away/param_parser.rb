@@ -15,7 +15,6 @@ module BotAway
       
       if authenticity_token
         if catch(:bastard) { deobfuscate! } == :took_the_bait
-          #params.clear
           # don't clear the controller or action keys, as Rails 3 needs them
           params.keys.each { |key| params.delete(key) unless %w(controller action).include?(key) }
           params[:suspected_bot] = true

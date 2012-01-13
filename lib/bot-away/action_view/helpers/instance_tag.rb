@@ -102,7 +102,7 @@ class ActionView::Helpers::InstanceTag
         element.replace "<div style='position:absolute;left:-1000px;top:-1000px;'>Don't fill this in: #{element}</div>"
       when 2 # Negligible size
         element.replace "<div style='position:absolute;width:0px;height:1px;z-index:-1;color:transparent;overflow:hidden;'>Keep this blank: #{element}</div>"
-      else # this should never happen?
+      else   # this should never happen?
         disguise(element)
     end
   end

@@ -10,7 +10,7 @@ request.module_eval do
         BotAway::ParamParser.new(ip, parameters_without_deobfuscation.dup).params
       end
     else
-      Rails.logger.info parameters_without_deobfuscation.inspect
+      # Rails.logger.info parameters_without_deobfuscation.inspect
       BotAway::ParamParser.new(ip, parameters_without_deobfuscation.dup).params
     end
   end

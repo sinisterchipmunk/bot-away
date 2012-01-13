@@ -55,8 +55,6 @@ module BotAway
     def disabled_for?(options)
       return false if @disabled_for.nil? || options.empty?
       options = options.stringify_keys
-#      p options
-#      p "===="
       @disabled_for.each do |set|
         if set.key?('mode')
           next unless ENV['RAILS_ENV'] == set['mode'].to_s
@@ -66,7 +64,6 @@ module BotAway
           # and that means we need to check the next few conditions.
         end
         
-#        p set
         if set.key?('controller') && set.key?('action')
           return true if set['controller'] == options['controller'] && set['action'] == options['action']
         elsif set.key?('controller') && !set.key?('action')
