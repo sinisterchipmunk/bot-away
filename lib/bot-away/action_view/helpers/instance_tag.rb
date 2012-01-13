@@ -102,11 +102,11 @@ class ActionView::Helpers::InstanceTag
     # TODO a way to customize the hidden tags too
     case honeypot_index % 3
       when 0 # Hidden
-        element.replace "<div style='display:none;'>#{honeypot_warning_message}#{element}</div>"
+        element.replace "<div style='display:none;'>#{honeypot_warning_tag}#{element}</div>"
       when 1 # Off-screen
-        element.replace "<div style='position:absolute;left:-1000px;top:-1000px;'>#{honeypot_warning_message}#{element}</div>"
+        element.replace "<div style='position:absolute;left:-1000px;top:-1000px;'>#{honeypot_warning_tag}#{element}</div>"
       else   # Negligible size
-        element.replace "<div style='position:absolute;width:0px;height:1px;z-index:-1;color:transparent;overflow:hidden;'>#{honeypot_warning_message}#{element}</div>"
+        element.replace "<div style='position:absolute;width:0px;height:1px;z-index:-1;color:transparent;overflow:hidden;'>#{honeypot_warning_tag}#{element}</div>"
     end
   end
   

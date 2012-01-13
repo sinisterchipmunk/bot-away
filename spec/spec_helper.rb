@@ -13,6 +13,7 @@ require 'bot-away'
 
 class BotAway::TestRailsApp < Rails::Application
   base = File.expand_path("test_rails_app", File.dirname(__FILE__))
+  config.secret_token = "some secret phrase of at least 30 characters" * 30
   config.active_support.deprecation = :log
   config.paths['app/controllers'] = File.join(base, 'app/controllers')
   config.paths['app/views']       = File.join(base, 'app/views')
@@ -29,6 +30,7 @@ Rails.application.routes.finalize!
 Dir[File.expand_path('test_rails_app/**/*.rb', File.dirname(__FILE__))].each { |f| require f }
 
 require 'rspec/rails'
+require 'capybara/rails'
 
 RSpec.configure do |config|
   config.before do

@@ -9,6 +9,10 @@ describe ActionView::Helpers::InstanceTag do
     subject { default_instance_tag.honeypot_tag(:input, :type => :text, :name => 'name') }
     it { should be_html_safe }
   end
+  
+  it "should have bdo in the instance tag" do
+    subject.tag(:input, :type => :text).to_s.should =~ /<bdo/
+  end
 
   context "honeypot warning text" do
     before { default_instance_tag.honeypot_index = 1 } # always produce the same honeypot
