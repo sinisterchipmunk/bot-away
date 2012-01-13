@@ -53,8 +53,7 @@ The Rails 2.x version will still receive bug fixes, but is no longer under activ
 
 ### Rails 3
 
-In your Gemfile:
-
+  # in Gemfile
   gem 'bot-away', '~> 2.0'
 
 That's it.
@@ -79,8 +78,7 @@ And here's how to do the same for a specific action, leaving Bot-Away active for
 
   BotAway.disabled_for :controller => 'sessions', :action => 'login'
   
-You can also disable Bot-Away for a given action in every controller, but I'm not sure how useful that is. In any case,
-here's how to do it:
+You can also disable Bot-Away for a given action in every controller, but I'm not sure how useful that is. In any case, here's how to do it:
 
   BotAway.disabled_for :action => 'index' # all we did was omit :controller
   
@@ -130,37 +128,31 @@ You can specify this option as many times as you need to do.
 
 ### Showing the Honeypots
 
-Generally, you want to keep honeypots hidden, because they will clutter your interface and confuse your users. However,
-there was an issue awhile back (near the 1.0 release of Bot-Away) where Safari was a bit smarter than its competitors,
-successfully prefilling honeypots with data where Chrome, FF and IE all failed to do so. Eventually, I added the ability
-to show honeypots on the screen, proving my suspicion that Safari was being "too smart". After resolving the issue, I
-decided to leave this option available to Bot-Away as a debugging tool for handling future issues. To enable:
+Generally, you want to keep honeypots hidden, because they will clutter your interface and confuse your users. However, there was an issue awhile back (near the 1.0 release of Bot-Away) where Safari was a bit smarter than its competitors, successfully prefilling honeypots with data where Chrome, FF and IE all failed to do so. Eventually, I added the ability to show honeypots on the screen, proving my suspicion that Safari was being "too smart". After resolving the issue, I decided to leave this option available to Bot-Away as a debugging tool for handling future issues. To enable:
     
   BotAway.show_honeypots = true
 
 ### Dumping Params
 
 Like showing honeypots, above, this option is only useful if you're debugging issues in development
-mode. You can enable this if you need to see exactly what Rails sees _before_ Bot-Away steps in to intervene. Enabling
-this is a major security risk in production mode because it'll include sensitive data such as passwords; but it's very
-useful for debugging false positives (that is, Bot-Away thinks you're a bot, but you're not).
+mode. You can enable this if you need to see exactly what Rails sees _before_ Bot-Away steps in to intervene. Enabling this is a major security risk in production mode because it'll include sensitive data such as passwords; but it's very useful for debugging false positives (that is, Bot-Away thinks you're a bot, but you're not).
 
   BotAway.dump_params = true
   
 ## Features / Problems:
 
 * Wherever protection from forgery is not enabled in your Rails app, the Rails forms will be generated as if this gem
-  did not exist. That means hashed elements won't be generated, honeypots won't be generated, and posted forms will not
-  be intercepted.
+  did not exist. That means hashed elements won't be generated, honeypots won't be generated, and posted forms will
+  not be intercepted.
 
 * By default, protection from forgery is enabled for all Rails controllers, so by default the above-mentioned checks
   will also be triggered. For more details on forgery protection, see:
   http://api.rubyonrails.org/classes/ActionController/RequestForgeryProtection/ClassMethods.html
   
-* The techniques implemented by this library will be very difficult for a spambot to circumvent. However, keep in mind
-  that since the pages have to be machine-readable by definition, and since this gem has to follow certain protocols
-  in order to avoid confusing lots of humans (such as hiding the honeypots), it is always theoretically possible for
-  a spambot to get around it. It's just very, very difficult.
+* The techniques implemented by this library will be very difficult for a spambot to circumvent. However, keep in
+  mind that since the pages have to be machine-readable by definition, and since this gem has to follow certain
+  protocols in order to avoid confusing lots of humans (such as hiding the honeypots), it is always theoretically
+  possible for a spambot to get around it. It's just very, very difficult.
 
 * I feel this library has been fairly well-tested (99.5% test coverage as of this writing), but if you discover a bug
   and can't be bothered to let me know about it (or you just don't have time to wait for a fix or fix it yourself),
@@ -173,8 +165,9 @@ useful for debugging false positives (that is, Bot-Away thinks you're a bot, but
 
 * Currently, there's no direct support for per-request configuration of unfiltered params. This is mostly due to
   Bot-Away's low-level approach to filtering bots: the params have already been filtered by the time your controller
-  is created. I'd like to revisit per-request filtering sometime in the future, once I figure out the best way to do it.
+  is created. I'd like to revisit per-request filtering sometime in the future, once I figure out the best way to do
+  it.
 
 ## Requirements:
 
-* Rails 2.3.5 or better.
+* Rails 3.0 or better.
