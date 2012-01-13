@@ -88,7 +88,7 @@ to have Bot-Away disabled entirely so that you're not confused by MD5 tags and l
 
     BotAway.disabled_for :mode => 'development'
     
-### Accepting Unfiltered Params
+## Accepting Unfiltered Params
 
 Sometimes you need to tell Bot-Away to explicitly _not_ filter a parameter. This is most notable with fields you've
 dynamically added via JavaScript, since those can confuse Bot-Away's catching techniques. (It tends to think Javascript-

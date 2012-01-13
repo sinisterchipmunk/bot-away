@@ -18,7 +18,8 @@ class BotAway::TestRailsApp < Rails::Application
   config.paths['app/views']       = File.join(base, 'app/views')
   config.paths['config/locales']  = File.join(base, 'config/locales/bot-away-overrides.yml')
   if Rails::VERSION::MINOR == 0 # rails 3.0.x
-    config.paths.app.views = File.join(base, 'app/views')
+    config.paths.app.views        = File.join(base, 'app/views')
+    config.paths.config.locales   = File.join(base, 'config/locales/bot-away-overrides.yml')
   end
 end
 
