@@ -63,12 +63,9 @@ That's it.
 Sometimes you don't care about whether or not a bot is filling out a particular form. Even more, sometimes it's
 preferable to make a form bot-friendly. I'm talking specifically about login forms, where all sorts of people
 use bots (their Web browsers, usually) in order to prefill the form with their login information. This is perfectly
-harmless, and even a malicious bot is not going to be able to cause any trouble on a form like this because it'll only
-be denied access to the site.
+harmless, and even a malicious bot is not going to be able to cause any trouble on a form like this because it'll only be denied access to the site.
 
-In cases like these, you'll want to go ahead and disable Bot-Away. Since Bot-Away is only disabled on a per-controller
-or per-action basis, it stays active throughout the remainder of your site, which prevents bots from (for example)
-creating new users.
+In cases like these, you'll want to go ahead and disable Bot-Away. Since Bot-Away is only disabled on a per-controller or per-action basis, it stays active throughout the remainder of your site, which prevents bots from (for example) creating new users.
 
 To disable Bot-Away for an entire controller, add this line to a file called <em>config/initializers/bot-away.rb</em>:
 
@@ -87,18 +84,10 @@ This line can be specified multiple times, for each of the controllers and/or ac
 ## Disabling Bot-Away in Development
 
 If, while developing your app, you find yourself viewing the HTML source code, it'll probably be more helpful
-to have Bot-Away disabled entirely so that you're not confused by MD5 tags and legions of honeypots. This is easy enough
-to do:
+to have Bot-Away disabled entirely so that you're not confused by MD5 tags and legions of honeypots. This is easy enough to do:
 
-    BotAway.disabled_for :mode => :development
-
-  
-## Further Configuration (Mostly for Debugging):
-
-In general, Bot-Away doesn't have that much to configure. Most options only exist for your debugging pleasure, in
-case something isn't quite working as you'd expected. As shown above, these settings should be specified in a file
-called <em>config/initializers/bot-away.rb</em>. Configuration options available to you are as follows:
-
+    BotAway.disabled_for :mode => 'development'
+    
 ### Accepting Unfiltered Params
 
 Sometimes you need to tell Bot-Away to explicitly _not_ filter a parameter. This is most notable with fields you've
@@ -107,24 +96,28 @@ generated fields are honeypots, and raises an error based on that.) Here's how t
 not to be checked:
 
     BotAway.accepts_unfiltered_params "name_of_param", "name_of_another_param"
-  
+
 Note that these parameters can be either model keys, field keys or exact matches. For example, imagine the following
-scenario: you have two models, User and Group, and each has_many :roles. That means you'll likely have an administration
-screen somewhere with check boxes representing user roles and group roles. Here are the different ways you can control
-how Bot-Away interacts with these fields:
+scenario: you have two models, `User` and `Group`, and each `has_many :roles`. That means you'll likely have an administration screen somewhere with check boxes representing user roles and group roles. Here are the different ways you can control how Bot-Away interacts with these fields:
 
     BotAway.accepts_unfiltered_params "user"
       # disables BotAway filtering for ALL fields belonging to 'user', but NO fields belonging to 'group'
-  
+
     BotAway.accepts_unfiltered_params 'user[role_ids]', 'group[role_ids]'
       # disables BotAway filtering for ONLY the 'role_ids' field belonging to BOTH 'user' and 'group', while leaving
       # filtering enabled for ALL OTHER fields.
-    
+
     BotAway.accepts_unfiltered_params 'role_ids'
       # disables BotAway filtering for ONLY the 'role_ids' fields belonging to ALL MODELS, while leaving all
       # other fields enabled.
-    
+
 You can specify this option as many times as you need to do.
+
+## Further Configuration (Mostly for Debugging):
+
+In general, Bot-Away doesn't have that much to configure. Most options only exist for your debugging pleasure, in
+case something isn't quite working as you'd expected. As shown above, these settings should be specified in a file
+called <em>config/initializers/bot-away.rb</em>. Configuration options available to you are as follows:
 
 ### Showing the Honeypots
 
@@ -147,21 +140,21 @@ mode. You can enable this if you need to see exactly what Rails sees _before_ Bo
 
 * By default, protection from forgery is enabled for all Rails controllers, so by default the above-mentioned checks
   will also be triggered. For more details on forgery protection, see:
-  http://api.rubyonrails.org/classes/ActionController/RequestForgeryProtection/ClassMethods.html
+  http://api.rubyonrails.org/classes/ActionController/RequestForgeryProtection.html
   
 * The techniques implemented by this library will be very difficult for a spambot to circumvent. However, keep in
   mind that since the pages have to be machine-readable by definition, and since this gem has to follow certain
   protocols in order to avoid confusing lots of humans (such as hiding the honeypots), it is always theoretically
   possible for a spambot to get around it. It's just very, very difficult.
 
-* I feel this library has been fairly well-tested (99.5% test coverage as of this writing), but if you discover a bug
-  and can't be bothered to let me know about it (or you just don't have time to wait for a fix or fix it yourself),
-  then you can simply add the name of the offending form element to the BotAway.unfiltered_params
+* I feel this library has been fairly well-tested (99.21% test coverage as of this writing), but if you discover a
+  bug and can't be bothered to let me know about it (or you just don't have time to wait for a fix or fix it 
+  yourself), then you can simply add the name of the offending form element to the BotAway.unfiltered_params
   array like so:
       BotAway.accepts_unfiltered_params 'role_ids'
       BotAway.accepts_unfiltered_params 'user' # this can be called multiple times
-  You should also take note that this is an array, not a hash. So if you have a user[role_ids] as well as a
-  group[role_ids], the +role_ids+ will not be filtered on EITHER of these models.
+  You should also take note that this is an array, not a hash. So if you have a `user[role_ids]` as well as a
+  `group[role_ids]`, the `role_ids` will not be filtered on EITHER of these models.
 
 * Currently, there's no direct support for per-request configuration of unfiltered params. This is mostly due to
   Bot-Away's low-level approach to filtering bots: the params have already been filtered by the time your controller
