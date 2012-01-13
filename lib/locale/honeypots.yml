@@ -1,6 +1,6 @@
 en:
   bot_away:
     number_of_honeypot_warning_messages: 3
-    honeypot_warning_0: "Leave this empty: "
-    honeypot_warning_1: "Don't fill this in: "
-    honeypot_warning_2: "Keep this blank: "
+    honeypot_warning_1: "Leave this empty: "
+    honeypot_warning_2: "Don't fill this in: "
+    honeypot_warning_3: "Keep this blank: "

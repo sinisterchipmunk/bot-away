@@ -112,7 +112,7 @@ class ActionView::Helpers::InstanceTag
 
   def random_honeypot_warning_message
     which = rand I18n.t("bot_away.number_of_honeypot_warning_messages")
-    warning = I18n.t "bot_away.honeypot_warning_#{which}"
+    warning = I18n.t "bot_away.honeypot_warning_#{which+1}"
     "<bdo dir=\"rtl\">#{warning.reverse.chars.collect { |b| "&#x#{b.ord.to_s(16)};" }.join}</bdo>".html_safe
   end
 end
