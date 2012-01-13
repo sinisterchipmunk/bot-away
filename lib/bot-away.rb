@@ -11,6 +11,8 @@ require 'bot-away/spinner'
 require 'bot-away/version'
 
 module BotAway
+  autoload :TestCase, 'bot-away/test_case'
+  
   class << self
     attr_accessor :show_honeypots, :dump_params
     
