@@ -6,7 +6,7 @@ describe ActionView::Helpers::InstanceTag do
   subject { default_instance_tag }
 
   context "honeypot warning text" do
-    before { srand 2 } # always produce the same honeypot
+    before { default_instance_tag.honeypot_index = 0 } # always produce the same honeypot
     subject { default_instance_tag.random_honeypot_warning_message }
     
     it "should obfuscate honeypot warning text" do

@@ -10,6 +10,6 @@ module BotAway::TestCase::InstanceTagTestCase
   end
 
   def default_instance_tag
-    ActionView::Helpers::InstanceTag.new("object_name", "method_name", view, mock_object)
+    @default_instance_tag ||= ActionView::Helpers::InstanceTag.new("object_name", "method_name", view, mock_object)
   end
 end
