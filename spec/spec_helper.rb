@@ -1,6 +1,10 @@
+require 'bundler'
+Bundler.setup
+
 ENV['RAILS_ENV'] = 'development'
 
 require 'rails'
+require 'active_support/secure_random'
 require 'action_controller/railtie'
 require 'action_mailer/railtie'
 require 'active_resource/railtie'
