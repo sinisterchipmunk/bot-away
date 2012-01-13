@@ -105,10 +105,8 @@ class ActionView::Helpers::InstanceTag
         element.replace "<div style='display:none;'>#{honeypot_warning_message}#{element}</div>"
       when 1 # Off-screen
         element.replace "<div style='position:absolute;left:-1000px;top:-1000px;'>#{honeypot_warning_message}#{element}</div>"
-      when 2 # Negligible size
+      else   # Negligible size
         element.replace "<div style='position:absolute;width:0px;height:1px;z-index:-1;color:transparent;overflow:hidden;'>#{honeypot_warning_message}#{element}</div>"
-      else   # this should never happen?
-        disguise(element)
     end
   end
   

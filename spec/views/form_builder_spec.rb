@@ -99,7 +99,7 @@ describe ActionView::Helpers::FormBuilder do
   end
 
   context '#label' do
-    subject { builder.label method_name }
+    subject { builder.label method_name, :for => tag_id }
     
     it "links labels to their obfuscated elements" do
       subject.should match(/for=["']#{obfuscated_id}['"]/)

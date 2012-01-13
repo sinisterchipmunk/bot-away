@@ -9,7 +9,7 @@ require 'active_support/secure_random'
 require 'action_controller/railtie'
 require 'action_mailer/railtie'
 require 'active_resource/railtie'
-require File.expand_path('../lib/bot-away', File.dirname(__FILE__))
+require 'bot-away'
 
 class BotAway::TestRailsApp < Rails::Application
   base = File.expand_path("test_rails_app", File.dirname(__FILE__))
