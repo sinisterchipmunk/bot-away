@@ -8,6 +8,7 @@ rvm:
   - rbx-2.0
 
 gemfile:
-  - gemfiles/Gemfile.rails-2.3.x
+  # No longer developing against Rails 2.3
+  # - gemfiles/Gemfile.rails-2.3.x
   - gemfiles/Gemfile.rails-3.0.x
   - gemfiles/Gemfile.rails-3.1.x
