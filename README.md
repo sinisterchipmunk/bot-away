@@ -1,4 +1,4 @@
-= bot-away
+# bot-away
 
 * http://github.com/sinisterchipmunk/bot-away
 
@@ -6,7 +6,7 @@ Unobtrusively detects form submissions made by spambots, and silently drops thos
 "unobtrusive" -- this is NOT a CAPTCHA. This is a transparent, modular implementation of the bot-catching techniques
 discussed by Ned Batchelder at http://nedbatchelder.com/text/stopbots.html.
 
-== How It Works
+## How It Works
 
 If a bot submission is detected, the params hash is cleared, so the data can't be used. Since this includes the
 authenticity token, Rails should complain about an invalid or missing authenticity token. Congrats, spam blocked.
@@ -23,7 +23,7 @@ here's a brief run-down of what's going on:
   minimize predictability.
   
   In the rare event that a real user actually can see the element, it has a label next to it
-  along the lines of "Leave this blank" -- though the exact message is randomized to help prevent detection.
+  along the lines of "Leave this blank" -- though the exact message is randomized to help prevent detection by bots.
 * All of the form elements are mirrored by hashes. The hashes are generated using the session's authenticity token,
   so they can't be predicted.
 * When data is submitted, Bot-Away steps in and
@@ -36,22 +36,22 @@ here's a brief run-down of what's going on:
   that does not happen, then your code will be passed a params hash containing only a "suspected_bot" key, and an error
   will result. Either way, the spambot has been foiled!
 
-== Installation:
+## Installation:
 
 * gem install bot-away
 
-== Usage:
+## Usage:
 
 Whether you're on Rails 2 or Rails 3, adding Bot-Away to your project is as easy as telling Rails where to find it.
 
-=== Rails 2.x
+### Rails 2.x
 
 The Rails 2.x version will still receive bug fixes, but is no longer under active development. To use bot-away with Rails 2, pull in bot-away v1.x:
 
   # in config/environment.rb:
   config.gem 'bot-away', '~> 1.2'
 
-=== Rails 3
+### Rails 3
 
 In your Gemfile:
 
@@ -59,7 +59,7 @@ In your Gemfile:
 
 That's it.
 
-== Whitelists
+## Whitelists
 
 Sometimes you don't care about whether or not a bot is filling out a particular form. Even more, sometimes it's
 preferable to make a form bot-friendly. I'm talking specifically about login forms, where all sorts of people
@@ -67,7 +67,7 @@ use bots (their Web browsers, usually) in order to prefill the form with their l
 harmless, and even a malicious bot is not going to be able to cause any trouble on a form like this because it'll only
 be denied access to the site.
 
-In cases like this, you'll want to go ahead and disable Bot-Away. Since Bot-Away is only disabled on a per-controller
+In cases like these, you'll want to go ahead and disable Bot-Away. Since Bot-Away is only disabled on a per-controller
 or per-action basis, it stays active throughout the remainder of your site, which prevents bots from (for example)
 creating new users.
 
@@ -86,7 +86,7 @@ here's how to do it:
   
 This line can be specified multiple times, for each of the controllers and/or actions that you need it disabled for.
   
-== Disabling Bot-Away in Development
+## Disabling Bot-Away in Development
 
 If, while developing your app, you find yourself viewing the HTML source code, it'll probably be more helpful
 to have Bot-Away disabled entirely so that you're not confused by MD5 tags and legions of honeypots. This is easy enough
@@ -95,13 +95,13 @@ to do:
   BotAway.disabled_for :mode => :development
 
   
-== Further Configuration (Mostly for Debugging):
+## Further Configuration (Mostly for Debugging):
 
 In general, Bot-Away doesn't have that much to configure. Most options only exist for your debugging pleasure, in
 case something isn't quite working as you'd expected. As shown above, these settings should be specified in a file
 called <em>config/initializers/bot-away.rb</em>. Configuration options available to you are as follows:
 
-=== Accepting Unfiltered Params
+### Accepting Unfiltered Params
 
 Sometimes you need to tell Bot-Away to explicitly _not_ filter a parameter. This is most notable with fields you've
 dynamically added via JavaScript, since those can confuse Bot-Away's catching techniques. (It tends to think Javascript-
@@ -128,7 +128,7 @@ how Bot-Away interacts with these fields:
     
 You can specify this option as many times as you need to do.
 
-=== Showing the Honeypots
+### Showing the Honeypots
 
 Generally, you want to keep honeypots hidden, because they will clutter your interface and confuse your users. However,
 there was an issue awhile back (near the 1.0 release of Bot-Away) where Safari was a bit smarter than its competitors,
@@ -138,7 +138,7 @@ decided to leave this option available to Bot-Away as a debugging tool for handl
     
   BotAway.show_honeypots = true
 
-=== Dumping Params
+### Dumping Params
 
 Like showing honeypots, above, this option is only useful if you're debugging issues in development
 mode. You can enable this if you need to see exactly what Rails sees _before_ Bot-Away steps in to intervene. Enabling
@@ -147,7 +147,7 @@ useful for debugging false positives (that is, Bot-Away thinks you're a bot, but
 
   BotAway.dump_params = true
   
-== Features / Problems:
+## Features / Problems:
 
 * Wherever protection from forgery is not enabled in your Rails app, the Rails forms will be generated as if this gem
   did not exist. That means hashed elements won't be generated, honeypots won't be generated, and posted forms will not
@@ -175,6 +175,6 @@ useful for debugging false positives (that is, Bot-Away thinks you're a bot, but
   Bot-Away's low-level approach to filtering bots: the params have already been filtered by the time your controller
   is created. I'd like to revisit per-request filtering sometime in the future, once I figure out the best way to do it.
 
-== Requirements:
+## Requirements:
 
 * Rails 2.3.5 or better.
