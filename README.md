@@ -17,24 +17,24 @@ here's a brief run-down of what's going on:
 * Your code stays the same. After the Bot-Away gem has been activated, all Rails-generated forms on your site
   will automatically be transformed into bot-resistent forms.
 * All of the form elements that you create (for instance, a "comment" model with a "body" field) are turned into
-  dummy elements, or honeypots, and are made invisible to the end user. This is done using div elements and inline CSS
-  stylesheets (I decided against a JavaScript option because it's the most likely to be disabled on a legitimate
+  dummy elements, or honeypots, and are made invisible to the end user. This is done using div elements and inline 
+  CSS stylesheets (I decided against a JavaScript option because it's the most likely to be disabled on a legitimate
   client). There are several ways an element can be hidden, and these approaches are chosen at random to help
   minimize predictability.
-  
-  In the rare event that a real user actually can see the element, it has a label next to it
-  along the lines of "Leave this blank" -- though the exact message is randomized to help prevent detection by bots.
+  * In the rare event that a real user actually can see the element, it has a label next to it
+    along the lines of "Leave this blank" -- though the exact message is randomized to help prevent detection by
+    bots.
 * All of the form elements are mirrored by hashes. The hashes are generated using the session's authenticity token,
   so they can't be predicted.
 * When data is submitted, Bot-Away steps in and
   1. validates that no honeypots have been filled in; and
-  2. converts the hashed elements back into the field names that you are expecting (replacing the honeypot fields). Your
-     code is never aware of the difference; it's just business as usual as long as the user is legitimate.
+  2. converts the hashed elements back into the field names that you are expecting (replacing the honeypot fields).
+     Your code is never aware of the difference; it's just business as usual as long as the user is legitimate.
 * If a honeypot has been filled in, or a hashed element is missing where it was expected, then the request is
   considered to be either spam, or tampered with; and the entire params hash is emptied. Since this happens at the
   lowest level, the most likely result is that Rails will complain that the user's authenticity token is invalid. If
-  that does not happen, then your code will be passed a params hash containing only a "suspected_bot" key, and an error
-  will result. Either way, the spambot has been foiled!
+  that does not happen, then your code will be passed a params hash containing only a "suspected_bot" key, and an
+  error will result. Either way, the spambot has been foiled!
 
 ## Installation:
 
