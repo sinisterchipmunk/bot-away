@@ -15,13 +15,10 @@ class BotAway::TestRailsApp < Rails::Application
   config.paths['app/controllers'] = File.join(base, 'app/controllers')
   config.paths['app/views']       = File.join(base, 'app/views')
   config.active_support.deprecation = :log
-
-  routes do
-    match "/:controller/:action"
-  end
 end
 
 BotAway::TestRailsApp.initialize!
+Rails.application.routes.draw { root :to => 'tests#basic_form' }
 Rails.application.routes.finalize!
 Dir[File.expand_path('test_rails_app/**/*.rb', File.dirname(__FILE__))].each { |f| require f }
 
