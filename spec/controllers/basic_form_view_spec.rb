@@ -1,10 +1,14 @@
 require 'spec_helper'
 
 describe TestsController do
+  # For all intents and purposes this is a view spec, but because rspec mocks up the controller
+  # in view specs (and rightly so!), we need to technically run it as a controller spec in order
+  # to invoke a real controller first.
+
   before do
     # BotAway doesn't work without forgery protection, and RSpec-Rails 2 disables it.
     # Lost way too many hours on this.
-    # Note: This has to happen in controller because RSpec2 sets a before block, which runs
+    # Note: This has to happen in spec file because RSpec2 sets a before block, which runs
     # after the ones set by config.
     Rails.application.config.allow_forgery_protection = true
     ActionController::Base.allow_forgery_protection = true
