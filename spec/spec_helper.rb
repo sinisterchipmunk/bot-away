@@ -36,6 +36,6 @@ RSpec.configure do |config|
     BotAway.reset!
     enable_forgery_protection
   end
-  
+
   config.include BotAway::TestCase
 end
