@@ -5,6 +5,20 @@ describe ActionView::Helpers::InstanceTag do
 
   subject { default_instance_tag }
 
+  context "honeypot warning text" do
+    before { srand 2 } # always produce the same honeypot
+    subject { default_instance_tag.random_honeypot_warning_message }
+    
+    it "should obfuscate honeypot warning text" do
+      # 'Leave this empty: ' reversed and then converted to HTML escaped unicode:
+      subject.should =~ /#{Regexp::escape '&#x20;&#x3a;&#x79;&#x74;&#x70;&#x6d;&#x65;&#x20;&#x73;&#x69;&#x68;&#x74;&#x20;&#x65;&#x76;&#x61;&#x65;&#x4c;'}/
+    end
+  
+    it "should use bdo to display honeypot warning text accurately" do
+      subject.should match(/<bdo dir=['"]rtl["']>.*?<\/bdo>/)
+    end
+  end
+  
   context "with a valid text area tag" do
     subject do
       dump { default_instance_tag.to_text_area_tag }

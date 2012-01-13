@@ -15,7 +15,7 @@ describe ActionView::Helpers::FormBuilder do
       builder.text_area(method_name).should_not match(/<\/div>/)
     end
   end
-  
+
   it "should not obfuscate names that have been explicitly ignored" do
     BotAway.accepts_unfiltered_params 'method_name'
     builder.text_field('method_name').should_not match(/name="#{obfuscated_name}/)
@@ -100,8 +100,19 @@ describe ActionView::Helpers::FormBuilder do
 
   context '#label' do
     subject { builder.label method_name }
+    
     it "links labels to their obfuscated elements" do
       subject.should match(/for=["']#{obfuscated_id}['"]/)
     end
+    
+    # TODO ideas for future implementation, but they may break nested tags
+    # it "obfuscates label text using bdo dir" do
+    #   subject.should match(/<bdo dir=['"]rtl["']/)
+    # end
+    # 
+    # it "uses reversed unicode entities for label text" do
+    #   # method_name => reversed(eman_dohtem)
+    #   subject.should match("&#x65;&#x6d;&#x61;&#x6e;&#x5f;&#x64;&#x6f;&#x68;&#x74;&#x65;&#x6d;")
+    # end
   end
 end

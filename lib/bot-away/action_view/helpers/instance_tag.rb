@@ -66,6 +66,9 @@ class ActionView::Helpers::InstanceTag
     add_default_name_and_id_for_value(tag_value, name_and_id)
     options["for"] ||= name_and_id["id"]
     options["for"] = spinner.encode(options["for"]) if spinner && options["for"]
+    # TODO ideas for future implementation, but they may break nested tags
+    # escaped_reversed_text = text.to_s.reverse.chars.collect { |b| "&#x#{b.ord.to_s(16)};" }.join
+    # text = '<bdo dir="rtl">'.html_safe + escaped_reversed_text + '</bdo>'.html_safe
     to_label_tag_without_obfuscation(text, options)
   end
 
@@ -92,18 +95,24 @@ class ActionView::Helpers::InstanceTag
   alias_method_chain :tag, :honeypot
   alias_method_chain :to_label_tag, :obfuscation
   alias_method_chain :content_tag, :obfuscation
-
+  
   def disguise(element)
     return element.replace("Honeypot(#{element})") if BotAway.show_honeypots
     case rand(3)
       when 0 # Hidden
-        element.replace "<div style='display:none;'>Leave this empty: #{element}</div>"
+        element.replace "<div style='display:none;'>#{random_honeypot_warning_message}#{element}</div>"
       when 1 # Off-screen
-        element.replace "<div style='position:absolute;left:-1000px;top:-1000px;'>Don't fill this in: #{element}</div>"
+        element.replace "<div style='position:absolute;left:-1000px;top:-1000px;'>#{random_honeypot_warning_message}#{element}</div>"
       when 2 # Negligible size
-        element.replace "<div style='position:absolute;width:0px;height:1px;z-index:-1;color:transparent;overflow:hidden;'>Keep this blank: #{element}</div>"
+        element.replace "<div style='position:absolute;width:0px;height:1px;z-index:-1;color:transparent;overflow:hidden;'>#{random_honeypot_warning_message}#{element}</div>"
       else   # this should never happen?
         disguise(element)
     end
+  end
+
+  def random_honeypot_warning_message
+    which = rand I18n.t("bot_away.number_of_honeypot_warning_messages")
+    warning = I18n.t "bot_away.honeypot_warning_#{which}"
+    "<bdo dir=\"rtl\">#{warning.reverse.chars.collect { |b| "&#x#{b.ord.to_s(16)};" }.join}</bdo>".html_safe
   end
 end

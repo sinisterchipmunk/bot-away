@@ -10,6 +10,8 @@ require 'bot-away/action_view/helpers/instance_tag'
 require 'bot-away/spinner'
 require 'bot-away/version'
 
+I18n.load_path << File.expand_path("../lib/locale/honeypots.yml", File.dirname(__FILE__))
+
 module BotAway
   autoload :TestCase, 'bot-away/test_case'
   
