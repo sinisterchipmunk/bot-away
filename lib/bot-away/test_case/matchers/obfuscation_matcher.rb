@@ -16,6 +16,10 @@ class BotAway::TestCase::Matchers::ObfuscationMatcher
     @target[@rx]
   end
 
+  def description
+    "be obfuscated as '#{obfuscated_name}' with id '#{obfuscated_id}'"
+  end
+
   def failure_message
     "expected #{@target.inspect}\n  to match #{@rx.inspect}"
   end
