@@ -36,7 +36,7 @@ class ActionView::Helpers::InstanceTag
   end
   
   def honeypot_tag(name, options = nil, *args)
-    tag_without_honeypot(name, honeypot_options(options ? options.dup : {}), *args)
+    disguise tag_without_honeypot(name, honeypot_options(options ? options.dup : {}), *args)
   end
 
   def obfuscated_tag(name, options = nil, *args)
@@ -45,7 +45,7 @@ class ActionView::Helpers::InstanceTag
 
   def tag_with_honeypot(name, options = nil, *args)
     if spinner
-      obfuscated_tag(name, options, *args) + disguise(honeypot_tag(name, options, *args))
+      obfuscated_tag(name, options, *args) + honeypot_tag(name, options, *args)
     else
       tag_without_honeypot(name, options, *args)
     end
