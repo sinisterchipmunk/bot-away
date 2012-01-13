@@ -12,9 +12,12 @@ require File.expand_path('../lib/bot-away', File.dirname(__FILE__))
 
 class BotAway::TestRailsApp < Rails::Application
   base = File.expand_path("test_rails_app", File.dirname(__FILE__))
+  config.active_support.deprecation = :log
   config.paths['app/controllers'] = File.join(base, 'app/controllers')
   config.paths['app/views']       = File.join(base, 'app/views')
-  config.active_support.deprecation = :log
+  if Rails::VERSION::MINOR == 0 # rails 3.0.x
+    config.paths.app.views = File.join(base, 'app/views')
+  end
 end
 
 BotAway::TestRailsApp.initialize!
