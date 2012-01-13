@@ -1,0 +1,6 @@
+en:
+  bot_away:
+    number_of_honeypot_warning_messages: 4
+    honeypot_warning_2: "Overridden honeypot warning"
+    honeypot_warning_4: "Additional honeypot warning"
+    

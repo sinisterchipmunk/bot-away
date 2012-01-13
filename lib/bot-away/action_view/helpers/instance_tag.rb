@@ -99,24 +99,29 @@ class ActionView::Helpers::InstanceTag
   
   def disguise(element)
     return element.replace("Honeypot(#{element})") if BotAway.show_honeypots
+    # TODO a way to customize the hidden tags too
     case honeypot_index % 3
       when 0 # Hidden
-        element.replace "<div style='display:none;'>#{random_honeypot_warning_message}#{element}</div>"
+        element.replace "<div style='display:none;'>#{honeypot_warning_message}#{element}</div>"
       when 1 # Off-screen
-        element.replace "<div style='position:absolute;left:-1000px;top:-1000px;'>#{random_honeypot_warning_message}#{element}</div>"
+        element.replace "<div style='position:absolute;left:-1000px;top:-1000px;'>#{honeypot_warning_message}#{element}</div>"
       when 2 # Negligible size
-        element.replace "<div style='position:absolute;width:0px;height:1px;z-index:-1;color:transparent;overflow:hidden;'>#{random_honeypot_warning_message}#{element}</div>"
+        element.replace "<div style='position:absolute;width:0px;height:1px;z-index:-1;color:transparent;overflow:hidden;'>#{honeypot_warning_message}#{element}</div>"
       else   # this should never happen?
         disguise(element)
     end
   end
   
   def honeypot_index
-    @honeypot_index || rand(I18n.t("bot_away.number_of_honeypot_warning_messages"))
+    @honeypot_index || rand(I18n.t("bot_away.number_of_honeypot_warning_messages").to_i) + 1
   end
 
-  def random_honeypot_warning_message
-    warning = I18n.t "bot_away.honeypot_warning_#{honeypot_index+1}"
-    "<bdo dir=\"rtl\">#{warning.reverse.chars.collect { |b| "&#x#{b.ord.to_s(16)};" }.join}</bdo>".html_safe
+  def honeypot_warning_message
+    warning = I18n.t "bot_away.honeypot_warning_#{honeypot_index}"
+    warning.reverse.chars.collect { |b| "&#x#{b.ord.to_s(16)};" }.join
+  end
+  
+  def honeypot_warning_tag
+    "<bdo dir=\"rtl\">#{honeypot_warning_message}</bdo>".html_safe
   end
 end

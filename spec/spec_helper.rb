@@ -16,6 +16,7 @@ class BotAway::TestRailsApp < Rails::Application
   config.active_support.deprecation = :log
   config.paths['app/controllers'] = File.join(base, 'app/controllers')
   config.paths['app/views']       = File.join(base, 'app/views')
+  config.paths['config/locales']  = File.join(base, 'config/locales/bot-away-overrides.yml')
   if Rails::VERSION::MINOR == 0 # rails 3.0.x
     config.paths.app.views = File.join(base, 'app/views')
   end

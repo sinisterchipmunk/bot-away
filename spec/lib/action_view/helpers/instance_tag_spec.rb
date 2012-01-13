@@ -11,8 +11,8 @@ describe ActionView::Helpers::InstanceTag do
   end
 
   context "honeypot warning text" do
-    before { default_instance_tag.honeypot_index = 0 } # always produce the same honeypot
-    subject { default_instance_tag.random_honeypot_warning_message }
+    before { default_instance_tag.honeypot_index = 1 } # always produce the same honeypot
+    subject { default_instance_tag.honeypot_warning_tag }
     
     it "should obfuscate honeypot warning text" do
       # 'Leave this empty: ' reversed and then converted to HTML escaped unicode:
@@ -21,6 +21,20 @@ describe ActionView::Helpers::InstanceTag do
   
     it "should use bdo to display honeypot warning text accurately" do
       subject.should match(/<bdo dir=['"]rtl["']>.*?<\/bdo>/)
+    end
+    
+    context "I18n" do
+      it "should allow overridden honeypot warning" do
+        default_instance_tag.honeypot_index = 2
+        CGI.unescapeHTML(default_instance_tag.honeypot_warning_message).reverse.should == "Overridden honeypot warning"
+      end
+      
+      it "shold allow additional honeypot warnings" do
+        I18n.t('bot_away.number_of_honeypot_warning_messages').to_i.should == 4
+        
+        default_instance_tag.honeypot_index = 4
+        CGI.unescapeHTML(default_instance_tag.honeypot_warning_message).reverse.should == "Additional honeypot warning"
+      end
     end
   end
   
