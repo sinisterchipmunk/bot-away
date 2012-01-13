@@ -1,7 +1,7 @@
 PATH
   remote: /Users/colin/projects/gems/bot-away
   specs:
-    bot-away (1.2.0)
+    bot-away (2.0.0)
       actionpack (>= 2.3.5)
 
 GEM
