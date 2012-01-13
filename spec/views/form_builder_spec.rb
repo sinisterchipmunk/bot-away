@@ -27,25 +27,33 @@ describe ActionView::Helpers::FormBuilder do
     it { should include_honeypot }
   end
   
+  shared_examples_for "an obfuscated select tag" do
+    it_should_behave_like "an obfuscated tag"
+    
+    it "should fill honeypots with html-safe options" do
+      subject.to_s.should match(/<select[^>]*><option[^>]*><\/option>/)
+    end
+  end
+  
   # select(method, options)
   context '#select' do
     context "with options" do
       subject { builder.select(method_name, {1 => :a, 2 => :b}) }
-      it_should_behave_like "an obfuscated tag"
+      it_should_behave_like "an obfuscated select tag"
     end
   end
   
   # collection_select(method, collection, value_method, text_method, options = {}, html_options = {})
   context '#collection_select' do
     subject { builder.collection_select method_name, [mock_object], :method_name, :method_name }
-    it_should_behave_like "an obfuscated tag"
+    it_should_behave_like "an obfuscated select tag"
   end
   
   # grouped_collection_select(method, collection, group_method, group_label_method, option_key_method,
   #                           option_value_method, options = {}, html_options = {})
   context '#grouped_collection_select' do
     subject { builder.grouped_collection_select method_name, [mock_object], object_name, method_name, method_name, :to_s }
-    it_should_behave_like "an obfuscated tag"
+    it_should_behave_like "an obfuscated select tag"
   end
   
   # time_zone_select(method, priority_zones = nil, options = {}, html_options = {})

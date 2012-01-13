@@ -76,7 +76,7 @@ class ActionView::Helpers::InstanceTag
       # this should cover all Rails selects.
       if spinner && options && (options.keys.include?('id') || options.keys.include?('name'))
         if name == 'select' && !content_or_options_with_block.empty?
-          content = '<option selected value=""></option>'
+          content = '<option selected value=""></option>'.html_safe
         else
           content = ""
         end
