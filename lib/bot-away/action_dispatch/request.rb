@@ -1,20 +1,13 @@
-request = (defined?(Rails::VERSION) && Rails::VERSION::STRING >= "3.0") ? 
-          ActionDispatch::Request : # Rails 3.0
-          ActionController::Request # Rails 2.3
+# Note to self and anyone else reading this: we're overriding ActionDispatch::ParamsParser
+# instead of just attaching a custom param parser so that others' custom param parsers can do
+# their jobs without conflict. Also, overriding the parser allows us to deobfuscate all params,
+# not just the ones I'm smart enough to predict will be used.
+require 'action_dispatch/middleware/params_parser'
 
-request.module_eval do
-  def parameters_with_deobfuscation
-    # NFC what is happening behind the scenes but Rails 2.3 croaks when we memoize; Rails 3 croaks when we don't.
-    if defined?(Rails::VERSION) && Rails::VERSION::STRING >= "3.0"
-      @deobfuscated_parameters ||= begin
-        BotAway::ParamParser.new(ip, parameters_without_deobfuscation.dup).params
-      end
-    else
-      # Rails.logger.info parameters_without_deobfuscation.inspect
-      BotAway::ParamParser.new(ip, parameters_without_deobfuscation.dup).params
-    end
+class ActionDispatch::ParamsParser
+  def parse_formatted_parameters_with_deobfuscation(env)
+    BotAway::ParamParser.new(ip, parse_formatted_parameters_without_deobfuscation(env).dup).params
   end
 
-  alias_method_chain :parameters, :deobfuscation
-  alias_method :params, :parameters
+  alias_method_chain :parse_formatted_parameters, :deobfuscation
 end

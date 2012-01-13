@@ -1,3 +1,4 @@
+ENV['BUNDLE_GEMFILE'] ||= File.expand_path("../gemfiles/Gemfile.rails-3.1.x", File.dirname(__FILE__))
 require 'bundler'
 Bundler.setup
 
@@ -21,7 +22,7 @@ class BotAway::TestRailsApp < Rails::Application
 end
 
 BotAway::TestRailsApp.initialize!
-Rails.application.routes.draw { root :to => 'tests#basic_form' }
+Rails.application.routes.draw { match '/:controller/:action' }
 Rails.application.routes.finalize!
 Dir[File.expand_path('test_rails_app/**/*.rb', File.dirname(__FILE__))].each { |f| require f }
 
@@ -29,10 +30,12 @@ require 'rspec/rails'
 
 RSpec.configure do |config|
   config.before do
-    # reset any config changes
-    BotAway.reset!
-    
     # for the CSRF token, which BA uses as a seed
     SecureRandom.stub!(:base64).and_return("1234")
+    # reset any config changes
+    BotAway.reset!
+    enable_forgery_protection
   end
+  
+  config.include BotAway::TestCase
 end

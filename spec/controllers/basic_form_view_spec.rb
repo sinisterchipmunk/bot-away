@@ -1,20 +1,12 @@
 require 'spec_helper'
 
+# For all intents and purposes this is a view spec, but because rspec mocks up the controller
+# in view specs (and rightly so!), we need to technically run it as a controller spec in order
+# to invoke a real controller first.
 describe TestsController do
-  # For all intents and purposes this is a view spec, but because rspec mocks up the controller
-  # in view specs (and rightly so!), we need to technically run it as a controller spec in order
-  # to invoke a real controller first.
-
-  before do
-    # BotAway doesn't work without forgery protection, and RSpec-Rails 2 disables it.
-    # Lost way too many hours on this.
-    # Note: This has to happen in spec file because RSpec2 sets a before block, which runs
-    # after the ones set by config.
-    Rails.application.config.allow_forgery_protection = true
-    ActionController::Base.allow_forgery_protection = true
-  end
-  
+  include BotAway::TestCase::ControllerTestCase
   render_views
+  before { enable_forgery_protection }
   
   let(:params) { { :controller => 'tests', :action => 'basic_form' } }
 
@@ -50,7 +42,7 @@ describe TestsController do
   end
   
   context "with bot-away disabled for only this view" do
-    before(:each) { BotAway.disabled_for({:controller => 'tests', :action => 'basic_form'}) }
+    before { BotAway.disabled_for({:controller => 'tests', :action => 'basic_form'}) }
     it_should_behave_like "disabled"
   end
   
@@ -64,57 +56,57 @@ describe TestsController do
   
   context "with matching controller name" do
     context "and no action" do
-      before(:each) { BotAway.disabled_for :controller => 'tests' }
+      before { BotAway.disabled_for :controller => 'tests' }
       it_should_behave_like "disabled"
     end
     
     context "and matching action" do
-      before(:each) { BotAway.disabled_for :controller => 'tests', :action => 'basic_form' }
+      before { BotAway.disabled_for :controller => 'tests', :action => 'basic_form' }
       it_should_behave_like "disabled"
     end
     
     context "and not matching action" do
-      before(:each) { BotAway.disabled_for :controller => 'tests', :action => 'create' }
+      before { BotAway.disabled_for :controller => 'tests', :action => 'create' }
       it_should_behave_like "enabled"
     end
   end
   
   context "with not matching controller name" do
     context "and no action" do
-      before(:each) { BotAway.disabled_for :controller => 'users' }
+      before { BotAway.disabled_for :controller => 'users' }
       it_should_behave_like "enabled"
     end
     
     context "and matching action" do
-      before(:each) { BotAway.disabled_for :controller => 'users', :action => 'basic_form' }
+      before { BotAway.disabled_for :controller => 'users', :action => 'basic_form' }
       it_should_behave_like "enabled"
     end
     
     context "and not matching action" do
-      before(:each) { BotAway.disabled_for :controller => 'users', :action => 'create' }
+      before { BotAway.disabled_for :controller => 'users', :action => 'create' }
       it_should_behave_like "enabled"
     end
   end
   
   context "with no controller name" do
     context "and matching action" do
-      before(:each) { BotAway.disabled_for :action => 'basic_form' }
+      before { BotAway.disabled_for :action => 'basic_form' }
       it_should_behave_like "disabled"
     end
     
     context "and not matching action" do
-      before(:each) { BotAway.disabled_for :action => 'create' }
+      before { BotAway.disabled_for :action => 'create' }
       it_should_behave_like "enabled"
     end
   end
   
   context "with matching mode" do
-    before(:each) { BotAway.disabled_for :mode => ENV['RAILS_ENV'] }
+    before { BotAway.disabled_for :mode => ENV['RAILS_ENV'] }
     it_should_behave_like "disabled"
   end
   
   context "with not matching mode" do
-    before(:each) { BotAway.disabled_for :mode => "this_is_not_#{ENV['RAILS_ENV']}" }
+    before { BotAway.disabled_for :mode => "this_is_not_#{ENV['RAILS_ENV']}" }
     it_should_behave_like "enabled"
   end
 end

@@ -30,11 +30,6 @@ describe ActionView::Helpers::InstanceTag do
       subject.obfuscated_tag(*@tag_options).should =~ /id="#{obfuscated_id}"/
     end
 
-   it "should not obfuscate tag value" do
-     pending "why was this disabled?"
-     subject.obfuscated_tag(*@tag_options).should =~ /value="@tag_options"/
-   end
-
     it "should include unobfuscated tag value" do
       subject.obfuscated_tag(*@tag_options).should =~ /value="method_value"/
     end

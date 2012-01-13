@@ -34,7 +34,8 @@ module BotAway
           deobfuscate!(value, object_name ? "#{object_name}[#{key}]" : key)
         else
           if object_name && !BotAway.excluded?(:object_name => object_name, :method_name => key)
-            if value.blank? && params.keys.include?(spun_key = spinner.encode("#{object_name}[#{key}]"))
+            spun_key = spinner.encode("#{object_name}[#{key}]")
+            if value.blank? && params.keys.include?(spun_key)
               current[key] = params.delete(spun_key)
             else
               #puts "throwing on #{object_name}[#{key}] because its not blank" if !value.blank?
