@@ -4,6 +4,11 @@ describe ActionView::Helpers::InstanceTag do
   include BotAway::TestCase::InstanceTagTestCase
 
   subject { default_instance_tag }
+  
+  context "honeypot" do
+    subject { default_instance_tag.honeypot_tag(:input, :type => :text, :name => 'name') }
+    it { should be_html_safe }
+  end
 
   context "honeypot warning text" do
     before { default_instance_tag.honeypot_index = 0 } # always produce the same honeypot
