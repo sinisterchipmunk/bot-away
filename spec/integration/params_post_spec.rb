@@ -19,6 +19,10 @@ describe "post data with params" do
     it "should not include legit params" do
       page.should_not have_content("subject:")
     end
+    
+    it "should drop data from the honeypots" do
+      page.should_not have_content("this is a subject")
+    end
   end
 
   describe "filling in a legit field" do
@@ -27,8 +31,8 @@ describe "post data with params" do
       click_button 'submit'
     end
     
-    it "should have legit params" do
-      page.should have_content('subject: this is a subject')
+    it "should have kept legit data" do
+      page.should have_content('this is a subject')
     end
     
     it "should not be considered a bot" do
