@@ -67,7 +67,7 @@ harmless, and even a malicious bot is not going to be able to cause any trouble 
 
 In cases like these, you'll want to go ahead and disable Bot-Away. Since Bot-Away is only disabled on a per-controller or per-action basis, it stays active throughout the remainder of your site, which prevents bots from (for example) creating new users.
 
-To disable Bot-Away for an entire controller, add this line to a file called <em>config/initializers/bot-away.rb</em>:
+To disable Bot-Away for an entire controller, add this line to a file called `config/initializers/bot-away.rb`:
 
     BotAway.disabled_for :controller => 'sessions'
   
@@ -113,11 +113,43 @@ scenario: you have two models, `User` and `Group`, and each `has_many :roles`. T
 
 You can specify this option as many times as you need to do.
 
+## I18n
+
+BotAway is mostly code, and produces mostly code, so there's not that much to translate. However, as mentioned above, the honeypots could theoretically be seen by humans in some rare cases (if they have an exceedingly simplistic browser or have disabled such fundamental Web controls as CSS). In these rare cases, BotAway prefixes the honeypot fields with a message akin to "Leave This Field Empty".
+
+To further confound smart bots, these messages are chosen at random and by default there are 3 such messages BotAway can choose from. However, BotAway only supports the English language by default, so if you are targeting other languages you'll want to add translations. Also, to give your Web app a bit of personalization (highly recommended, if you want to keep the bot-builders guessing!) then you'll want to override and/or add to the English messages as well!
+
+To do this, create a file in `config/locales/bot-away.yml` and add content such as this:
+
+    en:
+      bot_away:
+        number_of_honeypot_warning_messages: 3
+        honeypot_warning_1: "Leave this empty: "
+        honeypot_warning_2: "Don't fill this in: "
+        honeypot_warning_3: "Keep this blank: "
+
+Shown above is exactly what resides in the default BotAway locale. Change the contents of warning strings 1 through 3 within your own app to override them; change the `number_of_honeypot_warning_messages` field to cause BotAway to choose randomly from more or fewer messages. Also, as the above example implies, you can set a different number of randomized warnings per language.
+
+* If you'd like to add some warning messages to BotAway in currently-unsupported languages (or if you just want
+  BotAway to have more messages to choose from) then your additions are welcome! Please fork this project,
+  update the
+  [lib/locale/honeypots.yml](https://github.com/sinisterchipmunk/bot-away/blob/master/lib/locale/honeypots.yml)
+  file with your changes, and then send me a pull request!
+
+* Honeypot warning messages are obfuscated: they are sent as reversed, unicode-escaped strings displayed within
+  right-to-left directional tags (which are standard in HTML 4 and should be recognized by all browsers), so that in
+  the unlikely event a bot can figure out what your I18n locale's "don't fill this in" text means, it'll also have to
+  figure out how to read the text in reverse after unescaping the unicode characters. Obviously, human users won't
+  have this problem.
+  * To disable obfuscation of the honeypot warning messages (that is, serve them as plain left-to-right text), add 
+    the line `BotAway.obfuscate_honeypot_warning_messages = false` to `config/initializers/bot-away.rb`.
+
+
 ## Further Configuration (Mostly for Debugging):
 
 In general, Bot-Away doesn't have that much to configure. Most options only exist for your debugging pleasure, in
 case something isn't quite working as you'd expected. As shown above, these settings should be specified in a file
-called <em>config/initializers/bot-away.rb</em>. Configuration options available to you are as follows:
+called `config/initializers/bot-away.rb`. Configuration options available to you are as follows:
 
 ### Showing the Honeypots
 
