@@ -22,6 +22,14 @@ describe ActionView::Helpers::InstanceTag do
       # 'Leave this empty: ' reversed and then converted to HTML escaped unicode:
       subject.should =~ /#{Regexp::escape '&#x20;&#x3a;&#x79;&#x74;&#x70;&#x6d;&#x65;&#x20;&#x73;&#x69;&#x68;&#x74;&#x20;&#x65;&#x76;&#x61;&#x65;&#x4c;'}/
     end
+    
+    context "with honeypot warning obfuscation disabled" do
+      before { BotAway.obfuscate_honeypot_warning_messages = false }
+      
+      it "should not obfuscate honeypot warning text" do
+        subject.should =~ /Leave this empty: /
+      end
+    end
   
     it "should use bdo to display honeypot warning text accurately" do
       subject.should match(/<bdo dir=['"]rtl["']>.*?<\/bdo>/)

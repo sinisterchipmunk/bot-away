@@ -116,10 +116,18 @@ class ActionView::Helpers::InstanceTag
 
   def honeypot_warning_message
     warning = I18n.t "bot_away.honeypot_warning_#{honeypot_index}"
-    warning.reverse.chars.collect { |b| "&#x#{b.ord.to_s(16)};" }.join
+    if BotAway.obfuscate_honeypot_warning_messages?
+      warning.reverse.chars.collect { |b| "&#x#{b.ord.to_s(16)};" }.join
+    else
+      warning.html_safe
+    end
   end
   
   def honeypot_warning_tag
-    "<bdo dir=\"rtl\">#{honeypot_warning_message}</bdo>".html_safe
+    if BotAway.obfuscate_honeypot_warning_messages?
+      "<bdo dir=\"rtl\">#{honeypot_warning_message}</bdo>".html_safe
+    else
+      honeypot_warning_message
+    end
   end
 end

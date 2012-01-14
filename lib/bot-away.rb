@@ -13,6 +13,11 @@ module BotAway
   
   class << self
     attr_accessor :show_honeypots, :dump_params
+    attr_writer :obfuscate_honeypot_warning_messages
+    
+    def obfuscate_honeypot_warning_messages?
+      !!@obfuscate_honeypot_warning_messages
+    end
     
     def unfiltered_params(*keys)
       unfiltered_params = instance_variable_get("@unfiltered_params") || instance_variable_set("@unfiltered_params", [])
@@ -86,13 +91,13 @@ module BotAway
     def reset!
       self.show_honeypots = false
       self.dump_params = false
+      self.obfuscate_honeypot_warning_messages = true
       self.unfiltered_params.clear
       self.disabled_for.clear
     end
   end
 
   delegate :accepts_unfiltered_params, :unfiltered_params, :to => :"self.class"
-end
 
-# WHY do I have to do this???
-ActionView::Base.send :include, ActionView::Helpers
+  reset! # set defaults
+end
