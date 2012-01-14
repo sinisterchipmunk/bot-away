@@ -1,6 +1,22 @@
-=== 2.0.0 (Not Yet Released)
+=== 2.0.0 2012-01-13
 * Bumped major version number to signify that the version for Rails v2.x is no longer under active development.
-  Use v1.2.x under Rails 2.
+  Use v1.2.x under Rails 2. BotAway now officially supports only Rails 3.0.x and up.
+* Enhancements:
+  * Removed sc-core-ext as a dependency, reducing bloat.
+  * Added BotAway::TestCase and friends, in case you need to do some spec'ing of your own. Just include the modules
+    and away you go!
+  * Added I18n support! BotAway supports English language for 3 honeypot warnings out of the box. See README for
+    customization instructions.
+  * Honeypot warning messages are constructed as reversed, unicode-escaped strings displayed within right-to-left
+    directional tags (which are standard in HTML 4 and should be recognized by all browsers), so that in the unlikely
+    event a bot can figure out what your I18n locale's "don't fill this in" text means, it'll also have to figure out
+    how to read the text in reverse after unescaping the unicode characters. Obviously, human users won't have this
+    problem.
+  * To disable obfuscation of the honeypot warning messages (that is, serve them as plain left-to-right text), add
+    the line `BotAway.obfuscate_honeypot_warning_messages = false` to `config/initializers/bot-away.rb`.
+* Bugfix
+  * Select tag options untainted (#1). Select tags now produce html-safe options tags, so they don't culminate
+    in mass confusion.
 
 === 1.2.0 2010-10-14
 * Enhancements:
