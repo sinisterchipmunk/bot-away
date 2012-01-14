@@ -19,7 +19,7 @@ Gem::Specification.new do |s|
   s.require_paths = ["lib"]
   s.extra_rdoc_files = [
     "LICENSE",
-    "README.rdoc",
+    "README.md",
     "History.txt"
   ]
 
