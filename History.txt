@@ -1,3 +1,9 @@
+=== 2.0.1 2012-01-20
+* Bugfix
+  * Params always emty (#2). In certain situations, BotAway would prefill the request.parameters hash and this
+    was conflicting with Rails because once the parameters hash exists, Rails won't add path parameters (such
+    as :id) to it. Now, BotAway checks request.POST directly so that Rails can fill request.parameters as usual.
+
 === 2.0.0 2012-01-13
 * Bumped major version number to signify that the version for Rails v2.x is no longer under active development.
   Use v1.2.x under Rails 2. BotAway now officially supports only Rails 3.0.x and up.
