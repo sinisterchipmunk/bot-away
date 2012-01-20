@@ -7,4 +7,8 @@ class BotAway::Railtie < Rails::Engine
   else
     paths["config/locales"] = File.expand_path("../locale/honeypots.yml", File.dirname(__FILE__))
   end
+  
+  initializer "bot_away.use_middleware" do |app|
+    app.middleware.use BotAway::Middleware
+  end
 end

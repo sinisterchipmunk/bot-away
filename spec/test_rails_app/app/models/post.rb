@@ -10,4 +10,12 @@ class Post
   def to_key
     [1]
   end
+  
+  def persisted?
+    @persisted
+  end
+  
+  def initialize(options = {})
+    @persisted = options.delete(:persisted)
+  end
 end

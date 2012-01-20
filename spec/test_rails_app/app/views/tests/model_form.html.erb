@@ -1,4 +1,6 @@
-<%= form_for @post, :url => url_for('proc_form') do |f| %>
+<%= form_for @post, :url => url_for(:action => 'proc_form') do |f| %>
+  <input type="hidden" name="hidden_name" value="hidden_value" />
+  
   <p>
     <%= f.label :subject %><br/>
     <%= f.text_field :subject %>
