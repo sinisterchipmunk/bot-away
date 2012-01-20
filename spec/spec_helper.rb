@@ -5,11 +5,14 @@ Bundler.setup
 ENV['RAILS_ENV'] = 'development'
 
 require 'rails'
-require 'active_support/secure_random'
+require 'active_support'
 require 'action_controller/railtie'
 require 'action_mailer/railtie'
 require 'active_resource/railtie'
 require 'bot-away'
+
+# only for Rails 3.0.x
+begin; require 'active_support/secure_random'; rescue LoadError; end
 
 class BotAway::TestRailsApp < Rails::Application
   base = File.expand_path("test_rails_app", File.dirname(__FILE__))
@@ -22,10 +25,11 @@ class BotAway::TestRailsApp < Rails::Application
     config.paths.app.views        = File.join(base, 'app/views')
     config.paths.config.locales   = File.join(base, 'config/locales/bot-away-overrides.yml')
   end
+  config.action_dispatch.show_exceptions = false
 end
 
 BotAway::TestRailsApp.initialize!
-Rails.application.routes.draw { match '/:controller/:action' }
+Rails.application.routes.draw { match '/:controller/:action(/:id)' }
 Rails.application.routes.finalize!
 Dir[File.expand_path('test_rails_app/**/*.rb', File.dirname(__FILE__))].each { |f| require f }
 
