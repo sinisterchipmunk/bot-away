@@ -6,8 +6,8 @@ describe "GET params" do
   end
   
   it "should show the params" do
-    page.should have_content("id: '1'")
-    page.should have_content("one: '1'")
+    page.body.should match(/id: ['"]1["']/)
+    page.body.should match(/one: ['"]1["']/)
     page.should_not have_content("suspected_bot")
   end
 end
