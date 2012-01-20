@@ -3,9 +3,11 @@ rvm:
   - 1.9.2
   - 1.9.3
   - ree
-  - jruby
+  # rails 3.2 doesn't build on these right now
+  # TODO enable again when rails 3.2 works
+  # - jruby
+  # - rbx-2.0
   - ruby-head
-  - rbx-2.0
 
 gemfile:
   # No longer developing against Rails 2.3
