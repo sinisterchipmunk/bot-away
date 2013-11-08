@@ -39,7 +39,7 @@ require 'capybara/rails'
 RSpec.configure do |config|
   config.before do
     # for the CSRF token, which BA uses as a seed
-    SecureRandom.stub!(:base64).and_return("1234")
+    SecureRandom.stub(:base64).and_return("1234")
     # reset any config changes
     BotAway.reset!
     enable_forgery_protection
