@@ -1,0 +1,73 @@
+AllCops:
+  # Include gemspec and Rakefile
+  Includes:
+    - '**/*.gemspec'
+    - '**/Rakefile'
+  # Excludes:
+  #   - 'db/migrate/**'
+  #   - 'config/initializers/**'
+  #   - 'config/application.rb'
+  # By default, the rails cops are not run. Override in project or home
+  # directory .rubocop.yml files, or by giving the -R/--rails option.
+  RunRailsCops: false
+
+DefWithoutParentheses:
+  Enabled: false
+
+MethodCalledOnDoEndBlock:
+  Enabled: true
+
+SymbolArray:
+  Enabled: true
+
+AlignHash:
+  EnforcedHashRocketStyle: table
+  EnforcedColonStyle: table
+
+EmptyLineBetweenDefs:
+  AllowAdjacentOneLineDefs: true
+
+MethodLength:
+  CountComments: true  # count full line comments?
+  Max: 10
+
+ParameterLists:
+  Max: 3
+  CountKeywordArgs: false
+
+AndOr:
+  Enabled: false
+
+AssignmentInCondition:
+  Enabled: false
+
+# Use self when defining module/class methods.
+ClassMethods:
+  Enabled: false
+
+FavorSprintf:
+  Enabled: false
+
+Not:
+  Enabled: false
+
+SpaceInsideBrackets:
+  Enabled: false
+
+SpaceInsideHashLiteralBraces:
+  Enabled: false
+
+SpaceInsideParens:
+  Enabled: false
+
+StringLiterals:
+  Enabled: false
+
+TrailingBlankLines:
+  Enabled: false
+
+Encoding:
+  Enabled: false
+
+Void:
+  Enabled: false
