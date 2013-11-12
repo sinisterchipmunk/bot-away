@@ -20,16 +20,28 @@ module ActionView::Helpers::TagHelper
     if name == :label
       if block_given?
         options = content_or_options_with_block if content_or_options_with_block.is_a?(Hash)
-        options['for'] = BotAway::Spinner.spin(options['for']) if options && options['for']
-        content_tag_string(name, capture(&block), options, escape)
+        text = capture &block
       else
-        text = content_or_options_with_block
-        escaped_text = text.to_s.chars.collect { |b| "&#x#{b.ord.to_s(16)};" }.join.html_safe
-        options['for'] = BotAway::Spinner.spin(options['for']) if options && options['for']
-        content_tag_string(name, escaped_text, options, escape)
+        text = obfuscate_text content_or_options_with_block
       end
+
+      obfuscate_label_target options
+      content_tag_string name, text, options, escape
     else
       original_content_tag name, content_or_options_with_block, options, escape, &block
+    end
+  end
+
+  # Obfusates the specified text by converting it to HTML entities
+  def obfuscate_text text
+    text.to_s.chars.map { |b| "&#x#{b.ord.to_s(16)};" }.join.html_safe
+  end
+
+  # Hashes the label target given in the `for` attribute so that the label
+  # references a real data field and not a honeypot field
+  def obfuscate_label_target options
+    if options && options['for']
+      options['for'] = BotAway::Spinner.spin options['for']
     end
   end
 
