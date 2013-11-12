@@ -3,7 +3,7 @@ module BotAway
     def initialize app
       @app = app
     end
-    
+
     def call env
       request = ActionDispatch::Request.new env
 
@@ -12,7 +12,7 @@ module BotAway
         BotAway::ParamParser.new post
         request.env['rack.input'] = encode_params_hash post
       end
-      
+
       @app.call env
     end
 
@@ -25,7 +25,7 @@ module BotAway
     #     #=> StringIO<"a=1&b=2">
     #
     def encode_params_hash post
-      StringIO.new post.collect { |k,v| "#{k}=#{v}" }.join("&")
+      StringIO.new post.map { |k, v| "#{k}=#{v}" }.join("&")
     end
 
     # Returns a hash of params, where the name is the form element's complete
@@ -37,7 +37,7 @@ module BotAway
     # hashes.
     def single_level_params_hash request
       data = request.env['rack.input'].read
-      data.split(/&/).inject({}) do |params, key_value|
+      data.split(/&/).reduce({}) do |params, key_value|
         key, value = *key_value.split('=')
         params[key] = value
         params

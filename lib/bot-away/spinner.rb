@@ -18,7 +18,7 @@ class BotAway::Spinner
 
     def digest *keys
       Digest::SHA2.hexdigest [ Rails.configuration.secret_key_base,
-                              *keys ].join('-"')
+                               *keys ].join('-"')
     end
 
     # Returns a digital signature by building an MD5 digest from the specified

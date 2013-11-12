@@ -10,8 +10,8 @@ module ActionView::Helpers::FormTagHelper
     if spun_hashes = find_spun_hashes_in(content)
       signature = BotAway::Spinner.signature *spun_hashes
       html = [ "<input type='hidden'",
-                      "name='_ba_signature'",
-                      "value='#{signature}' />" ].join(' ')
+               "name='_ba_signature'",
+               "value='#{signature}' />" ].join(' ')
       output.safe_concat html
     end
     output.safe_concat "</form>"

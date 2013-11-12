@@ -28,7 +28,7 @@ class BotAway::ParamParser
   # Returns true if the signature generated from all of the hashed field names
   # is not the same as the signature submitted with the form data.
   def signature_mismatch?
-    return original_params['_ba_signature'] != signature
+    original_params['_ba_signature'] != signature
   end
 
   # Returns a hex string which is a signature generated from the
@@ -100,7 +100,7 @@ class BotAway::ParamParser
   # Constructs a Hash of `{ field_name => hashed_value }` for all honeypots
   # given in the params.
   def honeypot_map
-    @honeypot_map ||= original_params.keys.inject({}) do |hash, key|
+    @honeypot_map ||= original_params.keys.reduce({}) do |hash, key|
       if hashed_key = honeypot?(key)
         hash[key] = hashed_key
       end

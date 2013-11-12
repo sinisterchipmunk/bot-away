@@ -3,12 +3,12 @@ require 'bot-away/monkey/action_view/helpers/form_tag_helper'
 require 'bot-away/railtie'
 
 module BotAway
-  autoload :Middleware, 'bot-away/middleware'
-  autoload :ParamParser,'bot-away/param_parser'
-  autoload :Spinner,    'bot-away/spinner'
-  autoload :TimeHelpers,'bot-away/time_helpers'
-  autoload :Version,    'bot-away/version'
-  autoload :VERSION,    'bot-away/version'
+  autoload :Middleware,  'bot-away/middleware'
+  autoload :ParamParser, 'bot-away/param_parser'
+  autoload :Spinner,     'bot-away/spinner'
+  autoload :TimeHelpers, 'bot-away/time_helpers'
+  autoload :Version,     'bot-away/version'
+  autoload :VERSION,     'bot-away/version'
 
   OBFUSCATED_TAGS = %w( input select textarea )
 
