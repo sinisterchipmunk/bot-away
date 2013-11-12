@@ -57,11 +57,13 @@ class BotAway::ParamParser
   # too long after the original form was generated, indicating that the
   # request may have been replayed from a previous session.
   def too_slow?
-    time = current_time.to_i
-    time.step time - BotAway.max_form_age, -BotAway.time_increment do |time|
+    timestamp = current_time.to_i
+    oldest_valid_timestamp = timestamp - BotAway.max_form_age
+    timestamp.step oldest_valid_timestamp, -BotAway.time_increment do |time|
       salt_in_time = BotAway::Spinner.generate_salt time
       honeypot_map.values.each do |spun_value|
-        return false if spun_value[0...BotAway::Spinner::SALT_LENGTH] == salt_in_time
+        salt = spun_value[0...BotAway::Spinner::SALT_LENGTH]
+        return false if salt == salt_in_time
       end
     end
     true
@@ -101,9 +103,7 @@ class BotAway::ParamParser
   # given in the params.
   def honeypot_map
     @honeypot_map ||= original_params.keys.reduce({}) do |hash, key|
-      if hashed_key = honeypot?(key)
-        hash[key] = hashed_key
-      end
+      hashed_key = honeypot?(key) and hash[key] = hashed_key
       hash
     end
   end

@@ -16,25 +16,33 @@ module ActionView::Helpers::TagHelper
     end
   end
 
-  def content_tag name, content_or_options_with_block = nil, options = nil, escape = true, &block
+  def content_tag name, content_or_options_with_block = nil,
+                        options = nil, escape = true, &block
     if name == :label
-      if block_given?
-        options = content_or_options_with_block if content_or_options_with_block.is_a?(Hash)
-        text = capture &block
-      else
-        text = obfuscate_text content_or_options_with_block
-      end
-
-      obfuscate_label_target options
-      content_tag_string name, text, options, escape
+      label_content_tag name, content_or_options_with_block,
+                        options, escape, &block
     else
-      original_content_tag name, content_or_options_with_block, options, escape, &block
+      original_content_tag name, content_or_options_with_block,
+                           options, escape, &block
     end
+  end
+
+  def label_content_tag name, content_or_options_with_block = nil,
+                        options = nil, escape = true, &block
+    if block_given?
+      options ||= content_or_options_with_block
+      text = capture(&block)
+    else
+      text = obfuscate_text content_or_options_with_block
+    end
+
+    obfuscate_label_target options
+    content_tag_string name, text, options, escape
   end
 
   # Obfusates the specified text by converting it to HTML entities
   def obfuscate_text text
-    text.to_s.chars.map { |b| "&#x#{b.ord.to_s(16)};" }.join.html_safe
+    text.to_s.chars.map { |b| "&#x#{b.ord.to_s 16};" }.join.html_safe
   end
 
   # Hashes the label target given in the `for` attribute so that the label
@@ -47,7 +55,7 @@ module ActionView::Helpers::TagHelper
 
   def honeypot_tag name, options, open, escape
     options.reverse_merge! 'honeypot' => true
-    if honeypot = options.delete('honeypot')
+    if options.delete 'honeypot'
       options = options.dup
       options['style'] = "display:none;#{options['style']}"
       original_tag name, options, open, escape
@@ -64,7 +72,7 @@ module ActionView::Helpers::TagHelper
   end
 
   def honeypot_label name, options, open, escape
-    # TODO hide the honeypot
+    # TODO: hide the honeypot
     original_tag name, options, open, escape
   end
 
