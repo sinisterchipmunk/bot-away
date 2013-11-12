@@ -31,4 +31,5 @@ Gem::Specification.new do |s|
   s.add_development_dependency 'rspec'
   s.add_development_dependency 'rails', '>= 4.0'
   s.add_development_dependency 'coveralls'
+  s.add_development_dependency 'rubocop'
 end

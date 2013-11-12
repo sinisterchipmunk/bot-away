@@ -32,6 +32,7 @@ GEM
       thread_safe (~> 0.1)
       tzinfo (~> 0.3.37)
     arel (4.0.1)
+    ast (1.1.0)
     atomic (1.1.14)
     builder (3.1.4)
     capybara (2.1.0)
@@ -68,7 +69,11 @@ GEM
     multi_test (0.0.2)
     nokogiri (1.6.0)
       mini_portile (~> 0.5.0)
+    parser (2.0.0)
+      ast (~> 1.1)
+      slop (~> 3.4, >= 3.4.5)
     polyglot (0.3.3)
+    powerpack (0.0.9)
     rack (1.5.2)
     rack-test (0.6.2)
       rack (>= 1.0)
@@ -85,6 +90,7 @@ GEM
       activesupport (= 4.0.1)
       rake (>= 0.8.7)
       thor (>= 0.18.1, < 2.0)
+    rainbow (1.1.4)
     rake (10.1.0)
     rest-client (1.6.7)
       mime-types (>= 1.16)
@@ -103,10 +109,15 @@ GEM
       rspec-core (~> 2.14.0)
       rspec-expectations (~> 2.14.0)
       rspec-mocks (~> 2.14.0)
+    rubocop (0.15.0)
+      parser (~> 2.0)
+      powerpack (~> 0.0.6)
+      rainbow (>= 1.1.4)
     simplecov (0.7.1)
       multi_json (~> 1.0)
       simplecov-html (~> 0.7.1)
     simplecov-html (0.7.1)
+    slop (3.4.6)
     sprockets (2.10.0)
       hike (~> 1.2)
       multi_json (~> 1.0)
@@ -142,3 +153,4 @@ DEPENDENCIES
   rake
   rspec
   rspec-rails
+  rubocop
