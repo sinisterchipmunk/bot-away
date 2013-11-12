@@ -27,6 +27,8 @@ class RailsApp < Rails::Application
   config.paths['app/views'].unshift Rails.root.join('app/views')
 end
 
+FileUtils.mkdir_p Rails.root.join('app/views/accounts')
+
 RailsApp.initialize!
 
 require 'cucumber/rspec/doubles'
