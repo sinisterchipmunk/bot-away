@@ -1,8 +1,8 @@
 module BotAway
   module Version
-    MAJOR = 2
+    MAJOR = 3
     MINOR = 0
-    PATCH = 1
+    PATCH = 0
     BUILD = nil
     
     STRING = BUILD ? [MAJOR, MINOR, PATCH, BUILD].join('.') : [MAJOR, MINOR, PATCH].join('.')

@@ -1,20 +1,47 @@
 class BotAway::Spinner
-  def initialize(ip, key, secret)
-    raise "Shouldn't have a nil ip" unless ip
-    raise "Shouldn't have a nil secret" unless secret
-    secret = File.join(#Time.now.to_i.to_s,
-                                               ip,
-                                               key.to_s,
-                                               secret)
+  include BotAway::TimeHelpers
 
-    @spinner = Digest::MD5.hexdigest(secret)
+  attr_reader :value, :salt
+
+  SALT_LENGTH = 64
+  HASH_LENGTH = 64
+
+  class << self
+    def spin value, *salt
+      new(value, *salt).hash
+    end
+
+    def generate_salt time = nil
+      time ||= BotAway::Spinner.new(nil).time
+      digest time.to_i.to_s
+    end
+
+    def digest *keys
+      Digest::SHA2.hexdigest [ Rails.configuration.secret_key_base,
+                              *keys ].join('-"')
+    end
+
+    # Returns a digital signature by building an MD5 digest from the specified
+    # string and the application's secret token.
+    #
+    # TODO: investigate the need and feasibility to include timestamp in SHA.
+    def signature *string
+      salt = digest Rails.configuration.secret_key_base
+      spin(string.flatten.sort.join('-'), salt)[SALT_LENGTH..-1]
+    end
   end
 
-  def spinner
-    @spinner
+  def initialize value, salt = nil
+    @value = value
+    @salt = salt || BotAway::Spinner.generate_salt(time)
   end
 
-  def encode(real_field_name)
-    Digest::MD5.hexdigest(File.join(real_field_name.to_s, spinner))
+  def time
+    @time ||= current_time
+  end
+
+  def hash
+    digested_value = self.class.digest salt, value
+    [ salt, digested_value ].join
   end
 end

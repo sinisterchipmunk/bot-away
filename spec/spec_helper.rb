@@ -8,7 +8,6 @@ require 'rails'
 require 'active_support'
 require 'action_controller/railtie'
 require 'action_mailer/railtie'
-require 'active_resource/railtie'
 require 'bot-away'
 
 # only for Rails 3.0.x

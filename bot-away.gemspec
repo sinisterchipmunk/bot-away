@@ -23,7 +23,12 @@ Gem::Specification.new do |s|
     "History.txt"
   ]
 
-  s.add_runtime_dependency('actionpack', ">= 2.3.5")
-  s.add_development_dependency 'rake', '~> 0.9.2'
-  s.add_development_dependency 'capybara', '~> 1.1.2'
+  s.add_runtime_dependency 'actionpack', ">= 4.0"
+  s.add_development_dependency 'rake'
+  s.add_development_dependency 'capybara'
+  s.add_development_dependency 'cucumber'
+  s.add_development_dependency 'rspec-rails'
+  s.add_development_dependency 'rspec'
+  s.add_development_dependency 'rails', '>= 4.0'
+  s.add_development_dependency 'simplecov'
 end

@@ -1,3 +1,7 @@
+=== 3.0.0 unreleased
+* Enhancements:
+  * Completely rewritten for Rails 4.0!
+
 === 2.0.1 2012-01-20
 * Bugfix
   * Params always emty (#2). In certain situations, BotAway would prefill the request.parameters hash and this
