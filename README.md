@@ -1,4 +1,4 @@
-# bot-away [![Build Status](https://secure.travis-ci.org/sinisterchipmunk/bot-away.png)](http://travis-ci.org/sinisterchipmunk/bot-away)
+# bot-away [![Build Status](https://secure.travis-ci.org/sinisterchipmunk/bot-away.png)](http://travis-ci.org/sinisterchipmunk/bot-away)[![Coverage Status](https://coveralls.io/repos/sinisterchipmunk/bot-away/badge.png)](https://coveralls.io/r/sinisterchipmunk/bot-away)
 
 * http://github.com/sinisterchipmunk/bot-away
 
